@@ -1,57 +1,37 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
-using Newtonsoft.Json;
 using System.Xml;
 using System.Threading.Tasks;
-//using Xunit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace SabreClientTest
 {
     [TestClass]
     public class AuthorizationTests
     {
-        private const string EncodedType = "ISO-8859-1";
-        private const string AuthPostData = "grant_type=";
-
-
-        //[Fact]
         [TestMethod]
         public async Task GetToken()
         {
             string url = @"https://sws3-crt.cert.sabre.com";
-
-            //string encodedclientId = System.Convert.ToBase64String(Encoding.GetEncoding(EncodedType).GetBytes("7971"));
-            //string encodedpassword = System.Convert.ToBase64String(Encoding.GetEncoding(EncodedType).GetBytes("WS102513"));
-            //CredentialCache credentials = new CredentialCache();
-            //credentials.Add(new System.Uri(url), "Basic", new NetworkCredential(encodedclientId, encodedpassword));
-            
-            var sbb = GetRequest();
+            var sbb = GetRequest("7971", "WS102513", "92RG", "DEFAULT");
             try
             {
                 using (HttpClient client = new HttpClient { BaseAddress = new Uri(url) })
                 {
                     client.DefaultRequestHeaders.Clear();
-                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(ContentTypes.));
-                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("gzip,deflate"));
-
                     HttpResponseMessage responseMessage = await client.PostAsync("", new StringContent(sbb, Encoding.UTF8, "text/xml"));
-                    //var resp = await responseMessage.Content.ReadAsStringAsync();
-                    //var document = XDocument.Load(stream);
-
                     var response = await responseMessage.Content.ReadAsStringAsync();
 
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(response);
-                    ProcessResponse(doc);
-                    /*var binarySecurityToken = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "BinarySecurityToken");
-                    var Action = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Action");
+                    var nsmgr = GetXmlNamespaceManager(doc);
+                    string conversationId = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/eb:MessageHeader/eb:ConversationId").InnerText;
+                    string token = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/wsse:Security/wsse:BinarySecurityToken").InnerText;
 
-                    var userName = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Username");
-                    var password = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Password");
-                    var ipcc = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Organization");
-                    var conversationIds = document.Descendants().Where(x => x.Name.LocalName == "ConversationId");*/
+                    Assert.IsNotNull(conversationId);
+                    Assert.IsNotNull(token);
                 }
             }
             catch (Exception e)
@@ -63,22 +43,85 @@ namespace SabreClientTest
         [TestMethod]
         public void ParseResponse()
         {
-            try
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(GetXmlResponse());
-                ProcessResponse(doc);
-            }
-            catch (Exception e)
-            {
-                //throw;
-            }
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(GetXmlResponse());
 
+            var nsmgr = GetXmlNamespaceManager(doc);
+            string conversationId = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/eb:MessageHeader/eb:ConversationId").InnerText;
+            string token = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/wsse:Security/wsse:BinarySecurityToken").InnerText;
+
+            Assert.AreEqual("V1@280b16ec-5eac-46c0-893f-c88f8e8cb632@310b16ec-5dad-46c0-893f-c88f8e8cb643@780b16ec-5eac-46c0-893f-c88f8e8cb699", conversationId);
+            Assert.AreEqual(@"Shared/IDL:IceSess\/SessMgr:1\.0.IDL/Common/!ICESMS\/ACPCRTC!ICESMSLB\/CRT.LB!1544695565786!2375!17", token);
         }
 
-        private string GetRequest()
+        private static XmlNamespaceManager GetXmlNamespaceManager(XmlDocument doc)
         {
-            var body = new StringBuilder();
+            var xmlNamespaces = new Dictionary<string, string>
+            {
+                {"xsl", "http://www.w3.org/1999/XSL/Transform"},
+                {"soap-env", "http://schemas.xmlsoap.org/soap/envelope/" },
+                {"eb", "http://www.ebxml.org/namespaces/messageHeader" },
+                {"wsse", "http://schemas.xmlsoap.org/ws/2002/12/secext" }
+            };
+
+            var nsmgr = new XmlNamespaceManager(doc.NameTable);
+            foreach (var item in xmlNamespaces)
+            {
+                nsmgr.AddNamespace(item.Key, item.Value);
+            }
+
+            return nsmgr;
+        }
+
+        private static XmlNode GetNodeByPath(XmlDocument doc, XmlNamespaceManager nmgr, string path)
+        {
+            return doc.SelectSingleNode(path, nmgr);
+        }
+
+        private static string GetRequest(string userName, string password, string ipcc, string domain)
+        {
+            return
+                "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\">" +
+                    "<SOAP-ENV:Header>" +
+                        "<eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">" +
+                            "<eb:From><eb:PartyId>9aq99999</eb:PartyId></eb:From>" +
+                            "<eb:To><eb:PartyId>123ws123</eb:PartyId></eb:To>" +
+                            "<eb:ConversationId>1234567</eb:ConversationId>" +
+                            "<eb:Action>SessionCreateRQ</eb:Action>" +
+                        "</eb:MessageHeader>" +
+                        "<wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">" +
+                            "<wsse:UsernameToken>" +
+                                $"<wsse:Username>{userName}</wsse:Username>" +
+                                $"<wsse:Password>{password}</wsse:Password>" +
+                                $"<Organization>{ipcc}</Organization>" +
+                                $"<Domain>{domain}</Domain>" +
+                            "</wsse:UsernameToken>" +
+                        "</wsse:Security>" +
+                    "</SOAP-ENV:Header>" +
+                    "<SOAP-ENV:Body></SOAP-ENV:Body>" +
+                "</SOAP-ENV:Envelope>";
+
+            //$"<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\">" +
+            //        "<SOAP-ENV:Header>" +
+            //            "<eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">" +
+            //                "<eb:From><eb:PartyId>9aq99999</eb:PartyId></eb:From>" +
+            //                "<eb:To><eb:PartyId>123ws123</eb:PartyId></eb:To>" +
+            //                "<eb:ConversationId>1234567</eb:ConversationId>" +
+            //                "<eb:Action>SessionCreateRQ</eb:Action>" +
+            //            "</eb:MessageHeader>" +
+            //            "<wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\">" +
+            //                "<wsse:UsernameToken>" +
+            //                    "<wsse:Username>7971</wsse:Username>" +
+            //                    "<wsse:Password>WS102513</wsse:Password>" +
+            //                    "<Organization>92RG</Organization>" +
+            //                    "<Domain>DEFAULT</Domain>" +
+            //                "</wsse:UsernameToken>" +
+            //            "</wsse:Security>" +
+            //        "</SOAP-ENV:Header>" +
+            //        "<SOAP-ENV:Body></SOAP-ENV:Body>" +
+            //    "</SOAP-ENV:Envelope>";
+
+            /*var body = new StringBuilder();
             body.AppendLine("<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\">");
             body.AppendLine("<SOAP-ENV:Header>");
             body.AppendLine("<eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">");
@@ -99,28 +142,10 @@ namespace SabreClientTest
             body.AppendLine("<SOAP-ENV:Body></SOAP-ENV:Body>");
             body.AppendLine("</SOAP-ENV:Envelope>");
 
-            return body.ToString();
+            return body.ToString();*/
         }
 
-        private void ProcessResponse(XmlDocument doc)
-        {
-            var cn = doc.DocumentElement.ChildNodes;
-            var n1 = doc.DocumentElement.SelectNodes("soap-env:Envelope/soap-env:Header");
-            var n2 = doc.DocumentElement.SelectNodes("//soap-env:Envelope/soap-env:Header");
-            var n3 = doc.SelectNodes("soap-env:Envelope/soap-env:Header");
-            var n4 = doc.SelectNodes("//soap-env:Envelope/soap-env:Header");
-
-            var n5 = doc.SelectNodes("soap-env:Envelope/soap-env:Header/eb:MessageHeader/");
-            var n6 = doc.SelectSingleNode("soap-env:Envelope/soap-env:Header/eb:MessageHeader/eb:ConversationId");
-            var n7 = doc.SelectNodes("soap-env:Envelope/soap-env:Header/wsse:Security");
-            var n8 = doc.SelectSingleNode("soap-env:Envelope/soap-env:Header/wsse:Security/wsse:BinarySecurityToken");
-
-
-            string jsonText = JsonConvert.SerializeXmlNode(doc);
-            int b = 1;
-        }
-
-        private string GetXmlResponse()
+        private static string GetXmlResponse()
         {
             return @"<?xml version=""1.0"" encoding=""UTF-8""?>
                     <soap-env:Envelope xmlns:soap-env=""http://schemas.xmlsoap.org/soap/envelope/"">
@@ -153,6 +178,54 @@ namespace SabreClientTest
                         </soap-env:Body>
                     </soap-env:Envelope>";
         }
+
+        //public async Task GetTokenDummy()
+        //{
+            //const string EncodedType = "ISO-8859-1";
+            //const string AuthPostData = "grant_type=";
+
+
+        //    string url = @"https://sws3-crt.cert.sabre.com";
+
+        //    //string encodedclientId = System.Convert.ToBase64String(Encoding.GetEncoding(EncodedType).GetBytes("7971"));
+        //    //string encodedpassword = System.Convert.ToBase64String(Encoding.GetEncoding(EncodedType).GetBytes("WS102513"));
+        //    //CredentialCache credentials = new CredentialCache();
+        //    //credentials.Add(new System.Uri(url), "Basic", new NetworkCredential(encodedclientId, encodedpassword));
+
+        //    var sbb = GetRequest("7971", "WS102513", "92RG", "DEFAULT");
+        //    try
+        //    {
+        //        using (HttpClient client = new HttpClient { BaseAddress = new Uri(url) })
+        //        {
+        //            client.DefaultRequestHeaders.Clear();
+        //            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(ContentTypes.));
+        //            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("gzip,deflate"));
+
+        //            HttpResponseMessage responseMessage = await client.PostAsync("", new StringContent(sbb, Encoding.UTF8, "text/xml"));
+        //            //var resp = await responseMessage.Content.ReadAsStringAsync();
+        //            //var document = XDocument.Load(stream);
+
+        //            var response = await responseMessage.Content.ReadAsStringAsync();
+
+        //            XmlDocument doc = new XmlDocument();
+        //            doc.LoadXml(response);
+        //            var nsmgr = GetXmlNamespaceManager(doc);
+        //            ProcessResponse(doc, nsmgr);
+        //            /*var binarySecurityToken = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "BinarySecurityToken");
+        //            var Action = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Action");
+
+        //            var userName = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Username");
+        //            var password = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Password");
+        //            var ipcc = document.Descendants().FirstOrDefault(x => x.Name.LocalName == "Organization");
+        //            var conversationIds = document.Descendants().Where(x => x.Name.LocalName == "ConversationId");*/
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw;
+        //    }
+        //}
+
     }
 }
  
