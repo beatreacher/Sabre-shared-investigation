@@ -16,27 +16,20 @@ namespace SabreClientTest
         {
             string url = @"https://sws3-crt.cert.sabre.com";
             var sbb = GetRequest("7971", "WS102513", "92RG", "DEFAULT");
-            try
+            using (HttpClient client = new HttpClient { BaseAddress = new Uri(url) })
             {
-                using (HttpClient client = new HttpClient { BaseAddress = new Uri(url) })
-                {
-                    client.DefaultRequestHeaders.Clear();
-                    HttpResponseMessage responseMessage = await client.PostAsync("", new StringContent(sbb, Encoding.UTF8, "text/xml"));
-                    var response = await responseMessage.Content.ReadAsStringAsync();
+                client.DefaultRequestHeaders.Clear();
+                HttpResponseMessage responseMessage = await client.PostAsync("", new StringContent(sbb, Encoding.UTF8, "text/xml"));
+                var response = await responseMessage.Content.ReadAsStringAsync();
 
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(response);
-                    var nsmgr = GetXmlNamespaceManager(doc);
-                    string conversationId = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/eb:MessageHeader/eb:ConversationId").InnerText;
-                    string token = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/wsse:Security/wsse:BinarySecurityToken").InnerText;
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(response);
+                var nsmgr = GetXmlNamespaceManager(doc);
+                string conversationId = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/eb:MessageHeader/eb:ConversationId").InnerText;
+                string token = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/wsse:Security/wsse:BinarySecurityToken").InnerText;
 
-                    Assert.IsNotNull(conversationId);
-                    Assert.IsNotNull(token);
-                }
-            }
-            catch (Exception e)
-            {
-                throw;
+                Assert.IsNotNull(conversationId);
+                Assert.IsNotNull(token);
             }
         }
 
