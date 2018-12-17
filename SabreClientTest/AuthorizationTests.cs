@@ -21,7 +21,7 @@ namespace SabreClientTest
         public async Task GetToken()
         {
             string url = @"https://sws3-crt.cert.sabre.com";
-            var sbb = GetRequest("7971", "WS102513", "92RG", "DEFAULT", "TokenCreateRQ");
+            var sbb = GetRequest("*", "*", "*", "DEFAULT", "TokenCreateRQ");
             using (HttpClient client = new HttpClient { BaseAddress = new Uri(url) })
             {
                 client.DefaultRequestHeaders.Clear();
