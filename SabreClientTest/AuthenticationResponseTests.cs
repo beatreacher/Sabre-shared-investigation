@@ -9,27 +9,13 @@ using SabreApiClient;
 namespace SabreClientTest
 {
     [TestClass]
-    public class AuthenticationTests
+    public class AuthenticationResponseTests
     {
         IDictionary<string, string> Actions = new Dictionary<string, string>
         {
             {"CreateToken", "TokenCreateRQ"},
             {"CreateSession", "SessionCreateRQ"}
         };
-
-        [TestMethod]
-        public async Task GetToken()
-        {
-            var client = new Client("*", "*", "*", "DEFAULT");
-            var sabreApiClient = new SabreApiClient.SabreApiClient();
-            var session = await sabreApiClient.CreateAccessToken(client, "TokenCreateRQ");
-
-            Assert.IsNotNull(session);
-            Assert.IsNotNull(session.ConversationId);
-            Assert.IsNotNull(session.Token);
-            Assert.IsNotNull(session.MessageId);
-            Assert.IsNotNull(session.TimeStamp);
-        }
 
         [TestMethod]
         public void ParseResponse()
