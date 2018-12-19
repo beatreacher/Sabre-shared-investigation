@@ -88,9 +88,9 @@
       <Project>{4c022a82-e858-4163-900e-97ba199803b2}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{ef19b4b7-50f0-4860-b6b4-039c4fc77984}</Project>
-      <Name>Model</Name>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{7dbf2ef3-758b-4334-afc6-14c8c1ae3b0f}</Project>
+      <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

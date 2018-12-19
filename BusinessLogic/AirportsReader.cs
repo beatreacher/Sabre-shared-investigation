@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
-using Model;
+using Domain.Models;
 
 namespace BusinessLogic
 {
