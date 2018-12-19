@@ -5,6 +5,7 @@ using System.Xml;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using FluentAssertions;
 
 namespace SabreClientTest
 {
@@ -55,10 +56,10 @@ namespace SabreClientTest
             string messageId = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/eb:MessageHeader/eb:MessageData/eb:MessageId").InnerText;
             string timeStamp = GetNodeByPath(doc, nsmgr, "soap-env:Envelope/soap-env:Header/eb:MessageHeader/eb:MessageData/eb:Timestamp").InnerText;
 
-            Assert.AreEqual("V1@280b16ec-5eac-46c0-893f-c88f8e8cb632@310b16ec-5dad-46c0-893f-c88f8e8cb643@780b16ec-5eac-46c0-893f-c88f8e8cb699", conversationId);
-            Assert.AreEqual(@"Shared/IDL:IceSess\/SessMgr:1\.0.IDL/Common/!ICESMS\/ACPCRTC!ICESMSLB\/CRT.LB!1544695565786!2375!17", token);
-            Assert.AreEqual("888281363657680150", messageId);
-            Assert.AreEqual("2018-12-13T10:06:05", timeStamp);
+            conversationId.Should().Be("V1@280b16ec-5eac-46c0-893f-c88f8e8cb632@310b16ec-5dad-46c0-893f-c88f8e8cb643@780b16ec-5eac-46c0-893f-c88f8e8cb699");
+            token.Should().Be(@"Shared/IDL:IceSess\/SessMgr:1\.0.IDL/Common/!ICESMS\/ACPCRTC!ICESMSLB\/CRT.LB!1544695565786!2375!17");
+            messageId.Should().Be("888281363657680150");
+            timeStamp.Should().Be("2018-12-13T10:06:05");
         }
 
         private static XmlNamespaceManager GetXmlNamespaceManager(XmlDocument doc)

@@ -1,0 +1,250 @@
+"code","aliases","name","description","timezone","country","useAliases","excludeFromSearch","latitude","longitude","m2iorigin"
+"ABE","","Allentown, PA","","EST","",0,0,40.6524,-75.4404,0
+"ABQ","","Albuquerque, NM","","MST","",0,0,35.0402,-106.609,0
+"ACA","","Acapulco","","CST","Mexico",0,0,0,0,0
+"ACY","","Atlantic City, NJ","","EST","USA",0,0,39.4576,-74.5772,0
+"ALB","","Albany, NY","","EST","USA",0,0,42.7491,-73.802,0
+"AMA","","Amarillo, TX","","CST","USA",0,0,35.2194,-101.706,0
+"ANC","","Anchorage, AK","","America/Anchorage","USA",0,0,61.1744,-149.996,0
+"ANU","","Antigua","","America/Antigua","",0,0,0,0,0
+"ATL","","Atlanta, GA","","EST","USA",0,0,33.6367,-84.4281,1
+"AUA","","Aruba","island on caribbean","America/Aruba","",0,0,0,0,0
+"AUG","","Augusta, ME","","EST","USA",0,0,44.3206,-69.7973,0
+"AUS","","Austin, TX","","CST","",0,0,30.1945,-97.6699,0
+"AVL","","Asheville, NC","","EST","USA",0,0,35.4362,-82.5418,0
+"AVP","","Scranton, PA","","EST","USA",0,0,41.3385,-75.7234,0
+"AXA","","Anguilla","","America/Anguilla","",0,0,0,0,0
+"AZO","","Kalamazoo, MI","","EST","USA",0,0,42.2344,-85.5516,0
+"AZS","","Samana","","GMT-04:00","",0,0,0,0,0
+"BBQ","","Barbuda","","AST","",0,0,0,0,0
+"BDA","","Bermuda","","Atlantic/Bermuda","",0,0,0,0,0
+"BDL","","Hartford, CT","","EST","United States",0,0,41.9389,-72.6832,1
+"BFL","","Bakersfield, CA","","PST","",0,0,35.4339,-119.058,0
+"BGI","","Barbados","","America/Barbados","",0,0,0,0,0
+"BHM","","Birmingham, AL","","CST","",0,0,33.5639,-86.7523,0
+"BIL","","Billings, MT","","MST","USA",0,0,45.8077,-108.543,0
+"BIS","","Bismarck, ND","","CST","",0,0,46.7727,-100.746,0
+"BMI","","Bloomington, IL","","CST","",0,0,40.4771,-88.9159,0
+"BNA","","Nashville, TN","","CST","",0,0,36.1245,-86.6782,1
+"BOI","","Boise, ID","Boise, ID","MST","US",0,0,43.5644,-116.223,0
+"BON","","Bonaire","","AST","",0,0,0,0,0
+"BOS","","Boston, MA","","EST","USA",0,0,42.363,-71.0064,1
+"BRS","","Bristol, GB","","UCT","United Kingdom",0,0,0,0,0
+"BTR","","Baton Rouge, LA","","CST","USA",0,0,0,0,0
+"BTV","","Burlington, VT","","EST","USA",0,0,44.4719,-73.1533,0
+"BUF","","Buffalo, NY","","EST","",0,0,42.9405,-78.7322,0
+"BUR","","Burbank, CA","","PST","USA",0,0,34.2007,-118.359,0
+"BWI","","Baltimore, MD","","EST","",0,0,39.1754,-76.6683,1
+"BZE","","Belize City - Belize","","CST","Belize",0,0,0,0,0
+"CAE","","Columbia, SC","","EST","USA",0,0,33.9388,-81.1195,0
+"CAK","","Akron/Canton, OH","","EST","USA",0,0,40.9151,-81.4436,0
+"CHA","","Chattanooga, TN","","EST","USA",0,0,35.0352,-85.2036,0
+"CHI","ORD MDW","Chicago - All Airports","","CST","USA",0,0,0,0,0
+"CHS","","Charleston, SC","","EST","USA",0,0,32.8986,-80.0405,0
+"CID","","Cedar Rapids, IA","","CST","USA",0,0,41.8847,-91.7108,0
+"CLE","","Cleveland, OH","","EST","",0,0,41.4094,-81.855,0
+"CLT","","Charlotte, NC","","EST","USA",0,0,35.2137,-80.9491,1
+"CMH","","Columbus, OH","","EST","",0,0,39.998,-82.8919,0
+"COS","","Colorado Springs, CO","","MST","USA",0,0,0,0,0
+"CPR","","Casper, WY","","MST","USA",0,0,42.908,-106.464,0
+"CRP","","Corpus Christi, TX","","CST","USA",0,0,0,0,0
+"CRW","","Charleston, WV","","EST","USA",0,0,38.3759,-81.593,0
+"CTG","","Cartagena","","EST","Colombia",0,0,0,0,0
+"CUN","","Cancun","","GMT","Mexico",0,0,0,0,0
+"CUR","","Curacao","","America/Curacao","",0,0,0,0,0
+"CVG","","Cincinnati, OH","","EST","USA",0,0,39.0488,-84.6678,0
+"CYB","","Gerrard-Smith","","EST","",0,0,0,0,0
+"CZM","","Cozumel","","CST","Mexico",0,0,0,0,0
+"DAL","","Dallas Love Field, TX","","CST","USA",0,0,32.8471,-96.8518,0
+"DAY","","Dayton, OH","","EST","USA",0,0,39.9023,-84.2194,0
+"DCA","","Washington National, DC","","EST","",0,0,38.8521,-77.0377,1
+"DEN","","Denver, CO","","MST","",0,0,39.8617,-104.673,1
+"DFW","","Dallas/Ft. Worth, TX","","CST","USA",0,0,32.8968,-97.038,1
+"DLH","","Duluth, MN","","EST","USA",0,0,46.8421,-92.1936,0
+"DOM","","Melville Hall Airport","","GMT","Dominica",0,0,0,0,0
+"DSM","","Des Moines, IA","","CST","",0,0,41.534,-93.6631,0
+"DTW","","Detroit, MI","","EST","",0,0,42.2124,-83.3534,1
+"ECP","","Panama City/Bay County, FL","","EST","USA",0,0,0,0,0
+"EDI","","Edinburgh (Turnhouse), GB","","UCT","United Kingdom",0,0,0,0,0
+"EIS","","Tortola BVI","","America/Virgin","",0,0,0,0,0
+"ELP","","El Paso, TX","","MST","",0,0,31.8072,-106.378,0
+"EUG","","Eugene, OR","","PST","USA",0,0,44.1246,-123.212,0
+"EUX","","St. Eustatius","","AST","",0,0,0,0,0
+"EWR","JFK LGA","Newark, NJ","[undefined]","EST","USA",0,0,40.6925,-74.1687,1
+"FAI","","Fairbanks, AK","","AST","USA",0,0,64.8151,-147.856,0
+"FAR","","Fargo, ND","","CST","USA",0,0,46.9207,-96.8158,0
+"FAT","","Fresno, CA","","PST","",0,0,36.7762,-119.718,0
+"FAY","","Fayetteville, NC","","EST","USA",0,0,34.9912,-78.8803,0
+"FDF","","Martinique","","America/Martinique","",0,0,0,0,0
+"FLL","","Ft Lauderdale, FLL","","EST","",0,0,26.0726,-80.1527,1
+"FNT","","Flint, MI","","EST","USA",0,0,42.9654,-83.7437,0
+"FPO","","Grand Bahama - Freeport","","EST","Bahamas",0,0,0,0,0
+"FSD","","Sioux Falls, SD","","CST","USA",0,0,43.582,-96.7419,0
+"FWA","","Fort Wayne, IN","","CST","USA",0,0,0,0,0
+"GCM","","Grand Cayman Island","","EST","",0,0,0,0,0
+"GEG","","Spokane, WA","","PST","USA",0,0,47.619,-117.535,0
+"GGT","","Exuma","","EST","Bahamas",0,0,0,0,0
+"GJT","","Grand Junction, CO","","MST","USA",0,0,0,0,0
+"GND","","Grenada","","America/Grenada","",0,0,0,0,0
+"GPT","","Gulfport, MS","","CST","USA",0,0,0,0,0
+"GRB","","Green Bay, WI","","CST","USA",0,0,44.4846,-88.1297,0
+"GRK","","Killeen, TX","","CST","USA",0,0,0,0,0
+"GRR","","Grand Rapids, MI","","EST","USA",0,0,42.8808,-85.5228,0
+"GSO","","Greensboro, NC","","EST","USA",0,0,36.1013,-79.9411,0
+"GSP","","Greenville/Spartanburg, SC","","EST","",0,0,34.8957,-82.2189,0
+"HNL","","Honolulu, HI","","HST","USA",0,0,0,0,0
+"HOT","","Hot Springs, AR","","CST","",0,0,34.478,-93.0962,0
+"HOU","","Houston, TX - Hobby","","CST","USA",0,0,29.6454,-95.2789,0
+"HPN","","Westchester County, NY","","EST","USA",0,0,41.0669,-73.7076,0
+"HSV","","Huntsville, AL","","CST","USA",0,0,34.6372,-86.7751,0
+"HUX","","Bahias de Huatulco International Airport","",1,"Mexico",0,0,0,0,0
+"IAD","","Washington Dulles, DC","","EST","USA",0,0,38.9474,-77.4599,1
+"IAH","","Houston, TX - Intercontinental","","CST","",0,0,29.9844,-95.3414,1
+"ICT","","Wichita, KS","","CST","USA",0,0,37.6499,-97.4331,0
+"ILM","","Wilmington, NC","","EST","USA",0,0,0,0,0
+"IND","","Indianapolis, IN","","EST","",0,0,39.7173,-86.2947,1
+"INV","","Inverness, GB","","UCT","United Kingdom",0,0,0,0,0
+"JAN","","Jackson, MS","","CST","USA",0,0,32.3112,-90.0759,0
+"JAX","","Jacksonville, FL","","EST","",0,0,30.4941,-81.6879,0
+"JFK","LGA EWR","New York - JFK","","EST","USA",0,0,40.6398,-73.7789,1
+"JNU","","Juneau, AK","","America/Juneau","USA",0,0,58.355,-134.576,0
+"LAN","","Lansing, MI","","EST","USA",0,0,42.7786,-84.5862,0
+"LAS","","Las Vegas, NV","","PST","",0,0,36.0801,-115.152,0
+"LAX","","Los Angeles, CA","","PST","",0,0,33.9425,-118.407,1
+"LBB","","Lubbock, TX","","CST","USA",0,0,33.6636,-101.823,0
+"LEX","","Lexington, KY","","EST","",0,0,38.0368,-84.6086,0
+"LFT","","Lafayette, LA","","CST","USA",0,0,0,0,0
+"LGA","JFK EWR","New York - LaGuardia","","EST","USA",0,0,40.7772,-73.8726,1
+"LIR","","Liberia - Costa Rica","","CST","Costa Rica",0,0,0,0,0
+"LIT","","Little Rock, AR","","CST","",0,0,34.7294,-92.2248,0
+"LRM","","La Romana-Dominican Republic","","GMT-04:00","",0,0,0,0,0
+"MAF","","Midland, TX","","CST","USA",0,0,0,0,0
+"MAN","","Manchester, GB","","UTC","United Kingdom",0,0,0,0,0
+"MBJ","","Montego Bay Jamaica","","EST","Jamaica",0,0,0,0,0
+"MBS","","Saginaw","","EST","USA",0,0,0,0,0
+"MCI","","Kansas City, MO","","CST","",0,0,39.2976,-94.7139,1
+"MCO","","Orlando, FL","","EST","",0,0,28.4294,-81.309,1
+"MDT","","Harrisburg, PA","","EST","USA",0,0,40.1932,-76.7626,0
+"MDW","","Chicago Midway",NULL,"CST","USA",0,0,41.786,-87.7524,0
+"MEM","","Memphis, TN","","CST","",0,0,35.0424,-89.9767,0
+"MEX","","Mexico City","","CST","Mexico",0,0,0,0,0
+"MFE","","McAllen, TX","","CST","USA",0,0,0,0,0
+"MFR","","Medford, OR","","PST","",0,0,42.3742,-122.873,0
+"MGA","","Augusto  C. Sandino Airport","","pwt","Nicaragua",0,0,0,0,0
+"MGM","","Montgomery, AL","","CST","USA",0,0,32.3006,-86.394,0
+"MHH","","Marsh Harbour","","EST","The Bahamas",0,0,0,0,0
+"MHT","","Manchester, NH","","EST","USA",0,0,42.9328,-71.4357,0
+"MIA","","Miami, FL","","EST","us",0,0,25.7954,-80.2901,1
+"MKE","","Milwaukee, WI","","CST","",0,0,42.9472,-87.8967,0
+"MLI","","Moline, IL","","CST","USA",0,0,41.448,-90.5093,0
+"MOB","","Mobile, AL","","CST","",0,0,30.6914,-88.2428,0
+"MPV","","Montpelier, VT","","EST","USA",0,0,44.2035,-72.5621,0
+"MSN","","Madison Dane County, WI","","CST","USA",0,0,0,0,0
+"MSO","","Missoula, MT","","MST","",0,0,46.9163,-114.091,0
+"MSP","","Minneapolis, MN","","CST","",0,0,44.882,-93.2218,1
+"MSY","","New Orleans, LA","","CST","",0,0,29.9934,-90.258,0
+"MTY","","Monterrey","","CST","Mexico",0,0,0,0,0
+"MYR","","Myrtle Beach, SC","","EST","USA",0,0,33.6797,-78.9283,0
+"MZT","","Mazatlan","","MST","",0,0,0,0,0
+"NAS","","Nassau","","EST","",0,0,0,0,0
+"NCL","","Newcastle Airport, GB","","UCT","United Kingdom",0,0,0,0,0
+"NEV","","Nevis","","GMT-04:00","",0,0,0,0,0
+"NWI","","Norwich, GB","","UCT","United Kingdom",0,0,0,0,0
+"NYC","","New York City - All Airports","","EST","USA",0,0,0,0,1
+"OAK","","Oakland, CA","","PST","USA",0,0,37.7213,-122.221,0
+"OKC","","Oklahoma City, OK","","CST","",0,0,35.3931,-97.6008,0
+"OMA","","Omaha, NE","","CST","",0,0,41.3032,-95.8941,0
+"ONT","","LA/Ontario, CA","","PST","USA",0,0,34.056,-117.601,0
+"ORD","","Chicago O'Hare","","CST","USA",0,0,41.9816,-87.9067,1
+"ORF","","Norfolk, VA","","EST","USA",0,0,36.8946,-76.2012,0
+"PAP","","Port-Au-Prince","","GMT","Haiti",0,0,0,0,0
+"PBI","","West Palm Beach, FL","","EST","USA",0,0,26.6832,-80.0956,0
+"PDX","","Portland, OR","","PST","USA",0,0,45.5887,-122.597,0
+"PHF","","Newport News, VA","","EST","USA",0,0,37.1319,-76.493,0
+"PHL","","Philadelphia, PA","","EST","US",0,0,39.8722,-75.2409,1
+"PHX","","Phoenix, AZ","","MST","USA",0,0,33.4343,-112.012,0
+"PIE","","St. Petersburg, FL","","EST","USA",0,0,27.91,-82.6874,0
+"PIK","","Prestwick, GB","","UCT","United Kingdom",0,0,0,0,0
+"PIR","","Pierre, SD","","CST","USA",0,0,44.3827,-100.286,0
+"PIT","","Pittsburgh, PA","","EST","",0,0,40.4915,-80.2329,1
+"PLS","","Providenciales Island","","EST","",0,0,0,0,0
+"PMV","","Margarita Island","","GMT","Venezuela",0,0,0,0,0
+"PNS","","Pensacola, FL","","EST","",0,0,30.4734,-87.1866,0
+"POP","","Puerto Plata","","EST","",0,0,0,0,0
+"POS","","Trinidad - Port of Spain","","GMT-04:00","Trinidad",0,0,0,0,0
+"PSP","","Palm Springs, CA","","PST","USA",0,0,33.8297,-116.507,0
+"PTP","","Le Razier Airport","","GMT","Guadelupe",0,0,0,0,0
+"PTY","","Panama City - Panama","","EST","Panama",0,0,0,0,0
+"PUB","","Pueblo, CO","","MST","USA",0,0,38.2891,-104.496,0
+"PUJ","","Punta Cana","","GMT-04:00","",0,0,0,0,0
+"PVD","","Providence, RI","","EST","",0,0,41.724,-71.4282,0
+"PVR","","Puerto Vallarta","","CST","",0,0,0,0,0
+"PWM","","Portland, ME","","EST","USA",0,0,43.6462,-70.3093,0
+"RAP","","Rapid City, SD","","MST","USA",0,0,44.0453,-103.057,0
+"RDU","","Raleigh Durham, NC","","EST","",0,0,35.8776,-78.7875,1
+"RFD","","Rockford, IL","","CST","USA",0,0,42.1952,-89.0972,0
+"RIC","","Richmond, VA","","EST","",0,0,37.5052,-77.3197,0
+"RNO","","Reno, NV","","PST","",0,0,39.4991,-119.768,0
+"ROA","","Roanoke, VA","","EST","USA",0,0,37.3255,-79.9754,0
+"ROC","","Rochester, NY","","EST","USA",0,0,43.1189,-77.6724,0
+"RST","","Rochester, MN","","CST","USA",0,0,43.9083,-92.5,0
+"RSW","","Fort Myers, FL","","EST","USA",0,0,0,0,0
+"RTB","","Roatan","","Central Time Zone","Roatan",0,0,0,0,0
+"SAB","","Saba","","AST","Saba",0,0,0,0,0
+"SAN","","San Diego, CA","","PST","",0,0,32.7336,-117.19,0
+"SAT","","San Antonio, TX","","CST","",0,0,29.5337,-98.4698,0
+"SAV","","Savannah, GA","","EST","USA",0,0,32.1276,-81.2021,0
+"SBH","","St Barthelemy - Gustavia","","AST","",0,0,0,0,0
+"SDF","","Louisville, KY","","EST","",0,0,38.1741,-85.7365,0
+"SDQ","","Santo Domingo-Dominican Republic","","GMT-04:00","",0,0,0,0,0
+"SEA","","Seattle, WA","","PST","",0,0,47.4499,-122.312,0
+"SFO","","San Francisco, CA","","PST","USA",0,0,37.619,-122.375,1
+"SGF","","Springfield, MO","","CST","USA",0,0,37.2457,-93.3886,0
+"SHV","","Shreveport, LA","","CST","USA",0,0,32.4466,-93.8256,0
+"SJC","","San Jose, CA","","PST","USA",0,0,37.3627,-121.929,0
+"SJD","","San Jose Del Cabo","","MST","Mexico",0,0,0,0,0
+"SJO","","San Jose - Costa Rica","","CST","Costa Rica",0,0,0,0,0
+"SJU","","San Juan Puerto Rico","","GMT-04:00","",0,0,0,0,0
+"SKB","","St Kitts","","GMT-04:00","",0,0,0,0,0
+"SLC","","Salt Lake City, UT","","MST","",0,0,40.7884,-111.978,0
+"SLU","","St Lucia Castries","","GMT-04:00","",0,0,0,0,0
+"SMF","","Sacramento, CA","","PST","",0,0,38.6954,-121.591,0
+"SNA","","Orange County/Anaheim, CA","","PST","USA",0,0,33.6757,-117.868,0
+"SNN","","Shannon, IE","","UCT","Ireland",0,0,0,0,0
+"SOU","","Southampton, GB","","UCT","United Kingdom",0,0,0,0,0
+"SPR","","San Pedro, Ambergris Caye","","Central","Belize",0,0,0,0,0
+"STI","","Santiago","","AST","Dominican Republic",0,0,0,0,0
+"STL","","St. Louis, MO","[undefined]","CST","USA",0,0,38.7487,-90.37,1
+"STT","","St Thomas","","GMT-04:00","",0,0,0,0,0
+"STX","","St Croix","","GMT-04:00","",0,0,0,0,0
+"SVD","","St Vincent","","AST","",0,0,0,0,0
+"SWS","","Swansea, GB","","UCT","United Kingdom",0,0,0,0,0
+"SXM","","St. Martin","","GMT-04:00","",0,0,0,0,0
+"SYR","","Syracuse, NY","","EST","USA",0,0,43.1112,-76.1063,0
+"TAB","","Tobago","","GMT-04:00","Tobago",0,0,0,0,0
+"TCB","","Treasure Cay Airport","","EST","The Bahamas",0,0,0,0,0
+"TLH","","Tallahassee, FL","","EST","USA",0,0,30.3965,-84.3503,0
+"TPA","","Tampa, FL","","EST","",0,0,27.9755,-82.5332,1
+"TUL","","Tulsa, OK","","CST","",0,0,36.1984,-95.8881,0
+"TUS","","Tucson, AZ","","MST","USA",0,0,32.1161,-110.941,0
+"TYS","","Knoxville, TN","","CST","USA",0,0,35.811,-83.994,0
+"UVF","SLU","Hewanorra St Lucia","","AST","St Lucia",0,1,0,0,0
+"VER","","Las Bajadas - Veracruz","",1,"Mexico",0,0,0,0,0
+"VIJ","","Virgin Gorda BVI","","AST","BVI",0,0,0,0,0
+"VQS","","Vieques, Puerto Rico","","GMT-04:00","Puerto Rico",0,0,0,0,0
+"WAS","","Washington DC - All Airports","","EST","USA",0,0,0,0,1
+"XNA","","Fayetteville, AR","","CST","",0,0,36.2816,-94.3078,0
+"YEG","","Edmonton, AB","","MST","",0,0,53.3097,-113.58,0
+"YHZ","","Halifax, NS","","AST","",0,0,44.8808,-63.5086,0
+"YOW","","Ottawa, ON","","EST","",0,0,45.3225,-75.6692,0
+"YQB","","Quebec, QC","","EST","",0,0,46.7911,-71.3933,0
+"YUL","YMQ YMX","Montreal Trudeau","","EST","CANADA",0,0,45.4706,-73.7408,0
+"YUM","","Yuma, AZ","","MST","USA",0,0,32.6566,-114.606,0
+"YVR","","Vancouver, BC","","PST","",0,0,49.1939,-123.184,0
+"YWG","","Winnipeg, MB","","CST","",0,0,49.91,-97.2399,0
+"YXE","","Saskatoon, SK","","CST","",0,0,52.1708,-106.7,0
+"YYC","","Calgary, AB","","MST","",0,0,51.1139,-114.02,0
+"YYJ","","Victoria, BC","","PST","",0,0,48.6469,-123.426,0
+"YYZ","","Toronto, ON","","EST","Canada",0,0,43.6772,-79.6306,0
+"ZIH","","Ixtapa","","MST","",0,0,0,0,0
+"ZLO","PVR","Manzanillo - Playa de Oro","","PST","Mexico",0,0,0,0,0
