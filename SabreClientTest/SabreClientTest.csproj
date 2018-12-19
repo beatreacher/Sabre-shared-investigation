@@ -72,7 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizationTests.cs" />
+    <Compile Include="AuthenticationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AirportsReaderTest.cs" />
   </ItemGroup>
@@ -91,6 +91,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{7dbf2ef3-758b-4334-afc6-14c8c1ae3b0f}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SabreApiClient\SabreApiClient.csproj">
+      <Project>{553a1301-bfde-4ebe-b86c-43b9bbfafdc7}</Project>
+      <Name>SabreApiClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
