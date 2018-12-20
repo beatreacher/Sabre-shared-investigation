@@ -59,6 +59,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
@@ -79,10 +80,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationResponseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AirportsReaderTest.cs" />
-    <Compile Include="SabreApiClientTests.cs" />
+    <Compile Include="SabreApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

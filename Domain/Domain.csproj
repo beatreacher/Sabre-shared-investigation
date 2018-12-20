@@ -41,13 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Agency.cs" />
     <Compile Include="Models\Airport.cs" />
-    <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\Customer\Address.cs" />
-    <Compile Include="Models\Customer\Customer.cs" />
-    <Compile Include="Models\Customer\Person.cs" />
-    <Compile Include="Models\Customer\Phone.cs" />
+    <Compile Include="Models\Credentials.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

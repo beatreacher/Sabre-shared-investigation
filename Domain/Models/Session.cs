@@ -2,13 +2,13 @@
 {
     public class Session
     {
-        public string Token { get; private set; }
+        public string Token { get; }
 
-        public string ConversationId { get; private set; }
+        public string ConversationId { get; }
 
-        public string MessageId { get; private set; }
+        public string MessageId { get; }
 
-        public string TimeStamp { get; private set; }
+        public string TimeStamp { get; }
 
         public Session(string token, string conversationId, string messageId, string timeStamp)
         {

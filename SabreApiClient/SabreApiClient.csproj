@@ -43,8 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientResponseProcessor.cs" />
+    <Compile Include="Connected Services\SessionCreator\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SabreApiClient.cs" />
+    <Compile Include="RequestModelHelpers\MessageHeaderHelper.cs" />
+    <Compile Include="SabreApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
@@ -57,6 +63,62 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Connected Services\SessionCreator\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\SabreApiClient.SessionCreator.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCreator\SabreApiClient.SessionCreator.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCreator\SabreApiClient.SessionCreator.SessionCreateRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCreator\SabreApiClient.SessionCreator.SessionCreateRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCreator\SessionCreateRQ.wsdl" />
+    <None Include="Connected Services\SessionCreator\SessionCreateRQ.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\SessionCreateRQRS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\SessionCreateRS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCreator\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\SessionCreator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SessionCreator\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SessionCreator\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SessionCreator\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
