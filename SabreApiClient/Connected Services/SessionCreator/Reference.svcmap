@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="95dbfd50-6c8a-48b4-bc89-dd37edb9893a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SessionCreateRQRS.xsd" MetadataType="Schema" ID="785ed663-74f6-47b6-b4c9-191747d4919d" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQRS.xsd" />
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="c5dfe943-306f-40cc-bd6c-80004022445c" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/xml.xsd" />
+    <MetadataFile FileName="SessionCreateRQ.wsdl" MetadataType="Wsdl" ID="b815d708-5514-45d1-be89-038bac2e4f6e" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.wsdl" />
+    <MetadataFile FileName="envelope.xsd" MetadataType="Schema" ID="e1a48189-26f4-4340-a027-5d2e1c1cf2ac" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/envelope.xsd" />
+    <MetadataFile FileName="wsse.xsd" MetadataType="Schema" ID="f68dced5-63cf-4515-9926-8a5602fa562a" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/wsse.xsd" />
+    <MetadataFile FileName="msg-header-2_0.xsd" MetadataType="Schema" ID="b6ce284a-9c73-45bb-ad6f-84d0c27032cd" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/msg-header-2_0.xsd" />
+    <MetadataFile FileName="SessionCreateRQ.xsd" MetadataType="Schema" ID="dab25f46-e68d-438d-babf-fab1686b76a8" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="93206740-fa89-4299-b630-1ce89ff6b581" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="xlink.xsd" MetadataType="Schema" ID="42e1223f-e203-472a-8b49-84556d495d98" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/xlink.xsd" />
+    <MetadataFile FileName="SessionCreateRS.xsd" MetadataType="Schema" ID="0d4da274-30c0-4490-8e80-ca07540f2136" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRS.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

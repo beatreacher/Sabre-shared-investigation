@@ -30,10 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,7 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientResponseProcessor.cs" />
+    <Compile Include="Connected Services\SessionCloseRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\SessionCreator\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -50,6 +60,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModelHelpers\MessageHeaderHelper.cs" />
+    <Compile Include="RequestModelHelpers\SabreMapper.cs" />
     <Compile Include="SabreApi.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +74,46 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Connected Services\SessionCloseRQ\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\SabreApiClient.SessionCloseRQ.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\SabreApiClient.SessionCloseRQ.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\SabreApiClient.SessionCloseRQ.SessionCloseRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\SabreApiClient.SessionCloseRQ.SessionCloseRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\SessionCloseRQ.wsdl" />
+    <None Include="Connected Services\SessionCloseRQ\SessionCloseRQ.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\SessionCloseRQRS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\SessionCloseRS.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionCloseRQ\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\SessionCreator\envelope.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -103,8 +154,10 @@
     <None Include="Connected Services\SessionCreator\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\SessionCloseRQ\" />
     <WCFMetadataStorage Include="Connected Services\SessionCreator\" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +172,17 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Connected Services\SessionCloseRQ\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SessionCloseRQ\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SessionCloseRQ\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

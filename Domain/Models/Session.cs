@@ -10,12 +10,15 @@
 
         public string TimeStamp { get; }
 
-        public Session(string token, string conversationId, string messageId, string timeStamp)
+        public string Organization { get; }
+
+        public Session(string token, string conversationId, string messageId, string timeStamp, string organization)
         {
             Token = token;
             ConversationId = conversationId;
             MessageId = messageId;
             TimeStamp = timeStamp;
+            Organization = organization;
         }
     }
 }

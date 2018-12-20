@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9f23caff-09b5-4b52-9f56-2c12d2c6513e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQ.wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="08ccb551-63d9-404e-a470-8b4f34413558" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="d5a29e86-9580-46f1-882d-6ca69cde8cae" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/xml.xsd" />
+    <MetadataFile FileName="envelope.xsd" MetadataType="Schema" ID="8df3b333-4c6c-4572-8a43-9bf4cb87928d" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/envelope.xsd" />
+    <MetadataFile FileName="wsse.xsd" MetadataType="Schema" ID="06a87cae-eaee-48d5-81c8-51cba46ca787" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/wsse.xsd" />
+    <MetadataFile FileName="msg-header-2_0.xsd" MetadataType="Schema" ID="7e1379fa-eb72-4127-81ea-4d11cff7c9b2" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/msg-header-2_0.xsd" />
+    <MetadataFile FileName="xlink.xsd" MetadataType="Schema" ID="2cf94d2b-e666-407b-86b8-536030acdde9" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/xlink.xsd" />
+    <MetadataFile FileName="SessionCloseRS.xsd" MetadataType="Schema" ID="2d46cd9c-a9ba-41f5-b834-df6929f39c18" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRS.xsd" />
+    <MetadataFile FileName="SessionCloseRQRS.xsd" MetadataType="Schema" ID="5bf3336b-d9ec-484b-9558-e03e794e77a0" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQRS.xsd" />
+    <MetadataFile FileName="SessionCloseRQ.xsd" MetadataType="Schema" ID="d354499a-5048-48ae-8bd9-51d90f4e61f7" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQ.xsd" />
+    <MetadataFile FileName="SessionCloseRQ.wsdl" MetadataType="Wsdl" ID="7f44b769-6609-4eb6-b893-4bef8f6d124f" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCloseRQ.wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
