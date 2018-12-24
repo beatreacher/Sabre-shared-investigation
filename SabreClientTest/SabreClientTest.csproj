@@ -85,6 +85,10 @@
     <Compile Include="SabreApiTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\SabreApiClient\NLog.config">
+      <Link>NLog.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

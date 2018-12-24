@@ -1,144 +1,72 @@
-﻿using Domain.Models;
-using SabreApiClient.RequestModelHelpers;
-//using SabreApiClient.SessionCreator;
-using System;
-using System.Linq;
-using System.Text;
+﻿using System;
+using SabreApiClient.Helpers;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using NLog;
+
+using Domain.Models;
 
 namespace SabreApiClient
 {
     public class SabreApi
     {
+        Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly SabreMapper SabreMapper = new SabreMapper();
+        private readonly XmlResponseProcessor ResponseProcessor = new XmlResponseProcessor();
 
-        public async Task<Session> CreateSession(Credentials credentials, string methodName)
-        {
-            var header = SabreMapper.GetMessageHeader<SessionCreator.MessageHeader>(Guid.NewGuid().ToString(), methodName, credentials.Organization);
-            var security = new SessionCreator.Security
-            {
-                UsernameToken = new SessionCreator.SecurityUsernameToken
-                {
-                    Username = credentials.UserName,
-                    Password = credentials.Password,
-                    Organization = credentials.Organization,
-                    Domain = credentials.Domain
-                }
-            };
-
-            var pos = new SessionCreator.SessionCreateRQPOS
-            {
-                Source = new SessionCreator.SessionCreateRQPOSSource { PseudoCityCode = credentials.Organization }
-            };
-            var req = new SessionCreator.SessionCreateRQ
-            {
-                POS = pos
-            };
-
-            var proxy = new SessionCreator.SessionCreatePortTypeClient("SessionCreatePortType");
-            var response = await proxy.SessionCreateRQAsync(header, security, req);
-
-            CheckErrors(req, response);
-
-            var session = new Session(
-                response.Security.BinarySecurityToken,
-                response.MessageHeader.ConversationId,
-                response.MessageHeader.MessageData.MessageId,
-                response.MessageHeader.MessageData.Timestamp,
-                response.MessageHeader.CPAId
-                );
-
-
-            return session;
-        }
-
-        public async Task<string> CloseSession(Session session)
-        {
-            var header = SabreMapper.GetMessageHeader<SessionCloseRQ.MessageHeader>(session.ConversationId, "SessionCloseRQ", session.Organization);
-            var security = new SessionCloseRQ.Security { BinarySecurityToken = session.Token };
-
-            var source = new SessionCloseRQ.SessionCloseRQPOSSource { PseudoCityCode = session.Organization };
-            var pos = new SessionCloseRQ.SessionCloseRQPOS { Source = source };
-            var req = new SessionCloseRQ.SessionCloseRQ {POS = pos};
-        
-            var proxy = new SessionCloseRQ.SessionClosePortTypeClient("SessionClosePortType");
-            var response = await proxy.SessionCloseRQAsync(header, security, req);
-            CheckErrors(req, response);
-
-            return response.SessionCloseRS.status;
-        }
-
-        private string ToXmlString(object obj)
-        {
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(obj.GetType());
-            serializer.Serialize(stringwriter, obj);
-            return stringwriter.ToString();
-        }
-
-        private void CheckErrors(object request, dynamic response)
+        public async Task<OTA_AirScheduleService.OTA_AirScheduleRQResponse> GetFlightSchedules(
+            Session session,
+            OTA_AirScheduleService.OTA_AirScheduleRQ req
+            )
         {
             try
             {
-                if (request == null || response == null)
-                {
-                    return;
-                }
+                _logger.Debug("GetFlightSchedules started");
 
-                // Sabre Web Services version 1.x
-                var t = (response as object).GetType().GetProperties().FirstOrDefault(x => x.Name == "Errors");
-                if ((response as object).GetType().GetProperties().FirstOrDefault(x => x.Name == "Errors") != null)
-                {
-                    if (response.Errors != null)
-                    {
-                        var responseXml = this.ToXmlString(response);
-                        var requestXml = this.ToXmlString(request);
-                        throw new SabreException(response.Errors.Error.ErrorInfo.Message)
-                        {
-                            SabreRequest = requestXml,
-                            SabreResponse = responseXml
-                        };
-                    }
-                }
+                var header = SabreMapper.GetMessageHeader<OTA_AirScheduleService.MessageHeader>(session.ConversationId, "OTA_AirScheduleLLSRQ", session.Organization);
 
-                // Sabre Web Services version 2.x
-                if ((response as object).GetType().GetProperties().FirstOrDefault(x => x.Name == "ApplicationResults") != null)
-                {
-                    if (response.ApplicationResults.Error != null)
-                    {
-                        var responseXml = this.ToXmlString(response);
-                        var requestXml = this.ToXmlString(request);
+                var security = new OTA_AirScheduleService.Security1 { BinarySecurityToken = session.Token };
 
-                        var errors = response.ApplicationResults.Error as dynamic[];
-                        if (errors == null || errors.Length == 0)
-                        {
-                            return;
-                        }
+                var proxy = new OTA_AirScheduleService.OTA_AirSchedulePortTypeClient("OTA_AirSchedulePortType");
+                var response = await proxy.OTA_AirScheduleRQAsync(header, security, req);
+                ResponseProcessor.CheckErrors(req, response);
 
-                        var sb = new StringBuilder();
-                        foreach (var error in errors)
-                        {
-                            foreach (var result in error.SystemSpecificResults)
-                            {
-                                foreach (var message in result.Message)
-                                {
-                                    var messageContent = message.Value as string;
-                                    sb.AppendLine(messageContent);
-                                }
-                            }
-                        }
-                        throw new SabreException(sb.ToString())
-                        {
-                            SabreRequest = requestXml,
-                            SabreResponse = responseXml
-                        };
-                    }
-                }
+                return response;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                _logger.Error(e);
                 throw;
+            }
+            finally
+            {
+                _logger.Debug("GetFlightSchedules finished");
+            }
+        }
+
+        public async Task<BargainFinderMax.BargainFinderMaxRQResponse> GetBargainFinderMax(Session session, BargainFinderMax.OTA_AirLowFareSearchRQ request)
+        {
+            try
+            {
+                _logger.Debug("GetBargainFinderMax started");
+                var header = SabreMapper.GetMessageHeader<BargainFinderMax.MessageHeader>(session.ConversationId, "BargainFinderMaxRQ", session.Organization);
+                var security = new BargainFinderMax.Security { BinarySecurityToken = session.Token };
+
+                var proxy = new BargainFinderMax.BargainFinderMaxPortTypeClient("BargainFinderMaxPortType");
+                var response = await proxy.BargainFinderMaxRQAsync(header, security, request);
+
+                ResponseProcessor.CheckErrors(request, response);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("GetBargainFinderMax finished");
             }
         }
     }

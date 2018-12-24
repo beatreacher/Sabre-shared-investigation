@@ -1,4 +1,4 @@
-﻿namespace SabreApiClient.RequestModelHelpers
+﻿namespace SabreApiClient.Helpers
 {
     internal class SabreMapper
     {

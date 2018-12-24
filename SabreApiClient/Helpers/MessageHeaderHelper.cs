@@ -2,7 +2,7 @@
 using SabreApiClient.SessionCreator;
 using System;
 
-namespace SabreApiClient.RequestModelHelpers
+namespace SabreApiClient.Helpers
 {
     internal class MessageHeaderHelper
     {

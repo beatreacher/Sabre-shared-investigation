@@ -33,10 +33,16 @@
     <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -48,6 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\BargainFinderMax\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\OTA_AirScheduleService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\SessionCloseRQ\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -58,10 +74,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\XmlResponseProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestModelHelpers\MessageHeaderHelper.cs" />
-    <Compile Include="RequestModelHelpers\SabreMapper.cs" />
+    <Compile Include="Helpers\MessageHeaderHelper.cs" />
+    <Compile Include="Helpers\SabreMapper.cs" />
     <Compile Include="SabreApi.cs" />
+    <Compile Include="SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
@@ -74,6 +92,98 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Connected Services\BargainFinderMax\BargainFinderMaxRQRS_v4-3-0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\BargainFinderMaxRQ_v4-3-0.wsdl" />
+    <None Include="Connected Services\BargainFinderMax\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\OTA2003B.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\OTA2003B1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\OTA2003B2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\SabreApiClient.BargainFinderMax.BargainFinderMaxRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\SabreApiClient.BargainFinderMax.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\SabreApiClient.BargainFinderMax.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BargainFinderMax\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\OTA_AirScheduleLLS2.wsdl" />
+    <None Include="Connected Services\OTA_AirScheduleService\OTA_AirScheduleLLS2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\OTA_AirScheduleLLS21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\OTA_AirScheduleLLS22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\SabreApiClient.OTA_AirScheduleService.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\SabreApiClient.OTA_AirScheduleService.Security1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\STL_For_SabreProtocol_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\STL_Header_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\sws_common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirScheduleService\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\SessionCloseRQ\envelope.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -154,9 +264,12 @@
     <None Include="Connected Services\SessionCreator\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="NLog.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\BargainFinderMax\" />
+    <WCFMetadataStorage Include="Connected Services\OTA_AirScheduleService\" />
     <WCFMetadataStorage Include="Connected Services\SessionCloseRQ\" />
     <WCFMetadataStorage Include="Connected Services\SessionCreator\" />
   </ItemGroup>
@@ -180,6 +293,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\SessionCloseRQ\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\OTA_AirScheduleService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\OTA_AirScheduleService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\OTA_AirScheduleService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BargainFinderMax\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BargainFinderMax\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BargainFinderMax\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
