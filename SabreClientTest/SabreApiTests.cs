@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using Domain.Models;
 using SabreApiClient;
+using System.Linq;
 
 namespace SabreClientTest
 {
@@ -72,12 +73,16 @@ namespace SabreClientTest
                 var session = await sessionManager.CreateSession(_credentials, "SessionCreateRQ");
 
                 var client = new SabreApi();
-
                 var req = GetBargainRequest();
 
                 var bargainFinderMax = await client.GetBargainFinderMax(session, req);
                 bargainFinderMax.Should().NotBeNull();
                 bargainFinderMax.OTA_AirLowFareSearchRS.Should().NotBeNull();
+
+                foreach (var item in bargainFinderMax.OTA_AirLowFareSearchRS.Items)
+                {
+                    item.Should().NotBeOfType<SabreApiClient.BargainFinderMax.ErrorsType>();
+                }
 
                 var response = await sessionManager.CloseSession(session);
                 response.Should().Be("Approved");
@@ -133,24 +138,48 @@ namespace SabreClientTest
         {
             var odi1 = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQOriginDestinationInformation
             {
-                Item = "2016-09-09T00:00:00",
+                Item = "2019-01-09T00:00:00",
                 RPH = "1",
-                OriginLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeOriginLocation { LocationCode = "SLC" },
-                DestinationLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeDestinationLocation { LocationCode = "LAX" },
+                OriginLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeOriginLocation { LocationCode = "TPE" },
+                DestinationLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeDestinationLocation { LocationCode = "HKG" },
                 TPA_Extensions = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
                 {
-                    SegmentType = new SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentType { Code = SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentTypeCode.O }
+                    SegmentType = new SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentType
+                    {
+                        Code = SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentTypeCode.X,
+                        CodeSpecified = true
+                    },
+                    IncludeVendorPref = new SabreApiClient.BargainFinderMax.IncludeVendorPrefType[]
+                    {
+                        new SabreApiClient.BargainFinderMax.IncludeVendorPrefType
+                        {
+                            Code = "CX"
+                        }
+                    },
+                    Baggage = new SabreApiClient.BargainFinderMax.BaggageType { FreePieceRequired = true }
                 }
             };
             var odi2 = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQOriginDestinationInformation
             {
-                Item = "2016-09-14T00:00:00",
+                Item = "2019-01-14T00:00:00",
                 RPH = "2",
-                OriginLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeOriginLocation { LocationCode = "SFO" },
-                DestinationLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeDestinationLocation { LocationCode = "LAS" },
+                OriginLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeOriginLocation { LocationCode = "HKG" },
+                DestinationLocation = new SabreApiClient.BargainFinderMax.OriginDestinationInformationTypeDestinationLocation { LocationCode = "EWR" },
                 TPA_Extensions = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
                 {
-                    SegmentType = new SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentType { Code = SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentTypeCode.O }
+                    SegmentType = new SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentType
+                    {
+                        Code = SabreApiClient.BargainFinderMax.ExchangeOriginDestinationInformationTypeSegmentTypeCode.O,
+                        CodeSpecified = true
+                    },
+                    IncludeVendorPref = new SabreApiClient.BargainFinderMax.IncludeVendorPrefType[]
+                    {
+                        new SabreApiClient.BargainFinderMax.IncludeVendorPrefType
+                        {
+                            Code = "CX"
+                        }
+                    },
+                    Baggage = new SabreApiClient.BargainFinderMax.BaggageType { FreePieceRequired  = true}
                 }
             };
             var odis = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQOriginDestinationInformation[2] { odi1, odi2 };
@@ -188,6 +217,7 @@ namespace SabreClientTest
 
             var req = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ
             {
+                Version = "4.0.0",
                 TPA_Extensions = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQTPA_Extensions
                 {
                     IntelliSellTransaction = new SabreApiClient.BargainFinderMax.TransactionType
@@ -201,6 +231,8 @@ namespace SabreClientTest
                     {
                         RequestorID = new SabreApiClient.BargainFinderMax.UniqueID_Type
                         {
+                            ID="1",
+                            Type="1",
                             CompanyName = new SabreApiClient.BargainFinderMax.CompanyNameType { Code = "TN", Value = "TN" }
                         },
                         PseudoCityCode ="PCC"

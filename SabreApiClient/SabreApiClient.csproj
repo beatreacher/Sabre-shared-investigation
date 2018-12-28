@@ -74,6 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\UniqueID_Type.cs" />
     <Compile Include="Helpers\XmlResponseProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\MessageHeaderHelper.cs" />
