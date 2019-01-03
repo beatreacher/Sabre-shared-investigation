@@ -5,6 +5,7 @@ using FluentAssertions;
 using Domain.Models;
 using SabreApiClient;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace SabreClientTest
 {
@@ -55,6 +56,8 @@ namespace SabreClientTest
             var sessionManager = new SessionManager();
             var session = await sessionManager.CreateSession(_credentials, "SessionCreateRQ");
 
+            var para = JsonConvert.SerializeObject(session);
+
             var client = new SabreApi();
             var schedule = await client.GetFlightSchedules(session, GetFlightScheduleRequest());
             schedule.Should().NotBeNull();
@@ -74,8 +77,9 @@ namespace SabreClientTest
 
                 var client = new SabreApi();
                 var req = GetBargainRequest();
-
+                
                 var bargainFinderMax = await client.GetBargainFinderMax(session, req);
+
                 bargainFinderMax.Should().NotBeNull();
                 bargainFinderMax.OTA_AirLowFareSearchRS.Should().NotBeNull();
 
@@ -209,7 +213,11 @@ namespace SabreClientTest
                     {
                         PassengerTypeQuantity = new SabreApiClient.BargainFinderMax.PassengerTypeQuantityType[]
                         {
-                            new SabreApiClient.BargainFinderMax.PassengerTypeQuantityType { Code = "ADT", Quantity = "1" }
+                            new SabreApiClient.BargainFinderMax.PassengerTypeQuantityType
+                            {
+                                Code = "ADT",
+                                Quantity = "1"
+                            }
                         }
                     }
                 }
@@ -217,7 +225,7 @@ namespace SabreClientTest
 
             var req = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ
             {
-                Version = "4.0.0",
+                Version = "4.3.0",
                 TPA_Extensions = new SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQTPA_Extensions
                 {
                     IntelliSellTransaction = new SabreApiClient.BargainFinderMax.TransactionType

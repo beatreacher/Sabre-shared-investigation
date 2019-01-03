@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "88264e35-53c6-49bc-9d0e-83d12247d958",
+		"name": "Sabre",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Sabre Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\">\r\n   <SOAP-ENV:Header>\r\n      <eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n         <eb:From>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n         </eb:From>\r\n         <eb:To>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n         </eb:To>\r\n         <eb:CPAId>92RG</eb:CPAId>\r\n         <eb:ConversationId>SWS-Test-92RG</eb:ConversationId>\r\n         <eb:Service eb:type=\"OTA\">SessionCreateRQ</eb:Service>\r\n         <eb:Action>SessionCreateRQ</eb:Action>\r\n         <eb:MessageData>\r\n            <eb:MessageId>1000</eb:MessageId>\r\n            <eb:Timestamp>2012-06-07T10:00:00</eb:Timestamp>\r\n            <eb:TimeToLive>2013-06-06T23:59:59</eb:TimeToLive>\r\n         </eb:MessageData>\r\n      </eb:MessageHeader>\r\n      <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n         <wsse:UsernameToken>\r\n            <wsse:Username>7971</wsse:Username>\r\n            <wsse:Password>WS102513</wsse:Password>\r\n            <Organization>92RG</Organization>\r\n            <Domain>DEFAULT</Domain>\r\n         </wsse:UsernameToken>\r\n      </wsse:Security>\r\n   </SOAP-ENV:Header>\r\n   <SOAP-ENV:Body>\r\n      <SessionCreateRQ>\r\n         <POS>\r\n            <Source PseudoCityCode=\"92RG\"/>\r\n         </POS>\r\n      </SessionCreateRQ>\r\n   </SOAP-ENV:Body>\r\n</SOAP-ENV:Envelope>"
+				},
+				"url": {
+					"raw": "https://sws3-crt.cert.sabre.com",
+					"protocol": "https",
+					"host": [
+						"sws3-crt",
+						"cert",
+						"sabre",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TravelItineraryAddInfoLLSRQ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\">\r\n   <SOAP-ENV:Header>\r\n      <eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"2.0\">\r\n         <eb:From>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">1212</eb:PartyId>\r\n         </eb:From>\r\n         <eb:To>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">2323</eb:PartyId>\r\n         </eb:To>\r\n         <eb:CPAId>92RG</eb:CPAId>\r\n         <eb:ConversationId>1234567</eb:ConversationId>\r\n         <eb:Service eb:type=\"OTA\">TravelItineraryAddInfoLLSRQ</eb:Service>\r\n         <eb:Action>TravelItineraryAddInfoLLSRQ</eb:Action>\r\n         <eb:MessageData>\r\n            <eb:MessageId>1001</eb:MessageId>\r\n            <eb:Timestamp>2012-06-07T10:00:01</eb:Timestamp>\r\n            <eb:TimeToLive>2013-06-06T23:59:59</eb:TimeToLive>\r\n         </eb:MessageData>\r\n      </eb:MessageHeader>\r\n      <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n         <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/ACPCRTD!ICESMSLB\\/CRT.LB!1545134624501!3067!5</wsse:BinarySecurityToken>\r\n      </wsse:Security>\r\n   </SOAP-ENV:Header>\r\n   <SOAP-ENV:Body>\r\n      <TravelItineraryAddInfoRQ Version=\"1.9.1\" xmlns=\"http://webservices.sabre.com/sabreXML/2003/07\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n         <POS>\r\n            <Source PseudoCityCode=\"${#Project#Organization}\"/>\r\n         </POS>\r\n         <CustomerInfo>\r\n            <PersonName TravelerRefNumber=\"1.1\">\r\n               <GivenName>UserGivenName</GivenName>\r\n               <Surname>UserSurname</Surname>\r\n               <NameReference Text=\"REF1\"/>\r\n            </PersonName>\r\n            <Telephone AreaCityCode=\"817\" PhoneNumber=\"555-1212\" PhoneUseType=\"H\" TravelerRefNumber=\"1.1\"/>\r\n            <Email EmailAddress=\"email@email.com\" TravelerRefNumber=\"1.1\"/>\r\n            <CustomerIdentifier Identifier=\"1234567890\"/>\r\n         </CustomerInfo>\r\n         <AgencyInfo>\r\n            <Address>\r\n               <TPA_Extensions>\r\n                  <AgencyName>SABRE TRAVEL</AgencyName>\r\n               </TPA_Extensions>\r\n               <StreetNmbr>3150 SABRE DRIVE</StreetNmbr>\r\n               <CityName>SOUTHLAKE</CityName>\r\n               <PostalCode>76092</PostalCode>\r\n               <StateCountyProv StateCode=\"TX\"/>\r\n               <CountryName Code=\"US\"/>\r\n            </Address>\r\n            <Telephone AreaCityCode=\"817\" PhoneNumber=\"555-1212\" PhoneUseType=\"A\"/>\r\n            <Ticketing TicketType=\"7T-\"/>\r\n         </AgencyInfo>\r\n      </TravelItineraryAddInfoRQ>\r\n   </SOAP-ENV:Body>\r\n</SOAP-ENV:Envelope>"
+				},
+				"url": {
+					"raw": "https://sws-crt.cert.sabre.com/",
+					"protocol": "https",
+					"host": [
+						"sws-crt",
+						"cert",
+						"sabre",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BargainFinderMax",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n   <s:Header>\r\n      <h:Security xmlns:h=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n         <BinarySecurityToken>Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/ACPCRTC!ICESMSLB\\/CRT.LB!1545928899920!7429!9</BinarySecurityToken>\r\n      </h:Security>\r\n      <h:MessageHeader xmlns:h=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId>WebServiceClient</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId>WebServiceSupplier</PartyId>\r\n         </To>\r\n         <CPAId>92RG</CPAId>\r\n         <ConversationId>V1@280b16ec-5eac-46c0-893f-c88f8e8cb632@310b16ec-5dad-46c0-893f-c88f8e8cb643@780b16ec-5eac-46c0-893f-c88f8e8cb699</ConversationId>\r\n         <Service>BargainFinderMaxRQ</Service>\r\n         <Action>BargainFinderMaxRQ</Action>\r\n         <MessageData>\r\n            <MessageId>1fe8f7ad-990e-46c0-b19f-29930e4435cb</MessageId>\r\n            <Timestamp>2018-12-27T16:53:31Z</Timestamp>\r\n         </MessageData>\r\n      </h:MessageHeader>\r\n   </s:Header>\r\n   <s:Body xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n      <OTA_AirLowFareSearchRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"3.4.0\">\r\n         <POS>\r\n            <Source PseudoCityCode=\"PCC\">\r\n               <RequestorID Type=\"1\" ID=\"1\">\r\n                  <CompanyName Code=\"TN\">TN</CompanyName>\r\n               </RequestorID>\r\n            </Source>\r\n         </POS>\r\n         <OriginDestinationInformation RPH=\"1\">\r\n            <ArrivalDateTime>2019-01-09T00:00:00</ArrivalDateTime>\r\n            <OriginLocation LocationCode=\"TPE\" />\r\n            <DestinationLocation LocationCode=\"HKG\" />\r\n            <TPA_Extensions>\r\n               <SegmentType Code=\"X\" />\r\n               <IncludeVendorPref Code=\"CX\" />\r\n               <Baggage FreePieceRequired=\"true\" />\r\n            </TPA_Extensions>\r\n         </OriginDestinationInformation>\r\n         <OriginDestinationInformation RPH=\"2\">\r\n            <ArrivalDateTime>2019-01-14T00:00:00</ArrivalDateTime>\r\n            <OriginLocation LocationCode=\"HKG\" />\r\n            <DestinationLocation LocationCode=\"EWR\" />\r\n            <TPA_Extensions>\r\n               <SegmentType Code=\"O\" />\r\n               <IncludeVendorPref Code=\"CX\" />\r\n               <Baggage FreePieceRequired=\"true\" />\r\n            </TPA_Extensions>\r\n         </OriginDestinationInformation>\r\n         <TravelPreferences>\r\n            <CabinPref />\r\n            <TPA_Extensions>\r\n               <TripType />\r\n            </TPA_Extensions>\r\n         </TravelPreferences>\r\n         <TravelerInfoSummary>\r\n            <SeatsRequested>1</SeatsRequested>\r\n            <AirTravelerAvail>\r\n               <PassengerTypeQuantity Code=\"ADT\" Quantity=\"1\" />\r\n            </AirTravelerAvail>\r\n         </TravelerInfoSummary>\r\n         <TPA_Extensions>\r\n            <IntelliSellTransaction>\r\n               <RequestType Name=\"50ITINS\" />\r\n            </IntelliSellTransaction>\r\n         </TPA_Extensions>\r\n      </OTA_AirLowFareSearchRQ>\r\n   </s:Body>\r\n</s:Envelope>"
+				},
+				"url": {
+					"raw": "https://sws3-crt.cert.sabre.com",
+					"protocol": "https",
+					"host": [
+						"sws3-crt",
+						"cert",
+						"sabre",
+						"com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sample get request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"UserName\":\"7971\",\"Password\":\"WS102513\",\"Organization\":\"92RG\",\"Domain\":\"DEFAULT\"}"
+				},
+				"url": {
+					"raw": "http://localhost:57685/api/sabre/GetDummyFlightSchedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57685",
+					"path": [
+						"api",
+						"sabre",
+						"GetDummyFlightSchedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1. Create Session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d061134-4095-4e92-8f6a-204f1400f40c",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"Session\", jsonData);\r",
+							"postman.setEnvironmentVariable(\"Token\", jsonData.Token);\r",
+							"postman.setEnvironmentVariable(\"ConversationId\", jsonData.ConversationId);\r",
+							"postman.setEnvironmentVariable(\"MessageId\", jsonData.MessageId);\r",
+							"postman.setEnvironmentVariable(\"TimeStamp\", jsonData.TimeStamp);\r",
+							"postman.setEnvironmentVariable(\"Organization\", jsonData.Organization);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Session",
+						"value": "{{Session}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"UserName\":\"7971\",\"Password\":\"WS102513\",\"Organization\":\"92RG\",\"Domain\":\"DEFAULT\"}"
+				},
+				"url": {
+					"raw": "http://localhost:57685/api/sabre/CreateSession",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57685",
+					"path": [
+						"api",
+						"sabre",
+						"CreateSession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. GetDummyFlightSchedule",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": " applications/json",
+						"type": "text"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "ConversationId",
+						"value": "{{ConversationId}}",
+						"type": "text"
+					},
+					{
+						"key": "MessageId",
+						"value": "{{MessageId}}",
+						"type": "text"
+					},
+					{
+						"key": "TimeStamp",
+						"value": "{{TimeStamp}}",
+						"type": "text"
+					},
+					{
+						"key": "Organization",
+						"value": "{{Organization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"OptionalQualifiers\": null,\r\n\t\"OriginDestinationInformation\": {\r\n\t\t\"FlightSegment\": {\r\n\t\t\t\"ConnectionLocations\": null,\r\n\t\t\t\"DestinationLocation\": {\r\n\t\t\t\t\"LocationCode\": \"LHR\"\r\n\t\t\t},\r\n\t\t\t\"OriginLocation\": {\r\n\t\t\t\t\"LocationCode\": \"DFW\"\r\n\t\t\t},\r\n\t\t\t\"ArrivalDateTime\": null,\r\n\t\t\t\"DepartureDateTime\": \"12-21\"\r\n\t\t}\r\n\t},\r\n\t\"ReturnHostCommandSpecified\": false,\r\n\t\"TimeStampSpecified\": false,\r\n\t\"Version\": \"2.2.0\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:57685/api/sabre/GetDummyFlightSchedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57685",
+					"path": [
+						"api",
+						"sabre",
+						"GetDummyFlightSchedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. GetBargainFinderMax",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "ConversationId",
+						"type": "text",
+						"value": "{{ConversationId}}"
+					},
+					{
+						"key": "MessageId",
+						"type": "text",
+						"value": "{{MessageId}}"
+					},
+					{
+						"key": "TimeStamp",
+						"type": "text",
+						"value": "{{TimeStamp}}"
+					},
+					{
+						"key": "Organization",
+						"type": "text",
+						"value": "{{Organization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"POS\": [{\r\n\t\t\t\"RequestorID\": {\r\n\t\t\t\t\"CompanyName\": {\r\n\t\t\t\t\t\"CompanyShortName\": null,\r\n\t\t\t\t\t\"TravelSector\": null,\r\n\t\t\t\t\t\"Code\": \"TN\",\r\n\t\t\t\t\t\"CodeContext\": null,\r\n\t\t\t\t\t\"Value\": \"TN\"\r\n\t\t\t\t},\r\n\t\t\t\t\"URL\": null,\r\n\t\t\t\t\"Type\": \"1\",\r\n\t\t\t\t\"Instance\": null,\r\n\t\t\t\t\"ID_Context\": null,\r\n\t\t\t\t\"ID\": \"1\"\r\n\t\t\t},\r\n\t\t\t\"Position\": null,\r\n\t\t\t\"BookingChannel\": null,\r\n\t\t\t\"AgentSine\": null,\r\n\t\t\t\"PseudoCityCode\": \"PCC\",\r\n\t\t\t\"ISOCountry\": null,\r\n\t\t\t\"ISOCurrency\": null,\r\n\t\t\t\"AgentDutyCode\": null,\r\n\t\t\t\"AirlineVendorID\": null,\r\n\t\t\t\"AirportCode\": null,\r\n\t\t\t\"FirstDepartPoint\": null,\r\n\t\t\t\"ERSP_UserID\": null,\r\n\t\t\t\"PersonalCityCode\": null,\r\n\t\t\t\"AccountingCode\": null,\r\n\t\t\t\"OfficeCode\": null,\r\n\t\t\t\"DefaultTicketingCarrier\": null,\r\n\t\t\t\"AirlineChannelCode\": null,\r\n\t\t\t\"AgentDepartmentCode\": null,\r\n\t\t\t\"AgentFunction\": null,\r\n\t\t\t\"TravelAgencyIATA\": null,\r\n\t\t\t\"HomeAgencyIATA\": null,\r\n\t\t\t\"AgentIATA\": null,\r\n\t\t\t\"VendorCRSCode\": null,\r\n\t\t\t\"AgentDuty\": null,\r\n\t\t\t\"AbacusUser\": false,\r\n\t\t\t\"AgentCity\": null,\r\n\t\t\t\"Carrier\": null,\r\n\t\t\t\"MainTravelAgencyPCC\": null,\r\n\t\t\t\"HomePCC\": null\r\n\t\t}\r\n\t],\r\n\t\"OriginDestinationInformation\": [{\r\n\t\t\t\"TPA_Extensions\": {\r\n\t\t\t\t\"Flight\": null,\r\n\t\t\t\t\"PassengerPriceAdjustment\": null,\r\n\t\t\t\t\"Routing\": null,\r\n\t\t\t\t\"DateFlexibility\": null,\r\n\t\t\t\t\"Items\": null,\r\n\t\t\t\t\"Items1\": null,\r\n\t\t\t\t\"SegmentType\": {\r\n\t\t\t\t\t\"Code\": 2,\r\n\t\t\t\t\t\"CodeSpecified\": true\r\n\t\t\t\t},\r\n\t\t\t\t\"AlternateTime\": null,\r\n\t\t\t\t\"MaxOneWayOptions\": null,\r\n\t\t\t\t\"NumOneWayOptions\": null,\r\n\t\t\t\t\"CabinPref\": null,\r\n\t\t\t\t\"ConnectionTime\": null,\r\n\t\t\t\t\"TotalTravelTime\": null,\r\n\t\t\t\t\"IncludeVendorPref\": [{\r\n\t\t\t\t\t\t\"Code\": \"CX\"\r\n\t\t\t\t\t}\r\n\t\t\t\t],\r\n\t\t\t\t\"IncludeAlliancePref\": null,\r\n\t\t\t\t\"DepartureDays\": null,\r\n\t\t\t\t\"Baggage\": {\r\n\t\t\t\t\t\"FreePieceRequired\": true\r\n\t\t\t\t},\r\n\t\t\t\t\"ClassOfService\": null,\r\n\t\t\t\t\"FareBasis\": null,\r\n\t\t\t\t\"FareType\": null,\r\n\t\t\t\t\"BrandFilters\": null,\r\n\t\t\t\t\"Stopover\": null\r\n\t\t\t},\r\n\t\t\t\"RPH\": \"1\",\r\n\t\t\t\"Fixed\": false,\r\n\t\t\t\"FullDiversity\": false,\r\n\t\t\t\"OriginLocation\": {\r\n\t\t\t\t\"AllAirportsSpecified\": false,\r\n\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\"LocationCode\": \"TPE\",\r\n\t\t\t\t\"AirportsGroup\": null,\r\n\t\t\t\t\"CodeContext\": \"IATA\",\r\n\t\t\t\t\"Value\": null\r\n\t\t\t},\r\n\t\t\t\"DestinationLocation\": {\r\n\t\t\t\t\"AllAirportsSpecified\": false,\r\n\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\"LocationCode\": \"HKG\",\r\n\t\t\t\t\"AirportsGroup\": null,\r\n\t\t\t\t\"CodeContext\": \"IATA\",\r\n\t\t\t\t\"Value\": null\r\n\t\t\t},\r\n\t\t\t\"ConnectionLocations\": null,\r\n\t\t\t\"Item\": \"2019-01-09T00:00:00\",\r\n\t\t\t\"ItemElementName\": 0,\r\n\t\t\t\"DepartureWindow\": null,\r\n\t\t\t\"ArrivalWindow\": null\r\n\t\t}, {\r\n\t\t\t\"TPA_Extensions\": {\r\n\t\t\t\t\"Flight\": null,\r\n\t\t\t\t\"PassengerPriceAdjustment\": null,\r\n\t\t\t\t\"Routing\": null,\r\n\t\t\t\t\"DateFlexibility\": null,\r\n\t\t\t\t\"Items\": null,\r\n\t\t\t\t\"Items1\": null,\r\n\t\t\t\t\"SegmentType\": {\r\n\t\t\t\t\t\"Code\": 1,\r\n\t\t\t\t\t\"CodeSpecified\": true\r\n\t\t\t\t},\r\n\t\t\t\t\"AlternateTime\": null,\r\n\t\t\t\t\"MaxOneWayOptions\": null,\r\n\t\t\t\t\"NumOneWayOptions\": null,\r\n\t\t\t\t\"CabinPref\": null,\r\n\t\t\t\t\"ConnectionTime\": null,\r\n\t\t\t\t\"TotalTravelTime\": null,\r\n\t\t\t\t\"IncludeVendorPref\": [{\r\n\t\t\t\t\t\t\"Code\": \"CX\"\r\n\t\t\t\t\t}\r\n\t\t\t\t],\r\n\t\t\t\t\"IncludeAlliancePref\": null,\r\n\t\t\t\t\"DepartureDays\": null,\r\n\t\t\t\t\"Baggage\": {\r\n\t\t\t\t\t\"FreePieceRequired\": true\r\n\t\t\t\t},\r\n\t\t\t\t\"ClassOfService\": null,\r\n\t\t\t\t\"FareBasis\": null,\r\n\t\t\t\t\"FareType\": null,\r\n\t\t\t\t\"BrandFilters\": null,\r\n\t\t\t\t\"Stopover\": null\r\n\t\t\t},\r\n\t\t\t\"RPH\": \"2\",\r\n\t\t\t\"Fixed\": false,\r\n\t\t\t\"FullDiversity\": false,\r\n\t\t\t\"OriginLocation\": {\r\n\t\t\t\t\"AllAirportsSpecified\": false,\r\n\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\"LocationCode\": \"HKG\",\r\n\t\t\t\t\"AirportsGroup\": null,\r\n\t\t\t\t\"CodeContext\": \"IATA\",\r\n\t\t\t\t\"Value\": null\r\n\t\t\t},\r\n\t\t\t\"DestinationLocation\": {\r\n\t\t\t\t\"AllAirportsSpecified\": false,\r\n\t\t\t\t\"LocationType\": null,\r\n\t\t\t\t\"LocationCode\": \"EWR\",\r\n\t\t\t\t\"AirportsGroup\": null,\r\n\t\t\t\t\"CodeContext\": \"IATA\",\r\n\t\t\t\t\"Value\": null\r\n\t\t\t},\r\n\t\t\t\"ConnectionLocations\": null,\r\n\t\t\t\"Item\": \"2019-01-14T00:00:00\",\r\n\t\t\t\"ItemElementName\": 0,\r\n\t\t\t\"DepartureWindow\": null,\r\n\t\t\t\"ArrivalWindow\": null\r\n\t\t}\r\n\t],\r\n\t\"Leg\": null,\r\n\t\"TravelPreferences\": {\r\n\t\t\"VendorPref\": null,\r\n\t\t\"VendorPrefApplicability\": null,\r\n\t\t\"VendorPrefPairing\": null,\r\n\t\t\"FlightTypePref\": null,\r\n\t\t\"FareRestrictPref\": null,\r\n\t\t\"EquipPref\": null,\r\n\t\t\"CabinPref\": [{\r\n\t\t\t\t\"PreferLevel\": 2,\r\n\t\t\t\t\"CabinSpecified\": false\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"TicketDistribPref\": null,\r\n\t\t\"TPA_Extensions\": {\r\n\t\t\t\"DepartureWindow\": null,\r\n\t\t\t\"ArrivalWindow\": null,\r\n\t\t\t\"CodeShareIndicator\": null,\r\n\t\t\t\"ExcludeVendorPref\": null,\r\n\t\t\t\"IncludeAlliancePref\": null,\r\n\t\t\t\"ExcludeAlliancePref\": null,\r\n\t\t\t\"NumTrips\": null,\r\n\t\t\t\"AltCitiesCombinations\": null,\r\n\t\t\t\"NumTripsWithRouting\": null,\r\n\t\t\t\"OnlineIndicator\": null,\r\n\t\t\t\"InterlineIndicator\": null,\r\n\t\t\t\"TripType\": {\r\n\t\t\t\t\"ValueSpecified\": false\r\n\t\t\t},\r\n\t\t\t\"MaxPrice\": null,\r\n\t\t\t\"ContentType\": null,\r\n\t\t\t\"DomesticLayoverTime\": null,\r\n\t\t\t\"LongConnectTime\": null,\r\n\t\t\t\"LongConnectPoints\": null,\r\n\t\t\t\"AirServiceOnly\": null,\r\n\t\t\t\"JetServiceOnly\": null,\r\n\t\t\t\"SameConnectionAirportOnly\": null,\r\n\t\t\t\"SameOriginAirportOnly\": null,\r\n\t\t\t\"SameTurnaroundAirportOnly\": null,\r\n\t\t\t\"AircraftTypePenalty\": null,\r\n\t\t\t\"AlternateAirportPenalty\": null,\r\n\t\t\t\"FareAmountThreshold\": null,\r\n\t\t\t\"numOfLowFareSol\": null,\r\n\t\t\t\"numOfMustPriceOnlSol\": null,\r\n\t\t\t\"numOfMustPriceInrlSol\": null,\r\n\t\t\t\"numOfMustPriceNStpOnlSol\": null,\r\n\t\t\t\"numOfMustPriceNStpInrlSol\": null,\r\n\t\t\t\"numOfMustPriceSStopOnlSol\": null,\r\n\t\t\t\"stpPenaltyInUSD\": null,\r\n\t\t\t\"durPenaltyInUSD\": null,\r\n\t\t\t\"depPenaltyInUSD\": null,\r\n\t\t\t\"maxAllowedMustPriceOveragePerCrr\": null,\r\n\t\t\t\"fltOptMustPriceReuseLimit\": null,\r\n\t\t\t\"upperBoundMustPriceFactorForNotNonStp\": null,\r\n\t\t\t\"upperBoundLFSFactor\": null,\r\n\t\t\t\"numOfMustPriceNStp1StpOnlSol\": null,\r\n\t\t\t\"numOfMustPriceNStp1StpInrlSol\": null,\r\n\t\t\t\"upperBoundMustPriceFactorForNonStp\": null,\r\n\t\t\t\"maxAllowedLFSOveragePerCrrPercent\": null,\r\n\t\t\t\"targetMinNumOfLFSOnlSolPerCrr\": null,\r\n\t\t\t\"targetMinNumOfLFSTotOnlSolPercent\": null,\r\n\t\t\t\"fltOptLFSReuseLimitForNonAVS\": null,\r\n\t\t\t\"fltOptLFSReuseLimitForAVS\": null,\r\n\t\t\t\"avsPenaltyCrrs\": null,\r\n\t\t\t\"maxNumOfNonStpOnlSol\": null,\r\n\t\t\t\"maxNumOfNonStpInrlSol\": null,\r\n\t\t\t\"maxNumOfSingleStpOnlSol\": null,\r\n\t\t\t\"maxNumOf2PlusStpSol\": null,\r\n\t\t\t\"minAllowedOveragePerCrrPercent\": null,\r\n\t\t\t\"minAllowedOveragePerCrr\": null,\r\n\t\t\t\"maxRelFareLvlOfxForNonStp\": null,\r\n\t\t\t\"maxRelFareLvlOfxForCnx\": null,\r\n\t\t\t\"numOfMustPrice2PlusStpSol\": null,\r\n\t\t\t\"ItineraryNumberThreshold\": null,\r\n\t\t\t\"XOFares\": null,\r\n\t\t\t\"ExemptAllTaxes\": null,\r\n\t\t\t\"ExemptAllTaxesAndFees\": null,\r\n\t\t\t\"Taxes\": null,\r\n\t\t\t\"ExemptTax\": null,\r\n\t\t\t\"FlightStopsAsConnections\": null,\r\n\t\t\t\"TicketingSumOfLocals\": null,\r\n\t\t\t\"MultiAirportCodes\": null,\r\n\t\t\t\"JumpCabinLogic\": null,\r\n\t\t\t\"KeepSameCabin\": null,\r\n\t\t\t\"GoverningCarrierOverride\": null,\r\n\t\t\t\"ExcludeCallDirectCarriers\": null,\r\n\t\t\t\"ValidatingCarrier\": null,\r\n\t\t\t\"ValidatingCarrierCheck\": null,\r\n\t\t\t\"SettlementMethod\": null,\r\n\t\t\t\"FlightRepeatLimit\": null,\r\n\t\t\t\"FlexibleFares\": null,\r\n\t\t\t\"DiversityParameters\": null,\r\n\t\t\t\"AdditionalFareLimit\": null,\r\n\t\t\t\"FareFocusRules\": null,\r\n\t\t\t\"SellingLevels\": null,\r\n\t\t\t\"Budget\": null,\r\n\t\t\t\"OptionsPerDatePairList\": null,\r\n\t\t\t\"CountryPref\": null,\r\n\t\t\t\"RetailerRules\": null,\r\n\t\t\t\"ForceKeywordRestrictedContent\": null,\r\n\t\t\t\"FlightRestrictions\": null,\r\n\t\t\t\"LowCostCarriersProcessing\": null,\r\n\t\t\t\"VerificationItinCallLogic\": null,\r\n\t\t\t\"ClassOfService\": null,\r\n\t\t\t\"FareBasis\": null,\r\n\t\t\t\"FareType\": null\r\n\t\t},\r\n\t\t\"AncillaryFees\": null,\r\n\t\t\"FrequentFlyer\": null,\r\n\t\t\"SpanishFamilyDiscount\": null,\r\n\t\t\"Baggage\": null,\r\n\t\t\"InterlineBrands\": null,\r\n\t\t\"CommissionCodeQualifiers\": null,\r\n\t\t\"SmokingAllowed\": false,\r\n\t\t\"OnTimeRateSpecified\": false,\r\n\t\t\"ETicketDesired\": false,\r\n\t\t\"ValidInterlineTicket\": false,\r\n\t\t\"MaxStopsQuantity\": null,\r\n\t\t\"UseAllFlights\": 2,\r\n\t\t\"AllFlightsData\": false,\r\n\t\t\"Hybrid\": true,\r\n\t\t\"LookForAlternatives\": true\r\n\t},\r\n\t\"TravelerInfoSummary\": {\r\n\t\t\"SeatsRequested\": [\"1\"],\r\n\t\t\"AirTravelerAvail\": [{\r\n\t\t\t\t\"PassengerTypeQuantity\": [{\r\n\t\t\t\t\t\t\"TPA_Extensions\": null,\r\n\t\t\t\t\t\t\"Changeable\": true,\r\n\t\t\t\t\t\t\"IndexSpecified\": false,\r\n\t\t\t\t\t\t\"RequestedPassengerIndex\": null,\r\n\t\t\t\t\t\t\"ID\": null,\r\n\t\t\t\t\t\t\"Age\": null,\r\n\t\t\t\t\t\t\"Code\": \"ADT\",\r\n\t\t\t\t\t\t\"CodeContext\": null,\r\n\t\t\t\t\t\t\"URI\": null,\r\n\t\t\t\t\t\t\"Quantity\": \"1\"\r\n\t\t\t\t\t}\r\n\t\t\t\t],\r\n\t\t\t\t\"AirTraveler\": null\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"PriceRequestInformation\": null,\r\n\t\t\"TPA_Extensions\": null,\r\n\t\t\"SpecificPTC_IndicatorSpecified\": false\r\n\t},\r\n\t\"TPA_Extensions\": {\r\n\t\t\"IntelliSellTransaction\": {\r\n\t\t\t\"RequestType\": {\r\n\t\t\t\t\"Name\": \"50ITINS\",\r\n\t\t\t\t\"Value\": null\r\n\t\t\t},\r\n\t\t\t\"ServiceTag\": null,\r\n\t\t\t\"TravelerPersona\": null,\r\n\t\t\t\"PurchaseType\": null,\r\n\t\t\t\"SabreAth\": null,\r\n\t\t\t\"TranID\": null,\r\n\t\t\t\"ClientSessionID\": null,\r\n\t\t\t\"Branch\": null,\r\n\t\t\t\"CompressResponse\": null,\r\n\t\t\t\"FareOverrides\": null,\r\n\t\t\t\"Diagnostics\": null,\r\n\t\t\t\"SubagentData\": null,\r\n\t\t\t\"ResponseSorting\": null,\r\n\t\t\t\"SeatStatusSim\": null,\r\n\t\t\t\"AvailableLevel\": null,\r\n\t\t\t\"ATSETest\": null,\r\n\t\t\t\"AirStreaming\": null,\r\n\t\t\t\"DebugSpecified\": false,\r\n\t\t\t\"DebugKey\": null,\r\n\t\t\t\"ConfigSet\": null,\r\n\t\t\t\"DisableCacheSpecified\": false,\r\n\t\t\t\"ChunkNumber\": null,\r\n\t\t\t\"ShowItinSourceSpecified\": false\r\n\t\t},\r\n\t\t\"DiversityControl\": null,\r\n\t\t\"MessagingDetails\": null,\r\n\t\t\"Items\": null,\r\n\t\t\"AwardShopping\": null,\r\n\t\t\"Billing\": null,\r\n\t\t\"ExchangeSettings\": null,\r\n\t\t\"Exchange\": null,\r\n\t\t\"PointsRedemption\": null,\r\n\t\t\"SplitTaxes\": null,\r\n\t\t\"AlternateDatesProcessing\": null,\r\n\t\t\"ItineraryCache\": null,\r\n\t\t\"MultiTicket\": null,\r\n\t\t\"Partitions\": null,\r\n\t\t\"ReservationData\": null,\r\n\t\t\"AlternatePCC\": null\r\n\t},\r\n\t\"EchoToken\": null,\r\n\t\"TimeStamp\": null,\r\n\t\"Target\": 1,\r\n\t\"Version\": \"4.3.0\",\r\n\t\"TransactionIdentifier\": null,\r\n\t\"SequenceNmbr\": null,\r\n\t\"TransactionStatusCodeSpecified\": false,\r\n\t\"MaxResponses\": null,\r\n\t\"DirectFlightsOnly\": false,\r\n\t\"AvailableFlightsOnly\": true,\r\n\t\"ResponseType\": null,\r\n\t\"ResponseVersion\": null,\r\n\t\"SeparateMessages\": false,\r\n\t\"TruncateMessages\": true\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:57685/api/sabre/GetBargainFinderMax",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57685",
+					"path": [
+						"api",
+						"sabre",
+						"GetBargainFinderMax"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Close Session",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": " applications/json",
+						"type": "text"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "ConversationId",
+						"value": "{{ConversationId}}",
+						"type": "text"
+					},
+					{
+						"key": "MessageId",
+						"value": "{{MessageId}}",
+						"type": "text"
+					},
+					{
+						"key": "TimeStamp",
+						"value": "{{TimeStamp}}",
+						"type": "text"
+					},
+					{
+						"key": "Organization",
+						"value": "{{Organization}}",
+						"type": "text"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:57685/api/sabre/CloseSession",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57685",
+					"path": [
+						"api",
+						"sabre",
+						"CloseSession"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
