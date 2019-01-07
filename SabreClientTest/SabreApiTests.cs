@@ -4,8 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using Domain.Models;
 using SabreApiClient;
-using System.Linq;
-using Newtonsoft.Json;
+using Autofac.Extras.NLog;
 
 namespace SabreClientTest
 {
@@ -13,6 +12,8 @@ namespace SabreClientTest
     [TestClass]
     public class SabreApiTests
     {
+        ILogger _logger = new LoggerAdapter(NLog.LogManager.GetCurrentClassLogger());
+
         Credentials _credentials = new Credentials(
                 ConfigurationManager.AppSettings["UserName"],
                 ConfigurationManager.AppSettings["Password"],
@@ -23,7 +24,7 @@ namespace SabreClientTest
         [TestMethod]
         public async Task GetToken()
         {
-            var sessionManager = new SessionManager();
+            var sessionManager = new SessionManager(_logger);
             var session = await sessionManager.CreateSession(_credentials, "TokenCreateRQ");
 
             session.Should().NotBeNull();
@@ -32,11 +33,11 @@ namespace SabreClientTest
             session.MessageId.Should().NotBeNull();
             session.TimeStamp.Should().NotBeNull();
         }
-
+        
         [TestMethod]
         public async Task CreateCloseSessionTest()
         {
-            var client = new SessionManager();
+            var client = new SessionManager(_logger);
             var session = await client.CreateSession(_credentials, "SessionCreateRQ");
 
             session.Should().NotBeNull();
@@ -53,12 +54,10 @@ namespace SabreClientTest
         [TestMethod]
         public async Task GetFlightSchedulesTest()
         {
-            var sessionManager = new SessionManager();
+            var sessionManager = new SessionManager(_logger);
             var session = await sessionManager.CreateSession(_credentials, "SessionCreateRQ");
 
-            var para = JsonConvert.SerializeObject(session);
-
-            var client = new SabreApi();
+            var client = new SabreApi(_logger);
             var schedule = await client.GetFlightSchedules(session, GetFlightScheduleRequest());
             schedule.Should().NotBeNull();
             schedule.OTA_AirScheduleRS.Should().NotBeNull();
@@ -72,10 +71,10 @@ namespace SabreClientTest
         {
             try
             {
-                var sessionManager = new SessionManager();
+                var sessionManager = new SessionManager(_logger);
                 var session = await sessionManager.CreateSession(_credentials, "SessionCreateRQ");
 
-                var client = new SabreApi();
+                var client = new SabreApi(_logger);
                 var req = GetBargainRequest();
                 
                 var bargainFinderMax = await client.GetBargainFinderMax(session, req);
@@ -253,6 +252,5 @@ namespace SabreClientTest
 
             return req;
         }
-        
     }
 }

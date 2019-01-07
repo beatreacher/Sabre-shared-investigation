@@ -1,20 +1,29 @@
-﻿using Domain.Models;
-using Newtonsoft.Json;
-using SabreApiClient;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
+using Autofac.Extras.NLog;
+using Domain.Models;
+using Newtonsoft.Json;
+using SabreApiClient.Interfaces;
 
 namespace ApiService.Controllers
 {
     public class SabreController : ApiController
     {
+        private readonly ISessionManager _sessionManager;
+        private readonly ISabreApi _sabreApiClient;
+        private readonly ILogger _logger;
+
+        public SabreController(ISessionManager sessionManager, ISabreApi sabreApiClient, ILogger logger)
+        {
+            _sessionManager = sessionManager;
+            _sabreApiClient = sabreApiClient;
+            _logger = logger;
+        }
+
+
         private static SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQ GetFlightScheduleRequest()
         {
             string originLocation = "DFW";
@@ -59,34 +68,71 @@ namespace ApiService.Controllers
         [ActionName("CreateSession")]
         public async Task<Session> CreateSession(Credentials credentials)
         {
-            var sessionManager = new SessionManager();
-            var session = await sessionManager.CreateSession(credentials, "SessionCreateRQ");
-            return session;
+            try
+            {
+                _logger.Debug("CreateSession started");
+
+                var session = await _sessionManager.CreateSession(credentials, "SessionCreateRQ");
+                return session;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("CreateSession finished");
+            }
         }
 
         [HttpPost]
         [ActionName("CloseSession")]
         public async Task<string> CloseSession()
         {
-            Session session = GetSession(Request);
-            var sessionManager = new SessionManager();
-            return await sessionManager.CloseSession(session);
+            try
+            {
+                _logger.Debug("CloseSession started");
+                Session session = GetSession(Request);
+                return await _sessionManager.CloseSession(session);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("CloseSession finished");
+            }
         }
 
         [HttpPost]
         [ActionName("GetDummyFlightSchedule")]
         public async Task<SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRS> GetDummyFlightSchedule(object requestObject)
         {
-            var airScheduleRequest = JsonConvert.DeserializeObject<SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQ>(requestObject.ToString());
-            //var airScheduleRequest = JsonConvert.DeserializeObject<SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQ>(requestObject);
+            try
+            {
+                _logger.Debug("GetDummyFlightSchedule started");
+                var airScheduleRequest = JsonConvert.DeserializeObject<SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQ>(requestObject.ToString());
+                //var airScheduleRequest = JsonConvert.DeserializeObject<SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQ>(requestObject);
+                //var json = new JavaScriptSerializer().Serialize(airScheduleRequest);
 
-            //var json = new JavaScriptSerializer().Serialize(airScheduleRequest);
-            Session session = GetSession(Request);
+                Session session = GetSession(Request);
 
-            var client = new SabreApi();
-            var schedule = await client.GetFlightSchedules(session, airScheduleRequest);
+                var schedule = await _sabreApiClient.GetFlightSchedules(session, airScheduleRequest);
 
-            return schedule.OTA_AirScheduleRS;
+                return schedule.OTA_AirScheduleRS;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("GetDummyFlightSchedule finished");
+            }
         }
 
         [HttpPost]
@@ -94,14 +140,25 @@ namespace ApiService.Controllers
         //public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax(SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ request)
         public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax(object requestObject)
         {
+            try
+            {
+                _logger.Debug("GetBargainFinderMax started");
+                var request = JsonConvert.DeserializeObject<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ>(requestObject.ToString());
+                Session session = GetSession(Request);
 
-            var request = JsonConvert.DeserializeObject<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ>(requestObject.ToString());
-            Session session = GetSession(Request);
+                var bargainFinderMax = await _sabreApiClient.GetBargainFinderMax(session, request);
 
-            var client = new SabreApi();
-            var bargainFinderMax = await client.GetBargainFinderMax(session, request);
-
-            return bargainFinderMax.OTA_AirLowFareSearchRS;
+                return bargainFinderMax.OTA_AirLowFareSearchRS;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("GetBargainFinderMax finished");
+            }
         }
 
         private static Session GetSession(HttpRequestMessage request)

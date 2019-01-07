@@ -1,15 +1,21 @@
 ﻿using System;
 using SabreApiClient.Helpers;
 using System.Threading.Tasks;
-using NLog;
 
 using Domain.Models;
+using SabreApiClient.Interfaces;
+using Autofac.Extras.NLog;
 
 namespace SabreApiClient
 {
-    public class SessionManager
+    public class SessionManager : ISessionManager
     {
-        Logger _logger = LogManager.GetCurrentClassLogger();
+        private ILogger _logger;
+
+        public SessionManager(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         private readonly SabreMapper SabreMapper = new SabreMapper();
         private readonly XmlResponseProcessor ResponseProcessor = new XmlResponseProcessor();
