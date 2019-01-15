@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.sabre.com/sp/eab/v3_8" xmlns="http://www.w3.org/2001/XMLSchema">
+  <include schemaLocation="EnhancedAirBook3.8.0RQ.xsd" />
+  <include schemaLocation="EnhancedAirBook3.8.0RS.xsd" />
+</schema>

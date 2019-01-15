@@ -1,0 +1,6 @@
+/.vs/SabreClient/v15
+Debug
+AutoFixture.4.6.0
+/packages/
+/ApiService/bin/*.dll
+/ApiService/bin
