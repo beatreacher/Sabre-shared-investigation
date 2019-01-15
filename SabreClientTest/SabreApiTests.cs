@@ -128,11 +128,6 @@ namespace SabreClientTest
             var sessionManager = new SessionManager(_logger);
             var session = await sessionManager.CreateSession(_credentials, "SessionCreateRQ");
 
-            /*var item1 = new Enh.EnhancedAirBookRSTravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformationAssociatedDataAssociatedDataItem
-            {
-
-            };*/
-
             var odi = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment
             {
                 DepartureDateTime = "2019-02-21T09:30",
@@ -149,6 +144,9 @@ namespace SabreClientTest
             var client = new SabreApi(_logger);
             var enhacnedReq = new Enh.EnhancedAirBookRQ
             {
+                version = "3.9.0",
+                HaltOnError = true,
+                IgnoreOnError = true,
                 OTA_AirBookRQ = new Enh.EnhancedAirBookRQOTA_AirBookRQ
                 {
                     OriginDestinationInformation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment[1]
