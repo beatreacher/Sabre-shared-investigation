@@ -65,6 +65,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\EnhancedAirBookRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\OTA_AirBookLLSRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\OTA_AirScheduleService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,7 +110,9 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\BargainFinderMax\BargainFinderMaxRQRS_v4-3-0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -142,6 +154,110 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\BargainFinderMax\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\CommonSimpleTypes_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\EnhancedAirBook3.wsdl" />
+    <None Include="Connected Services\EnhancedAirBookRQ\EnhancedAirBook3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\EnhancedAirBook31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\EnhancedAirBook32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\SabreApiClient.EnhancedAirBookRQ.EnhancedAirBookRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\SabreApiClient.EnhancedAirBookRQ.EnhancedAirBookRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\SabreApiClient.EnhancedAirBookRQ.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\SabreApiClient.EnhancedAirBookRQ.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\SpCommonSimpleTypes_v3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\STL2_MsgCommon_v02_01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\STL2_Payload_v02_01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\TirSimpleTypes.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EnhancedAirBookRQ\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\OTA_AirBookLLS2.wsdl" />
+    <None Include="Connected Services\OTA_AirBookLLSRQ\OTA_AirBookLLS2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\OTA_AirBookLLS21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\OTA_AirBookLLS22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\SabreApiClient.OTA_AirBookLLSRQ.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\SabreApiClient.OTA_AirBookLLSRQ.OTA_AirBookRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\SabreApiClient.OTA_AirBookLLSRQ.OTA_AirBookRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\SabreApiClient.OTA_AirBookLLSRQ.Security1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\STL_For_SabreProtocol_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\STL_Header_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\sws_common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\OTA_AirScheduleService\envelope.xsd">
@@ -278,6 +394,8 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BargainFinderMax\" />
+    <WCFMetadataStorage Include="Connected Services\EnhancedAirBookRQ\" />
+    <WCFMetadataStorage Include="Connected Services\OTA_AirBookLLSRQ\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirScheduleService\" />
     <WCFMetadataStorage Include="Connected Services\SessionCloseRQ\" />
     <WCFMetadataStorage Include="Connected Services\SessionCreator\" />
@@ -326,6 +444,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\BargainFinderMax\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\OTA_AirBookLLSRQ\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EnhancedAirBookRQ\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EnhancedAirBookRQ\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EnhancedAirBookRQ\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
