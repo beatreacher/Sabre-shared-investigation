@@ -1,15 +1,21 @@
 ﻿using System;
 using SabreApiClient.Helpers;
 using System.Threading.Tasks;
-using NLog;
+using Autofac.Extras.NLog;
 
 using Domain.Models;
+using SabreApiClient.Interfaces;
 
 namespace SabreApiClient
 {
-    public class SabreApi
+    public class SabreApi : ISabreApi
     {
-        Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger _logger;
+
+        public SabreApi(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         private readonly SabreMapper SabreMapper = new SabreMapper();
         private readonly XmlResponseProcessor ResponseProcessor = new XmlResponseProcessor();
@@ -67,6 +73,58 @@ namespace SabreApiClient
             finally
             {
                 _logger.Debug("GetBargainFinderMax finished");
+            }
+        }
+
+        public async Task<OTA_AirBookLLSRQ.OTA_AirBookRQResponse> GetAirBook(Session session, OTA_AirBookLLSRQ.OTA_AirBookRQ request)
+        {
+            try
+            {
+                _logger.Debug("GetAirBook started");
+                var header = SabreMapper.GetMessageHeader<OTA_AirBookLLSRQ.MessageHeader>(session.ConversationId, "OTA_AirBookLLSRQ", session.Organization);
+                var security = new OTA_AirBookLLSRQ.Security1 { BinarySecurityToken = session.Token };
+
+                var proxy = new OTA_AirBookLLSRQ.OTA_AirBookPortTypeClient("OTA_AirBookPortType");
+                var response = await proxy.OTA_AirBookRQAsync(header, security, request);
+
+                ResponseProcessor.CheckErrors(request, response);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("GetAirBook finished");
+            }
+        }
+
+        public async Task<EnhancedAirBookRQ.EnhancedAirBookRQResponse> GetEnhancedAirBook(Session session, EnhancedAirBookRQ.EnhancedAirBookRQ request)
+        {
+            try
+            {
+                _logger.Debug("GetAirBook started");
+                var header = SabreMapper.GetMessageHeader<EnhancedAirBookRQ.MessageHeader>(session.ConversationId, "EnhancedAirBookRQ", session.Organization);
+                var security = new EnhancedAirBookRQ.Security { BinarySecurityToken = session.Token };
+
+                var proxy = new EnhancedAirBookRQ.EnhancedAirBookPortTypeClient("EnhancedAirBookPortType");
+                var response = await proxy.EnhancedAirBookRQAsync(header, security, request);
+
+                ResponseProcessor.CheckErrors(request, response);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("GetAirBook finished");
             }
         }
     }
