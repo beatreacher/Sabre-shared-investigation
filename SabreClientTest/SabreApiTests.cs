@@ -94,6 +94,12 @@ namespace SabreClientTest
                 //    schedule.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment;
 
                 var req = GetBargainRequest();
+
+                var jss = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+                
+                var reqSer = JsonConvert.SerializeObject(req, jss);
+                _logger.Debug(reqSer);
+
                 var bargainFinderMax = await client.GetBargainFinderMax(session, req);
 
                 bargainFinderMax.Should().NotBeNull();
@@ -149,6 +155,13 @@ namespace SabreClientTest
                 IgnoreOnError = true,
                 OTA_AirBookRQ = new Enh.EnhancedAirBookRQOTA_AirBookRQ
                 {
+                    HaltOnStatus = new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus[] { new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus { Code = "UC" } },
+                    RetryRebook = new Enh.EnhancedAirBookRQOTA_AirBookRQRetryRebook {Option = true},
+                    RedisplayReservation = new Enh.EnhancedAirBookRQOTA_AirBookRQRedisplayReservation
+                    {
+                        NumAttempts = "5",
+                        WaitInterval = "2000"
+                    },
                     OriginDestinationInformation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment[1]
                     {
                         odi
@@ -156,14 +169,17 @@ namespace SabreClientTest
                 },
                 PostProcessing = new Enh.EnhancedAirBookRQPostProcessing
                 {
-                    IgnoreAfter = true,
+                    IgnoreAfter = false,
                     //RedisplayReservation = new Enh.EnhancedAirBookRQPostProcessingRedisplayReservation()
                 },
-                //PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = false, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } }
-                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = true/*, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } */}
+                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = false, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "PTRMID" } }
+                //PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = true/*, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } */}
             };
             var schedule = await client.GetEnhancedAirBook(session, enhacnedReq);
             schedule.Should().NotBeNull();
+
+            var resp = JsonConvert.SerializeObject(schedule.EnhancedAirBookRS);
+            _logger.Debug(resp);
 
             var response = await sessionManager.CloseSession(session);
             response.Should().Be("Approved");
@@ -236,10 +252,10 @@ namespace SabreClientTest
 
             var odi1 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
             {
-                Item = "2019-03-09T00:00:00",
+                Item = "2019-02-21T12:27",
                 RPH = "1",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "TPE" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "HKG" },
+                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "LAS" },
+                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "JFK" },
                 TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
                 {
                     SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
@@ -247,22 +263,23 @@ namespace SabreClientTest
                         Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.X,
                         CodeSpecified = true
                     },
-                    IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    {
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CX"
-                        }
-                    },
+                    //IncludeVendorPref = new BFM.IncludeVendorPrefType[]
+                    //{
+                    //    new BFM.IncludeVendorPrefType
+                    //    {
+                    //        Code = "AA"
+                    //    }
+                    //},
                     Baggage = new BFM.BaggageType { FreePieceRequired = true }
                 }
             };
             var odi2 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
             {
+                DepartureWindow = "2019-04-14T00:00:00",
                 Item = "2019-03-14T00:00:00",
                 RPH = "2",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "HKG" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "EWR" },
+                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "JFK" },
+                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "LAS" },
                 TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
                 {
                     SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
@@ -270,17 +287,17 @@ namespace SabreClientTest
                         Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.O,
                         CodeSpecified = true
                     },
-                    IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    {
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CX"
-                        }
-                    },
+                    //IncludeVendorPref = new BFM.IncludeVendorPrefType[]
+                    //{
+                    //    new BFM.IncludeVendorPrefType
+                    //    {
+                    //        Code = "AA"
+                    //    }
+                    //},
                     Baggage = new BFM.BaggageType { FreePieceRequired = true }
                 }
             };
-            var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[2] { odi1, odi2 };
+            var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[] { odi1, odi2 };
 
             var travelPreferences = new BFM.AirSearchPrefsType
             {
@@ -294,7 +311,7 @@ namespace SabreClientTest
                 },
                 TPA_Extensions = new BFM.AirSearchPrefsTypeTPA_Extensions
                 {
-                    TripType = new BFM.AirSearchPrefsTypeTPA_ExtensionsTripType { Value = BFM.AirTripType.OpenJaw }
+                    TripType = new BFM.AirSearchPrefsTypeTPA_ExtensionsTripType { Value = BFM.AirTripType.Circle }
                 }
             };
 
