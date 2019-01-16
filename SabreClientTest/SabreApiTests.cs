@@ -129,31 +129,25 @@ namespace SabreClientTest
             var sessionManager = new SessionManager(_logger);
             var session = await sessionManager.CreateSession(_credentials, "SessionCreateRQ");
 
-            /*var item1 = new Enh.EnhancedAirBookRSTravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformationAssociatedDataAssociatedDataItem
-            {
-
-            };*/
-
             var odi = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment
             {
-                DepartureDateTime = "2014-06-03T12:30:00",
-                FlightNumber = "1022",
+                DepartureDateTime = "2019-02-21T09:30",
+                FlightNumber = "1815",
                 NumberInParty = "1",
-                ResBookDesigCode = "F",
+                ResBookDesigCode = "Y",
                 Status = "NN",
                 InstantPurchase = false,
-                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = "LAS" },
-                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = "US", FlightNumber = "1022" },
-                OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = "DFW" }
+                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = "JFK" },
+                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = "DL", FlightNumber = "1815" },
+                OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = "LAS" }
             };
 
             var client = new SabreApi(_logger);
-
-            var req = GetBargainRequest();
-            var bargainFinderMax = await client.GetBargainFinderMax(session, req);
-
             var enhacnedReq = new Enh.EnhancedAirBookRQ
             {
+                version = "3.9.0",
+                HaltOnError = true,
+                IgnoreOnError = true,
                 OTA_AirBookRQ = new Enh.EnhancedAirBookRQOTA_AirBookRQ
                 {
                     OriginDestinationInformation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment[1]
@@ -164,9 +158,10 @@ namespace SabreClientTest
                 PostProcessing = new Enh.EnhancedAirBookRQPostProcessing
                 {
                     IgnoreAfter = true,
-                    RedisplayReservation = new Enh.EnhancedAirBookRQPostProcessingRedisplayReservation()
+                    //RedisplayReservation = new Enh.EnhancedAirBookRQPostProcessingRedisplayReservation()
                 },
-                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = false, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } }
+                //PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = false, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } }
+                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = true/*, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } */}
             };
             var schedule = await client.GetEnhancedAirBook(session, enhacnedReq);
             schedule.Should().NotBeNull();

@@ -18,11 +18,11 @@ namespace SabreApiClient.EnhancedAirBookRQ {
         // CODEGEN: Generating message contract since the operation EnhancedAirBookRQ is neither RPC nor document wrapped.
         [System.ServiceModel.OperationContractAttribute(Action="EnhancedAirBookRQ", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fault))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Envelope))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SignaturePropertiesType))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ManifestType))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SignatureType))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Fault))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Envelope))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DetailType))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(RailwayStationInfoType))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HotelType))]
@@ -332,182 +332,274 @@ namespace SabreApiClient.EnhancedAirBookRQ {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName="AssociationMatrix", Namespace="http://services.sabre.com/sp/tir/simple/v3")]
-    public partial class AssociationMatrix1 : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
+    public partial class detail : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string nameField;
+        private System.Xml.XmlElement[] anyField;
         
-        private AssociationMatrixParent1 parentField;
-        
-        private AssociationMatrixChild1[] childField;
-        
-        private string elementIdField;
+        private System.Xml.XmlAttribute[] anyAttrField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string Name {
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
             get {
-                return this.nameField;
+                return this.anyField;
             }
             set {
-                this.nameField = value;
-                this.RaisePropertyChanged("Name");
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
+        public System.Xml.XmlAttribute[] AnyAttr {
+            get {
+                return this.anyAttrField;
+            }
+            set {
+                this.anyAttrField = value;
+                this.RaisePropertyChanged("AnyAttr");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
+    public partial class Fault : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlQualifiedName faultcodeField;
+        
+        private string faultstringField;
+        
+        private string faultactorField;
+        
+        private detail detailField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public System.Xml.XmlQualifiedName faultcode {
+            get {
+                return this.faultcodeField;
+            }
+            set {
+                this.faultcodeField = value;
+                this.RaisePropertyChanged("faultcode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string faultstring {
+            get {
+                return this.faultstringField;
+            }
+            set {
+                this.faultstringField = value;
+                this.RaisePropertyChanged("faultstring");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI", Order=2)]
+        public string faultactor {
+            get {
+                return this.faultactorField;
+            }
+            set {
+                this.faultactorField = value;
+                this.RaisePropertyChanged("faultactor");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public detail detail {
+            get {
+                return this.detailField;
+            }
+            set {
+                this.detailField = value;
+                this.RaisePropertyChanged("detail");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
+    public partial class Body : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        private System.Xml.XmlAttribute[] anyAttrField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
+        public System.Xml.XmlAttribute[] AnyAttr {
+            get {
+                return this.anyAttrField;
+            }
+            set {
+                this.anyAttrField = value;
+                this.RaisePropertyChanged("AnyAttr");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
+    public partial class Header : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        private System.Xml.XmlAttribute[] anyAttrField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
+        public System.Xml.XmlAttribute[] AnyAttr {
+            get {
+                return this.anyAttrField;
+            }
+            set {
+                this.anyAttrField = value;
+                this.RaisePropertyChanged("AnyAttr");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
+    public partial class Envelope : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private Header[] headerField;
+        
+        private Body bodyField;
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        private System.Xml.XmlAttribute[] anyAttrField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Header", Order=0)]
+        public Header[] Header {
+            get {
+                return this.headerField;
+            }
+            set {
+                this.headerField = value;
+                this.RaisePropertyChanged("Header");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public AssociationMatrixParent1 Parent {
+        public Body Body {
             get {
-                return this.parentField;
+                return this.bodyField;
             }
             set {
-                this.parentField = value;
-                this.RaisePropertyChanged("Parent");
+                this.bodyField = value;
+                this.RaisePropertyChanged("Body");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Child", Order=2)]
-        public AssociationMatrixChild1[] Child {
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=2)]
+        public System.Xml.XmlElement[] Any {
             get {
-                return this.childField;
+                return this.anyField;
             }
             set {
-                this.childField = value;
-                this.RaisePropertyChanged("Child");
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string elementId {
+        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
+        public System.Xml.XmlAttribute[] AnyAttr {
             get {
-                return this.elementIdField;
+                return this.anyAttrField;
             }
             set {
-                this.elementIdField = value;
-                this.RaisePropertyChanged("elementId");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.sabre.com/sp/tir/simple/v3")]
-    public partial class AssociationMatrixParent1 : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string refField;
-        
-        private string newRefField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string @ref {
-            get {
-                return this.refField;
-            }
-            set {
-                this.refField = value;
-                this.RaisePropertyChanged("ref");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string newRef {
-            get {
-                return this.newRefField;
-            }
-            set {
-                this.newRefField = value;
-                this.RaisePropertyChanged("newRef");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.sabre.com/sp/tir/simple/v3")]
-    public partial class AssociationMatrixChild1 : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string refField;
-        
-        private string newRefField;
-        
-        private string keyField;
-        
-        private string valueField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string @ref {
-            get {
-                return this.refField;
-            }
-            set {
-                this.refField = value;
-                this.RaisePropertyChanged("ref");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string newRef {
-            get {
-                return this.newRefField;
-            }
-            set {
-                this.newRefField = value;
-                this.RaisePropertyChanged("newRef");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string key {
-            get {
-                return this.keyField;
-            }
-            set {
-                this.keyField = value;
-                this.RaisePropertyChanged("key");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string value {
-            get {
-                return this.valueField;
-            }
-            set {
-                this.valueField = value;
-                this.RaisePropertyChanged("value");
+                this.anyAttrField = value;
+                this.RaisePropertyChanged("AnyAttr");
             }
         }
         
@@ -1898,274 +1990,182 @@ namespace SabreApiClient.EnhancedAirBookRQ {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
-    public partial class detail : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName="AssociationMatrix", Namespace="http://services.sabre.com/sp/tir/simple/v3")]
+    public partial class AssociationMatrix1 : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Xml.XmlElement[] anyField;
+        private string nameField;
         
-        private System.Xml.XmlAttribute[] anyAttrField;
+        private AssociationMatrixParent1 parentField;
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
+        private AssociationMatrixChild1[] childField;
+        
+        private string elementIdField;
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Name {
             get {
-                return this.anyAttrField;
+                return this.nameField;
             }
             set {
-                this.anyAttrField = value;
-                this.RaisePropertyChanged("AnyAttr");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
-    public partial class Fault : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlQualifiedName faultcodeField;
-        
-        private string faultstringField;
-        
-        private string faultactorField;
-        
-        private detail detailField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public System.Xml.XmlQualifiedName faultcode {
-            get {
-                return this.faultcodeField;
-            }
-            set {
-                this.faultcodeField = value;
-                this.RaisePropertyChanged("faultcode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
-        public string faultstring {
-            get {
-                return this.faultstringField;
-            }
-            set {
-                this.faultstringField = value;
-                this.RaisePropertyChanged("faultstring");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, DataType="anyURI", Order=2)]
-        public string faultactor {
-            get {
-                return this.faultactorField;
-            }
-            set {
-                this.faultactorField = value;
-                this.RaisePropertyChanged("faultactor");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
-        public detail detail {
-            get {
-                return this.detailField;
-            }
-            set {
-                this.detailField = value;
-                this.RaisePropertyChanged("detail");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
-    public partial class Body : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        private System.Xml.XmlAttribute[] anyAttrField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
-            get {
-                return this.anyAttrField;
-            }
-            set {
-                this.anyAttrField = value;
-                this.RaisePropertyChanged("AnyAttr");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
-    public partial class Header : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        private System.Xml.XmlAttribute[] anyAttrField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
-            get {
-                return this.anyAttrField;
-            }
-            set {
-                this.anyAttrField = value;
-                this.RaisePropertyChanged("AnyAttr");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://schemas.xmlsoap.org/soap/envelope/")]
-    public partial class Envelope : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private Header[] headerField;
-        
-        private Body bodyField;
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        private System.Xml.XmlAttribute[] anyAttrField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Header", Order=0)]
-        public Header[] Header {
-            get {
-                return this.headerField;
-            }
-            set {
-                this.headerField = value;
-                this.RaisePropertyChanged("Header");
+                this.nameField = value;
+                this.RaisePropertyChanged("Name");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public Body Body {
+        public AssociationMatrixParent1 Parent {
             get {
-                return this.bodyField;
+                return this.parentField;
             }
             set {
-                this.bodyField = value;
-                this.RaisePropertyChanged("Body");
+                this.parentField = value;
+                this.RaisePropertyChanged("Parent");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=2)]
-        public System.Xml.XmlElement[] Any {
+        [System.Xml.Serialization.XmlElementAttribute("Child", Order=2)]
+        public AssociationMatrixChild1[] Child {
             get {
-                return this.anyField;
+                return this.childField;
             }
             set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
+                this.childField = value;
+                this.RaisePropertyChanged("Child");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string elementId {
             get {
-                return this.anyAttrField;
+                return this.elementIdField;
             }
             set {
-                this.anyAttrField = value;
-                this.RaisePropertyChanged("AnyAttr");
+                this.elementIdField = value;
+                this.RaisePropertyChanged("elementId");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.sabre.com/sp/tir/simple/v3")]
+    public partial class AssociationMatrixParent1 : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string refField;
+        
+        private string newRefField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string @ref {
+            get {
+                return this.refField;
+            }
+            set {
+                this.refField = value;
+                this.RaisePropertyChanged("ref");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string newRef {
+            get {
+                return this.newRefField;
+            }
+            set {
+                this.newRefField = value;
+                this.RaisePropertyChanged("newRef");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3056.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.sabre.com/sp/tir/simple/v3")]
+    public partial class AssociationMatrixChild1 : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string refField;
+        
+        private string newRefField;
+        
+        private string keyField;
+        
+        private string valueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string @ref {
+            get {
+                return this.refField;
+            }
+            set {
+                this.refField = value;
+                this.RaisePropertyChanged("ref");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string newRef {
+            get {
+                return this.newRefField;
+            }
+            set {
+                this.newRefField = value;
+                this.RaisePropertyChanged("newRef");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string key {
+            get {
+                return this.keyField;
+            }
+            set {
+                this.keyField = value;
+                this.RaisePropertyChanged("key");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+                this.RaisePropertyChanged("value");
             }
         }
         
