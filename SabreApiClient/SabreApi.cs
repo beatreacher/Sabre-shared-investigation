@@ -2,9 +2,9 @@
 using SabreApiClient.Helpers;
 using System.Threading.Tasks;
 using Autofac.Extras.NLog;
-
 using Domain.Models;
 using SabreApiClient.Interfaces;
+using Newtonsoft.Json;
 
 namespace SabreApiClient
 {
@@ -59,6 +59,7 @@ namespace SabreApiClient
                 var security = new BargainFinderMax.Security { BinarySecurityToken = session.Token };
 
                 var proxy = new BargainFinderMax.BargainFinderMaxPortTypeClient("BargainFinderMaxPortType");
+                var t = JsonConvert.SerializeObject(request);
                 var response = await proxy.BargainFinderMaxRQAsync(header, security, request);
 
                 ResponseProcessor.CheckErrors(request, response);

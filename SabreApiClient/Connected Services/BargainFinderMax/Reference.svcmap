@@ -24,14 +24,14 @@
   <Metadata>
     <MetadataFile FileName="xlink.xsd" MetadataType="Schema" ID="91709a79-cab2-4a2b-9f3c-9f1d0980a74e" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/xlink.xsd" />
     <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="d09a4334-d974-4508-8d24-3954c61a3781" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/xml.xsd" />
-    <MetadataFile FileName="BargainFinderMaxRQ_v4-3-0.wsdl" MetadataType="Wsdl" ID="33e509c0-07c2-408b-97a3-bc41d4cda6b6" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRQ_v4-3-0.wsdl" />
+    <MetadataFile FileName="BargainFinderMaxRQ_v4-3-0.wsdl" MetadataType="Wsdl" ID="01762ed1-a00a-4fcb-acf8-62831d8adfa7" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRQ_v4-3-0.wsdl" />
     <MetadataFile FileName="envelope.xsd" MetadataType="Schema" ID="d415d6e6-261d-4db7-a0fd-e7717c689f1e" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/envelope.xsd" />
-    <MetadataFile FileName="BargainFinderMaxRQRS_v4-3-0.xsd" MetadataType="Schema" ID="1eba8cda-6d6e-4029-b2fa-dc5421d438f7" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRQRS_v4-3-0.xsd" />
-    <MetadataFile FileName="OTA2003B.xsd" MetadataType="Schema" ID="b6836cc0-727d-4085-ad3e-743ad52c6ab1" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMax_CommonTypes_v4-3-0.xsd" />
+    <MetadataFile FileName="BargainFinderMaxRQRS_v4-3-0.xsd" MetadataType="Schema" ID="34650272-25bf-43f8-a74e-1e13020b361b" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRQRS_v4-3-0.xsd" />
+    <MetadataFile FileName="OTA2003B.xsd" MetadataType="Schema" ID="e0276206-a09d-47b5-978d-ebc34824bfbb" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMax_CommonTypes_v4-3-0.xsd" />
     <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="2874f9a8-e229-4652-8f75-d65506100148" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/xmldsig-core-schema.xsd" />
     <MetadataFile FileName="wsse.xsd" MetadataType="Schema" ID="e1a1b029-3a4e-49be-9a18-c2efa0e98cb2" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/wsse.xsd" />
-    <MetadataFile FileName="OTA2003B1.xsd" MetadataType="Schema" ID="665686bf-13d4-49ad-9a2a-eaf71f182bbf" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRQ_v4-3-0.xsd" />
-    <MetadataFile FileName="OTA2003B2.xsd" MetadataType="Schema" ID="e5ea3ab1-b5a1-4eee-8b64-c5a2ea4e5cdf" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRS_v4-3-0.xsd" />
+    <MetadataFile FileName="OTA2003B1.xsd" MetadataType="Schema" ID="1210ae7b-8910-4bac-b526-877be71e4b35" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRQ_v4-3-0.xsd" />
+    <MetadataFile FileName="OTA2003B2.xsd" MetadataType="Schema" ID="66353e5f-656f-4306-88b4-c41c4dbf0425" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/BargainFinderMaxRS_v4-3-0.xsd" />
     <MetadataFile FileName="msg-header-2_0.xsd" MetadataType="Schema" ID="9a7ee99a-29ab-4aaf-a460-0c60f0838233" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/shopping/msg-header-2_0.xsd" />
   </Metadata>
   <Extensions>

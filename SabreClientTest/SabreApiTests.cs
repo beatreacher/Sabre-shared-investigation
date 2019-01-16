@@ -94,6 +94,7 @@ namespace SabreClientTest
                 //    schedule.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment;
 
                 var req = GetBargainRequest();
+                var t = JsonConvert.SerializeObject(req);
                 var bargainFinderMax = await client.GetBargainFinderMax(session, req);
 
                 bargainFinderMax.Should().NotBeNull();

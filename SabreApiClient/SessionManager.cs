@@ -47,6 +47,7 @@ namespace SabreApiClient
                 };
 
                 var proxy = new SessionCreator.SessionCreatePortTypeClient("SessionCreatePortType");
+                var t = JsonConvert.SerializeObject(req);
                 var response = await proxy.SessionCreateRQAsync(header, security, req);
 
                 ResponseProcessor.CheckErrors(req, response);
