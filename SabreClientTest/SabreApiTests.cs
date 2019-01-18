@@ -11,6 +11,7 @@ using System.Linq;
 using BFM = SabreApiClient.BargainFinderMax;
 using AirSchedService = SabreApiClient.OTA_AirScheduleService;
 using Enh = SabreApiClient.EnhancedAirBookRQ;
+using System;
 
 namespace SabreClientTest
 {
@@ -39,7 +40,7 @@ namespace SabreClientTest
             session.MessageId.Should().NotBeNull();
             session.TimeStamp.Should().NotBeNull();
         }
-        
+
         [TestMethod]
         public async Task CreateCloseSessionTest()
         {
@@ -64,16 +65,23 @@ namespace SabreClientTest
             var session = await sessionManager.CreateSession(_credentials, "SessionCreateRQ");
 
             var client = new SabreApi(_logger);
-            var req = GetFlightScheduleRequest();
+
+            var req = GetFlightScheduleRequest("LAS", "LAX", DateTime.Now.AddMonths(3).Date.ToString("s"));
             var schedule = await client.GetFlightSchedules(session, req);
             schedule.Should().NotBeNull();
             schedule.OTA_AirScheduleRS.Should().NotBeNull();
-
             var airScheduleRS = JsonConvert.SerializeObject(schedule.OTA_AirScheduleRS);
             _logger.Debug(airScheduleRS);
+            var fsOrigin = schedule.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment[0];
 
-            var response = await sessionManager.CloseSession(session);
-            response.Should().Be("Approved");
+            req = GetFlightScheduleRequest("LAX", "LAS", DateTime.Now.AddMonths(6).Date.ToString("s"));
+            var schedule1 = await client.GetFlightSchedules(session, req);
+            var airScheduleRS1 = JsonConvert.SerializeObject(schedule1.OTA_AirScheduleRS);
+            _logger.Debug(airScheduleRS1);
+            var fsDest = schedule1.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment[0];
+
+            var closeResponse = await sessionManager.CloseSession(session);
+            closeResponse.Should().Be("Approved");
         }
 
         [TestMethod]
@@ -94,7 +102,12 @@ namespace SabreClientTest
                 //    schedule.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment;
 
                 var req = GetBargainRequest();
-                var t = JsonConvert.SerializeObject(req);
+
+                var jss = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+
+                var reqSer = JsonConvert.SerializeObject(req, jss);
+                _logger.Debug(reqSer);
+
                 var bargainFinderMax = await client.GetBargainFinderMax(session, req);
 
                 bargainFinderMax.Should().NotBeNull();
@@ -104,7 +117,7 @@ namespace SabreClientTest
                 _logger.Debug(bfmAirLowFareSearchRS);
 
                 var its = ((BFM.OTA_AirLowFareSearchRSPricedItineraries)bargainFinderMax.OTA_AirLowFareSearchRS.Items.FirstOrDefault(s => s is BFM.OTA_AirLowFareSearchRSPricedItineraries)).PricedItinerary.First();
-                
+
                 foreach (var item in bargainFinderMax.OTA_AirLowFareSearchRS.Items)
                 {
                     item.Should().NotBeOfType<BFM.ErrorsType>();
@@ -120,7 +133,7 @@ namespace SabreClientTest
             {
                 throw;
             }
-            
+
         }
 
         [TestMethod]
@@ -131,14 +144,15 @@ namespace SabreClientTest
 
             var odi = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment
             {
-                DepartureDateTime = "2019-02-21T09:30",
-                FlightNumber = "1815",
+                DepartureDateTime = "2019-04-16T11:02:00",
+                FlightNumber = "1366",
                 NumberInParty = "1",
                 ResBookDesigCode = "Y",
                 Status = "NN",
                 InstantPurchase = false,
-                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = "JFK" },
-                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = "DL", FlightNumber = "1815" },
+                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = "LAX" },
+                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = "AA", FlightNumber = "1366" },
+                OperatingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOperatingAirline { Code="AA"},
                 OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = "LAS" }
             };
 
@@ -150,21 +164,55 @@ namespace SabreClientTest
                 IgnoreOnError = true,
                 OTA_AirBookRQ = new Enh.EnhancedAirBookRQOTA_AirBookRQ
                 {
-                    OriginDestinationInformation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment[1]
+                    HaltOnStatus = new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus[] { new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus { Code = "UC" } },
+                    RetryRebook = new Enh.EnhancedAirBookRQOTA_AirBookRQRetryRebook { Option = true },
+                    RedisplayReservation = new Enh.EnhancedAirBookRQOTA_AirBookRQRedisplayReservation
+                    {
+                        NumAttempts = "5",
+                        WaitInterval = "2000"
+                    },
+                    OriginDestinationInformation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment[]
                     {
                         odi
                     }
                 },
                 PostProcessing = new Enh.EnhancedAirBookRQPostProcessing
                 {
-                    IgnoreAfter = true,
-                    //RedisplayReservation = new Enh.EnhancedAirBookRQPostProcessingRedisplayReservation()
+                    IgnoreAfter = false,
+                    RedisplayReservation = new Enh.EnhancedAirBookRQPostProcessingRedisplayReservation { WaitInterval="5000"}
                 },
-                //PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = false, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } }
-                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = true/*, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } */}
+                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = false, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "PCOLDH" } },
+                //OTA_AirPriceRQ = new Enh.EnhancedAirBookRQOTA_AirPriceRQ[]
+                //{
+                //    new Enh.EnhancedAirBookRQOTA_AirPriceRQ
+                //    {
+                //        PriceRequestInformation = new Enh.EnhancedAirBookRQOTA_AirPriceRQPriceRequestInformation
+                //        {
+                //            OptionalQualifiers=new Enh.EnhancedAirBookRQOTA_AirPriceRQPriceRequestInformationOptionalQualifiers
+                //            {
+                //                PricingQualifiers = new Enh.EnhancedAirBookRQOTA_AirPriceRQPriceRequestInformationOptionalQualifiersPricingQualifiers
+                //                {
+                //                    CurrencyCode = "USD",
+                //                    PassengerType = new Enh.EnhancedAirBookRQOTA_AirPriceRQPriceRequestInformationOptionalQualifiersPricingQualifiersPassengerType[]
+                //                    {
+                //                        new Enh.EnhancedAirBookRQOTA_AirPriceRQPriceRequestInformationOptionalQualifiersPricingQualifiersPassengerType
+                //                        {
+                //                            Code="ADT",
+                //                            Quantity="1",
+                //                            Force=true
+                //                        }
+                //                    }
+                //                }
+                //            }
+                //        }
+                //    }
+                //}
             };
             var schedule = await client.GetEnhancedAirBook(session, enhacnedReq);
             schedule.Should().NotBeNull();
+
+            var resp = JsonConvert.SerializeObject(schedule.EnhancedAirBookRS);
+            _logger.Debug(resp);
 
             var response = await sessionManager.CloseSession(session);
             response.Should().Be("Approved");
@@ -185,14 +233,14 @@ namespace SabreClientTest
             response.Should().Be("Approved");
         }
 
-        private static AirSchedService.OTA_AirScheduleRQ GetFlightScheduleRequest()
+        private static AirSchedService.OTA_AirScheduleRQ GetFlightScheduleRequest(string originLocation, string destinationLocation, string departureDateTime)
         {
             //string originLocation = "DFW";
             //string destinationLocation = "LHR";
             //string departureDateTime = "12-21";
-            string originLocation = "LAS";
-            string destinationLocation = "JFK";
-            string departureDateTime = "02-21";
+            //string originLocation = "LAS";
+            //string destinationLocation = "JFK";
+            //string departureDateTime = "2019-02-21";
             string arrivalDateTime = null;
             AirSchedService.OTA_AirScheduleRQOriginDestinationInformationFlightSegmentConnectionLocations connectionLocations = null;
 
@@ -237,65 +285,34 @@ namespace SabreClientTest
 
             var odi1 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
             {
-                Item = "2019-03-09T00:00:00",
+                Item = "2019-04-16T13:45:00",
+                DepartureWindow = "11001500",
                 RPH = "1",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "TPE" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "HKG" },
-                TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
-                {
-                    SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
-                    {
-                        Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.X,
-                        CodeSpecified = true
-                    },
-                    IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    {
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CX"
-                        }
-                    },
-                    Baggage = new BFM.BaggageType { FreePieceRequired = true }
-                }
+                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "LAS" },
+                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "LAX" },
+                //TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
+                //{
+                //    SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
+                //    {
+                //        Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.X,
+                //        CodeSpecified = true
+                //    },
+                //    IncludeVendorPref = new BFM.IncludeVendorPrefType[]
+                //    {
+                //        new BFM.IncludeVendorPrefType
+                //        {
+                //            Code = "B6"
+                //        }
+                //    }
+                //}
             };
-            var odi2 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
-            {
-                Item = "2019-03-14T00:00:00",
-                RPH = "2",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "HKG" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "EWR" },
-                TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
-                {
-                    SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
-                    {
-                        Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.O,
-                        CodeSpecified = true
-                    },
-                    IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    {
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CX"
-                        }
-                    },
-                    Baggage = new BFM.BaggageType { FreePieceRequired = true }
-                }
-            };
-            var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[2] { odi1, odi2 };
+            var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[] { odi1 };
 
             var travelPreferences = new BFM.AirSearchPrefsType
             {
-                CabinPref = new BFM.CabinPrefType[1] //
-                {
-                    new BFM.CabinPrefType
-                    {
-                        Cabin = BFM.CabinType.Y,
-                        PreferLevel = BFM.PreferLevelType.Preferred
-                    }
-                },
                 TPA_Extensions = new BFM.AirSearchPrefsTypeTPA_Extensions
                 {
-                    TripType = new BFM.AirSearchPrefsTypeTPA_ExtensionsTripType { Value = BFM.AirTripType.OpenJaw }
+                    TripType = new BFM.AirSearchPrefsTypeTPA_ExtensionsTripType { Value = BFM.AirTripType.OneWay }
                 }
             };
 
@@ -311,7 +328,8 @@ namespace SabreClientTest
                             new BFM.PassengerTypeQuantityType
                             {
                                 Code = "ADT",
-                                Quantity = "1"
+                                Quantity = "1",
+                                Changeable=false
                             }
                         }
                     }
@@ -346,6 +364,7 @@ namespace SabreClientTest
                 TravelerInfoSummary = travelerInfoSummary,
             };
 
+
             return req;
         }
 
@@ -364,7 +383,7 @@ namespace SabreClientTest
                 DepartureDateTime = fs.DepartureDateTime,
                 ArrivalDateTime = fs.ArrivalDateTime,
                 FlightNumber = fs.FlightNumber,
-                NumberInParty = fs.NumberInParty,
+                NumberInParty = "1",
                 ResBookDesigCode = fs.ResBookDesigCode,
                 Status = "NN",
                 DestinationLocation = new SabreApiClient.OTA_AirBookLLSRQ.OTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = fs.ArrivalAirport.LocationCode },
@@ -373,7 +392,7 @@ namespace SabreClientTest
                 MarketingAirline = new SabreApiClient.OTA_AirBookLLSRQ.OTA_AirBookRQFlightSegmentMarketingAirline
                 {
                     Code = fs.MarketingAirline.Code,
-                    FlightNumber = fs.OperatingAirline.FlightNumber //"1717"
+                    FlightNumber = fs.OperatingAirline.FlightNumber
                 },
                 OperatingAirline = new SabreApiClient.OTA_AirBookLLSRQ.OTA_AirBookRQFlightSegmentOperatingAirline
                 {

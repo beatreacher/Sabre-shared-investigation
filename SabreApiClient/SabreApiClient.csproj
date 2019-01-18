@@ -68,6 +68,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\CreatePassengerNameRecordRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\EnhancedAirBookRQ\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -157,6 +162,61 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\BargainFinderMax\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\CommonSimpleTypes_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\CreatePassengerNameRecord2.wsdl" />
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\CreatePassengerNameRecord2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\CreatePassengerNameRecord21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\CreatePassengerNameRecord22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\CreatePassengerNameRecordCommonTypes1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\SabreApiClient.CreatePassengerNameRecordRQ.CreatePassengerNameRecordRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\SabreApiClient.CreatePassengerNameRecordRQ.CreatePassengerNameRecordRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\SabreApiClient.CreatePassengerNameRecordRQ.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\SabreApiClient.CreatePassengerNameRecordRQ.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\SpCommonSimpleTypes_v3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\STL2_MsgCommon_v02_01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\STL2_Payload_v02_01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\EnhancedAirBookRQ\CommonSimpleTypes_v1.xsd">
@@ -397,6 +457,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BargainFinderMax\" />
+    <WCFMetadataStorage Include="Connected Services\CreatePassengerNameRecordRQ\" />
     <WCFMetadataStorage Include="Connected Services\EnhancedAirBookRQ\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirBookLLSRQ\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirScheduleService\" />
@@ -471,6 +532,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\EnhancedAirBookRQ\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CreatePassengerNameRecordRQ\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

@@ -4,3 +4,7 @@ AutoFixture.4.6.0
 /packages/
 /ApiService/bin/*.dll
 /ApiService/bin
+UpgradeLog.htm
+/UpgradeLog2.htm
+/UpgradeLog3.htm
+/UpgradeLog4.htm

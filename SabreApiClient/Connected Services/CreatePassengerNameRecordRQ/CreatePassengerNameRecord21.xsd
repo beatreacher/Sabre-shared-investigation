@@ -1,0 +1,2037 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:rct="http://services.sabre.com/sp/reservation/common/types/v1" xmlns:spct="http://services.sabre.com/sp/common/simple/v3" xmlns:xsd="http://services.sabre.com/STL_MessageCommon/v02_01" xmlns:stlp="http://services.sabre.com/STL_Payload/v02_01" xmlns:cpst="http://services.sabre.com/cp/common/simple/v1" elementFormDefault="qualified" targetNamespace="http://services.sabre.com/sp/reservation/v2_2" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="built-ins/STL2_MsgCommon_v02_01.xsd" namespace="http://services.sabre.com/STL_MessageCommon/v02_01" />
+  <import schemaLocation="built-ins/STL2_Payload_v02_01.xsd" namespace="http://services.sabre.com/STL_Payload/v02_01" />
+  <import schemaLocation="built-ins/SpCommonSimpleTypes_v3.xsd" namespace="http://services.sabre.com/sp/common/simple/v3" />
+  <import schemaLocation="CommonSimpleTypes_v1.xsd" namespace="http://services.sabre.com/cp/common/simple/v1" />
+  <import schemaLocation="CreatePassengerNameRecordCommonTypes1.0.0.xsd" namespace="http://services.sabre.com/sp/reservation/common/types/v1" />
+  <element name="CreatePassengerNameRecordRQ">
+    <complexType>
+      <complexContent mixed="false">
+        <extension base="stlp:STL_Request_Payload">
+          <sequence>
+            <element minOccurs="0" name="Profile">
+              <complexType>
+                <sequence>
+                  <element name="UniqueID">
+                    <complexType>
+                      <attribute name="ID" type="string" use="required" />
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="TravelItineraryAddInfo">
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="AgencyInfo">
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="Address">
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="AddressLine" type="string" />
+                              <element name="CityName" type="string" />
+                              <element minOccurs="0" name="CountryCode" type="string" />
+                              <element minOccurs="0" name="PostalCode" type="string" />
+                              <element minOccurs="0" name="StateCountyProv">
+                                <complexType>
+                                  <attribute name="StateCode" type="string" use="required" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="StreetNmbr" type="string" />
+                              <element minOccurs="0" name="VendorPrefs">
+                                <complexType>
+                                  <sequence>
+                                    <element name="Airline">
+                                      <complexType>
+                                        <attribute name="Hosted" type="boolean" use="required" />
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="Ticketing">
+                          <complexType>
+                            <attribute name="PseudoCityCode" type="string" use="optional" />
+                            <attribute name="QueueNumber" type="integer" use="optional" />
+                            <attribute name="QueueName" type="string" use="optional" />
+                            <attribute name="ShortText" type="string" use="optional" />
+                            <attribute name="TicketTimeLimit" type="spct:dateTime" use="optional" />
+                            <attribute name="TicketType" type="string" use="required" />
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="CustomerInfo">
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="ContactNumbers">
+                          <complexType>
+                            <sequence>
+                              <element maxOccurs="unbounded" name="ContactNumber">
+                                <complexType>
+                                  <attribute name="InsertAfter" type="integer" use="optional" />
+                                  <attribute name="LocationCode" type="string" use="optional" />
+                                  <attribute name="NameNumber" type="string" use="optional" />
+                                  <attribute name="Phone" type="string" use="required" />
+                                  <attribute name="PhoneUseType" type="string" use="required" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="Corporate">
+                          <complexType>
+                            <sequence>
+                              <element name="ID" type="string" />
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="CreditCardData">
+                          <complexType>
+                            <choice>
+                              <element name="BillingInformation">
+                                <complexType>
+                                  <choice>
+                                    <element name="PostalCode" type="rct:shortTrimmedString" />
+                                    <element name="Zip" type="rct:shortTrimmedString" />
+                                  </choice>
+                                  <attribute name="cardHolderName" type="rct:shortTrimmedString" use="required" />
+                                  <attribute name="streetAddress" type="rct:shortTrimmedString" use="required" />
+                                  <attribute name="city" type="rct:shortTrimmedString" use="required" />
+                                  <attribute name="stateOrProvince" type="rct:shortTrimmedString" use="optional" />
+                                </complexType>
+                              </element>
+                              <element name="PreferredCustomer">
+                                <complexType>
+                                  <attribute default="false" name="ind" type="boolean" use="optional" />
+                                </complexType>
+                              </element>
+                            </choice>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" maxOccurs="unbounded" name="CustLoyalty">
+                          <complexType>
+                            <attribute name="MembershipID" type="string" use="required" />
+                            <attribute name="NameNumber" type="string" use="optional" />
+                            <attribute name="ProgramID" type="string" use="required" />
+                            <attribute name="SegmentNumber" type="string" use="optional" />
+                            <attribute name="TravelingCarrierCode" type="string" use="optional" />
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="CustomerIdentifier" type="string" />
+                        <element minOccurs="0" maxOccurs="unbounded" name="Email">
+                          <complexType>
+                            <attribute name="Address" type="string" use="required" />
+                            <attribute name="NameNumber" type="string" use="optional" />
+                            <attribute name="ShortText" type="string" use="optional" />
+                            <attribute name="Type" use="optional">
+                              <simpleType>
+                                <restriction base="string">
+                                  <enumeration value="BC" />
+                                  <enumeration value="CC" />
+                                  <enumeration value="FR" />
+                                  <enumeration value="TO" />
+                                </restriction>
+                              </simpleType>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" maxOccurs="unbounded" name="PersonName">
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="GivenName" type="string" />
+                              <element minOccurs="0" name="GroupInfo">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="VendorPrefs">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Airline">
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Name" type="string" use="required" />
+                                  <attribute name="NumSeatsRemaining" type="integer" use="required" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Surname" type="string" />
+                            </sequence>
+                            <attribute name="Infant" type="boolean" use="optional" />
+                            <attribute name="NameNumber" type="string" use="optional" />
+                            <attribute name="NameReference" type="string" use="optional" />
+                            <attribute name="PassengerType" type="string" use="optional" />
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="AirBook">
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" maxOccurs="1" name="RetryRebook">
+                    <complexType>
+                      <attribute name="Option" type="boolean" use="required" />
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" maxOccurs="unbounded" name="HaltOnStatus">
+                    <complexType>
+                      <attribute name="Code" use="required">
+                        <simpleType>
+                          <restriction base="string">
+                            <minLength value="1" />
+                          </restriction>
+                        </simpleType>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element name="OriginDestinationInformation">
+                    <complexType>
+                      <sequence>
+                        <element maxOccurs="16" name="FlightSegment">
+                          <complexType>
+                            <sequence>
+                              <element name="DestinationLocation">
+                                <complexType>
+                                  <attribute name="LocationCode" type="string" use="required" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Equipment">
+                                <complexType>
+                                  <attribute name="AirEquipType" type="string" use="required" />
+                                </complexType>
+                              </element>
+                              <element name="MarketingAirline">
+                                <complexType>
+                                  <attribute name="Code" type="string" use="required" />
+                                  <attribute name="FlightNumber" type="string" use="required" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="MarriageGrp">
+                                <simpleType>
+                                  <restriction base="string">
+                                    <enumeration value="O" />
+                                    <enumeration value="I" />
+                                  </restriction>
+                                </simpleType>
+                              </element>
+                              <element minOccurs="0" name="OperatingAirline">
+                                <complexType>
+                                  <attribute name="Code" type="string" use="required" />
+                                </complexType>
+                              </element>
+                              <element name="OriginLocation">
+                                <complexType>
+                                  <attribute name="LocationCode" type="string" use="required" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                            <attribute name="ArrivalDateTime" type="spct:dateTime" use="optional" />
+                            <attribute name="BrandID" type="string" use="optional" />
+                            <attribute name="DepartureDateTime" type="spct:dateTime" use="optional" />
+                            <attribute name="FlightNumber" type="string" use="required" />
+                            <attribute name="NumberInParty" type="string" use="required" />
+                            <attribute name="ResBookDesigCode" type="string" use="required" />
+                            <attribute name="Status" type="string" use="required" />
+                            <attribute name="InstantPurchase" type="boolean" use="optional" />
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="RedisplayReservation">
+                    <complexType>
+                      <attribute name="NumAttempts" use="required">
+                        <simpleType>
+                          <restriction base="integer">
+                            <minInclusive value="1" />
+                            <maxInclusive value="10" />
+                          </restriction>
+                        </simpleType>
+                      </attribute>
+                      <attribute name="WaitInterval" use="required">
+                        <simpleType>
+                          <restriction base="integer">
+                            <minInclusive value="100" />
+                            <maxInclusive value="10000" />
+                          </restriction>
+                        </simpleType>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element minOccurs="0" maxOccurs="10" name="AirPrice">
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="PriceComparison">
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="AcceptablePriceIncrease">
+                          <complexType>
+                            <choice>
+                              <element name="Amount" type="cpst:positiveAmount" />
+                              <element name="Percent" type="cpst:positiveAmount" />
+                            </choice>
+                            <attribute default="false" name="HaltOnNonAcceptablePrice" type="boolean" />
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="AcceptablePriceDecrease">
+                          <complexType>
+                            <choice>
+                              <element name="Amount" type="cpst:positiveAmount" />
+                              <element name="Percent" type="cpst:positiveAmount" />
+                            </choice>
+                            <attribute default="false" name="HaltOnNonAcceptablePrice" type="boolean" />
+                          </complexType>
+                        </element>
+                      </sequence>
+                      <attribute name="AmountSpecified" type="cpst:positiveAmount" use="required" />
+                    </complexType>
+                  </element>
+                  <element name="PriceRequestInformation">
+                    <complexType>
+                      <sequence>
+                        <element name="OptionalQualifiers">
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="FlightQualifiers">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="VendorPrefs">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Airline">
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="FOP_Qualifiers">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="BasicFOP">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="CC_Info">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="PaymentCard">
+                                                  <complexType>
+                                                    <attribute name="Code" type="string" use="optional" />
+                                                    <attribute name="ExpireDate" type="spct:expireDate" use="optional" />
+                                                    <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                    <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                    <attribute name="Number" type="integer" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                              <attribute name="Suppress" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="Type" type="string" use="optional" />
+                                        <attribute name="Reference" type="integer" use="optional" />
+                                        <attribute name="Virtual" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="BSP_Ticketing">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="MultipleFOP">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="Fare">
+                                                  <complexType>
+                                                    <attribute name="Amount" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_One">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="Code" type="string" use="optional" />
+                                                                <attribute name="ExpireDate" type="spct:expireDate" use="optional" />
+                                                                <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="optional" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                          <attribute name="Suppress" type="boolean" use="optional" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                    <attribute name="Reference" type="integer" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_Two">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="Code" type="string" use="optional" />
+                                                                <attribute name="ExpireDate" type="spct:expireDate" use="optional" />
+                                                                <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="optional" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                          <attribute name="Suppress" type="boolean" use="optional" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                    <attribute name="Reference" type="integer" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="MultipleMiscFOP">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="Fare">
+                                                  <complexType>
+                                                    <attribute name="Amount" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_One">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="Code" type="string" use="optional" />
+                                                                <attribute name="ExpireDate" type="spct:expireDate" use="optional" />
+                                                                <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="optional" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                          <attribute name="Suppress" type="boolean" use="optional" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                    <attribute name="Reference" type="integer" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_Two">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="ExtendedPayment">
+                                                        <complexType>
+                                                          <attribute name="NumMonths" type="integer" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="required" />
+                                                    <attribute name="Reference" type="integer" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element minOccurs="0" name="Taxes">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element maxOccurs="2" name="Tax">
+                                                        <complexType>
+                                                          <attribute name="Amount" type="string" use="required" />
+                                                          <attribute name="TaxCode" type="string" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="PayLaterPlan">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="Fare">
+                                                  <complexType>
+                                                    <attribute name="Amount" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="Code" type="string" use="optional" />
+                                                                <attribute name="ExpireDate" type="spct:expireDate" use="optional" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="optional" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                    <attribute name="Reference" type="string" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="Installment">
+                                                  <complexType>
+                                                    <attribute name="Count" type="string" use="required" />
+                                                    <attribute name="PayLaterReferenceNumber" type="string" use="required" />
+                                                    <attribute name="Reference" type="integer" use="optional" />
+                                                    <attribute name="Value" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="MultipleCC_FOP">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Fare">
+                                            <complexType>
+                                              <attribute name="Amount" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element name="CC_One">
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="CC_Info">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element name="PaymentCard">
+                                                        <complexType>
+                                                          <attribute name="Code" type="string" use="required" />
+                                                          <attribute name="ExpireDate" type="spct:expireDate" use="required" />
+                                                          <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                          <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                          <attribute name="Number" type="integer" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Suppress" type="boolean" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                          <element name="CC_Two">
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="CC_Info">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element name="PaymentCard">
+                                                        <complexType>
+                                                          <attribute name="Code" type="string" use="required" />
+                                                          <attribute name="ExpireDate" type="spct:expireDate" use="required" />
+                                                          <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                          <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                          <attribute name="Number" type="integer" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Suppress" type="boolean" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="SabreSonicTicketing">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="BasicFOP">
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="CC_Info">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element name="PaymentCard">
+                                                        <complexType>
+                                                          <attribute name="CardSecurityCode" type="integer" use="optional" />
+                                                          <attribute name="Code" type="string" use="required" />
+                                                          <attribute name="ExpireDate" type="spct:expireDate" use="required" />
+                                                          <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                          <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                          <attribute name="Number" type="integer" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Suppress" type="boolean" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                              <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                              <attribute name="Type" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="EnhancedMultipleFOP">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="Fare">
+                                                  <complexType>
+                                                    <attribute name="Amount" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_One">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="CardSecurityCode" type="string" use="optional" />
+                                                                <attribute name="Code" type="string" use="required" />
+                                                                <attribute name="ExpireDate" type="spct:expireDate" use="required" />
+                                                                <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="required" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_Two">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="CardSecurityCode" type="string" use="optional" />
+                                                                <attribute name="Code" type="string" use="required" />
+                                                                <attribute name="ExpireDate" type="spct:expireDate" use="required" />
+                                                                <attribute name="ExtendedPayment" type="integer" use="optional" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="required" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="Taxes">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element name="Tax">
+                                                        <complexType>
+                                                          <attribute name="Amount" type="string" use="required" />
+                                                          <attribute name="TaxCode" type="string" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="MultipleFOP">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="Fare">
+                                                  <complexType>
+                                                    <attribute name="Amount" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_One">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="Code" type="string" use="required" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="required" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="FOP_Two">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="CC_Info">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="PaymentCard">
+                                                              <complexType>
+                                                                <attribute name="Code" type="string" use="required" />
+                                                                <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                                                <attribute name="Number" type="integer" use="required" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="Type" type="string" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element minOccurs="0" name="Taxes">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element name="Tax">
+                                                        <complexType>
+                                                          <attribute name="Amount" type="string" use="required" />
+                                                          <attribute name="TaxCode" type="string" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="IgnoreStoredFOP" type="boolean" use="optional" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="MiscQualifiers">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="AirExtras">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="CustLoyalty">
+                                            <complexType>
+                                              <attribute name="ProgramID" type="string" use="required" />
+                                              <attribute name="TierLevel" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="Qualifier" type="string" />
+                                          <element minOccurs="0" maxOccurs="unbounded" name="Ticketing">
+                                            <complexType>
+                                              <attribute name="EndNumber" type="integer" use="optional" />
+                                              <attribute name="eTicketNumber" type="integer" use="optional" />
+                                              <attribute name="Number" type="integer" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="Ind" type="boolean" use="required" />
+                                        <attribute name="Summary" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="BaggageAllowance">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Segment">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                              <attribute name="EndNumber" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="Number" type="string" use="optional" />
+                                        <attribute name="Weight" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Commission">
+                                      <complexType>
+                                        <attribute name="Amount" type="string" use="optional" />
+                                        <attribute name="Percent" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Customer">
+                                      <complexType>
+                                        <attribute name="Number" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Endorsements">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Text" type="string" />
+                                        </sequence>
+                                        <attribute name="Override" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="HemisphereCode" type="string" />
+                                    <element minOccurs="0" name="JourneyCode" type="string" />
+                                    <element minOccurs="0" name="MultiTicket">
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="TourCode">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="SuppressFareReplaceWithBT">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="SuppressFareReplaceWithIT">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="SuppressIT">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="SuppressITSupressFare">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Text" type="string" />
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="ValidationMethod" type="string" />
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="PricingQualifiers">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="Account">
+                                      <complexType>
+                                        <sequence>
+                                          <element maxOccurs="4" name="Code" type="string" />
+                                        </sequence>
+                                        <attribute name="Force" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="AlternativePricing">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Overrides">
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="MatchNoMatch">
+                                                  <complexType>
+                                                    <attribute name="Ind" type="boolean" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element minOccurs="0" name="NoMatch">
+                                                  <complexType>
+                                                    <attribute name="Ind" type="boolean" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="NoAvailCheck" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="BankersSellingRate" type="string" />
+                                    <element minOccurs="0" name="BargainFinder">
+                                      <complexType>
+                                        <attribute name="Historical" type="boolean" use="optional" />
+                                        <attribute name="Rebook" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="5" name="BasicEconomyExclude" type="string" />
+                                    <element minOccurs="0" maxOccurs="unbounded" name="Brand">
+                                      <complexType>
+                                        <simpleContent>
+                                          <extension base="string">
+                                            <attribute name="RPH" type="integer" use="optional" />
+                                          </extension>
+                                        </simpleContent>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="BuyingDate" type="spct:date" />
+                                    <element minOccurs="0" name="Cabin" type="string" />
+                                    <element minOccurs="0" maxOccurs="unbounded" name="CommandPricing">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Discount">
+                                            <complexType>
+                                              <attribute name="Amount" type="string" use="optional" />
+                                              <attribute name="AuthCode" type="string" use="optional" />
+                                              <attribute name="Percent" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="FareBasis">
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="optional" />
+                                              <attribute name="TicketDesignator" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="RPH" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="4" name="CommissionContract" type="string" />
+                                    <element minOccurs="0" name="Corporate">
+                                      <complexType>
+                                        <sequence>
+                                          <element maxOccurs="4" name="ID" type="string" />
+                                        </sequence>
+                                        <attribute name="Force" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Fare">
+                                      <complexType>
+                                        <attribute name="Type" type="string" use="required" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="FareOptions">
+                                      <complexType>
+                                        <attribute name="ASLBreakdown" type="boolean" use="optional" />
+                                        <attribute name="ASLIgnore" type="boolean" use="optional" />
+                                        <attribute name="Excursion" type="boolean" use="optional" />
+                                        <attribute name="HandlingFees" type="boolean" use="optional" />
+                                        <attribute name="Net" type="boolean" use="optional" />
+                                        <attribute name="Private" type="boolean" use="optional" />
+                                        <attribute name="Public" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="ItineraryOptions">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="BreakFare">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="ForceConnection">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="ForceStopOver">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="OverrideBreak">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="SegmentSelect">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                              <attribute name="EndNumber" type="string" use="optional" />
+                                              <attribute name="RPH" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="SideTrip">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                              <attribute name="EndNumber" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="ManuallyAdjustedSellingLevel">
+                                      <complexType>
+                                        <attribute name="MarkDown" type="decimal" use="optional" />
+                                        <attribute name="MarkUp" type="decimal" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="NameSelect">
+                                      <complexType>
+                                        <attribute name="NameNumber" type="string" use="required" />
+                                        <attribute name="EndNameNumber" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="NetRemit">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="CAR">
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Cash">
+                                            <complexType>
+                                              <attribute name="CurrencyCode" type="string" use="optional" />
+                                              <attribute name="Amount" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Credit">
+                                            <complexType>
+                                              <attribute name="Amount" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="Code" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Overrides">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="FuelSurchargeOverride">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="GoverningCarrierOverride">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="Airline">
+                                                  <complexType>
+                                                    <attribute name="Code" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                              <attribute name="RPH" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="NoAdvancePurchase">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="NoFareRestrictions">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="NoMinMaxStay">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="NoPenalty">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Purchase">
+                                            <complexType>
+                                              <attribute name="LocationCode" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Ticketing">
+                                            <complexType>
+                                              <attribute name="LocationCode" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="PassengerStatus" type="string" />
+                                    <element minOccurs="0" maxOccurs="unbounded" name="PassengerType">
+                                      <complexType>
+                                        <attribute name="Code" type="string" use="required" />
+                                        <attribute name="Force" type="boolean" use="optional" />
+                                        <attribute name="Quantity" type="string" use="required" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="PlusUp">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="TicketDesignator" type="string" />
+                                        </sequence>
+                                        <attribute name="Amount" type="string" use="required" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="RetailerRuleQualifier">
+                                      <complexType>
+                                        <sequence>
+                                          <element maxOccurs="4" name="Qualifier" type="string" />
+                                        </sequence>
+                                        <attribute name="Force" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="ShipsRegistry" type="string" />
+                                    <element minOccurs="0" name="SpanishLargeFamilyDiscountLevel">
+                                      <simpleType>
+                                        <restriction base="string">
+                                          <enumeration value="1" />
+                                          <enumeration value="2" />
+                                        </restriction>
+                                      </simpleType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="SpecificFare">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="FareBasis" type="string" />
+                                        </sequence>
+                                        <attribute name="RPH" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="SpecificPenalty">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Changeable">
+                                            <complexType>
+                                              <attribute name="Any" type="boolean" use="optional" />
+                                              <attribute name="CurrencyCode" type="string" use="optional" />
+                                              <attribute name="MaxPenalty" type="string" use="optional" />
+                                              <attribute name="BeforeDeparture" type="boolean" use="optional" />
+                                              <attribute name="AfterDeparture" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="EitherOr">
+                                            <complexType>
+                                              <attribute name="Any" type="boolean" use="optional" />
+                                              <attribute name="CurrencyCode" type="string" use="optional" />
+                                              <attribute name="MaxPenalty" type="string" use="optional" />
+                                              <attribute name="BeforeDeparture" type="boolean" use="optional" />
+                                              <attribute name="AfterDeparture" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Refundable">
+                                            <complexType>
+                                              <attribute name="Any" type="boolean" use="optional" />
+                                              <attribute name="CurrencyCode" type="string" use="optional" />
+                                              <attribute name="MaxPenalty" type="string" use="optional" />
+                                              <attribute name="BeforeDeparture" type="boolean" use="optional" />
+                                              <attribute name="AfterDeparture" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="AdditionalInfo" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Taxes">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="NoTax">
+                                            <complexType>
+                                              <attribute name="Ind" type="boolean" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="TaxExempt">
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="TaxOverride">
+                                            <complexType>
+                                              <attribute name="Amount" type="string" use="required" />
+                                              <attribute name="Code" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="ValidityDates">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="NotValidAfter" type="spct:date" />
+                                          <element minOccurs="0" name="NotValidBefore" type="spct:date" />
+                                          <element name="Segment">
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="required" />
+                                              <attribute name="EndNumber" type="string" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="AlternateCurrencyCode" type="string" use="optional" />
+                                  <attribute name="CurrencyCode" type="string" use="optional" />
+                                  <attribute name="AggregatedContentExclude" type="boolean" use="optional" />
+                                  <attribute name="FareFocusExclude" type="boolean" use="optional" />
+                                  <attribute name="NoDate" type="boolean" use="optional" />
+                                  <attribute name="RoundTheWorld" type="boolean" use="optional" />
+                                  <attribute name="Source" type="string" use="optional" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                      <attribute name="AlternativePricing" type="boolean" use="optional" />
+                      <attribute name="FutureTicket" type="boolean" use="optional" />
+                      <attribute name="Manual" type="boolean" use="optional" />
+                      <attribute name="Retain" type="boolean" use="optional" />
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="AirTax">
+              <complexType>
+                <sequence>
+                  <element name="ItineraryInfos">
+                    <complexType>
+                      <sequence>
+                        <element maxOccurs="50" name="ItineraryInfo">
+                          <complexType>
+                            <sequence>
+                              <element name="ReservationItems">
+                                <complexType>
+                                  <sequence>
+                                    <element name="Item">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="AirFareInfo">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="PTC_FareBreakdown">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="FareBasisCode">
+                                                        <simpleType>
+                                                          <restriction base="string">
+                                                            <minLength value="1" />
+                                                            <maxLength value="15" />
+                                                            <pattern value="[A-Z0-9]+(/[A-Z0-9]+)?" />
+                                                          </restriction>
+                                                        </simpleType>
+                                                      </element>
+                                                      <element name="PassengerFare">
+                                                        <complexType>
+                                                          <sequence>
+                                                            <element name="BaseFare">
+                                                              <complexType>
+                                                                <attribute name="Amount" type="decimal" use="required" />
+                                                                <attribute name="CurrencyCode" type="string" use="optional" />
+                                                              </complexType>
+                                                            </element>
+                                                            <element minOccurs="0" name="EquivFare">
+                                                              <complexType>
+                                                                <attribute name="Amount" type="decimal" use="optional" />
+                                                                <attribute name="CurrencyCode" type="string" use="optional" />
+                                                              </complexType>
+                                                            </element>
+                                                          </sequence>
+                                                          <attribute name="AncillaryServiceCode" type="string" use="optional" />
+                                                        </complexType>
+                                                      </element>
+                                                      <element name="PassengerType">
+                                                        <complexType>
+                                                          <attribute name="Quantity" type="integer" use="optional" />
+                                                          <attribute name="Code" type="string" use="required" />
+                                                          <attribute name="Age" type="integer" use="optional" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                          <element maxOccurs="unbounded" name="FlightSegment">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="ArrivalAirport">
+                                                  <complexType>
+                                                    <attribute name="LocationCode" type="string" use="required" />
+                                                    <attribute name="CodeContext" type="string" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="DepartureAirport">
+                                                  <complexType>
+                                                    <attribute name="LocationCode" type="string" use="required" />
+                                                    <attribute name="CodeContext" type="string" use="optional" />
+                                                  </complexType>
+                                                </element>
+                                                <element name="Equipment">
+                                                  <complexType>
+                                                    <attribute name="AirEquipType" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element minOccurs="0" name="FareBreakInfo">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="BaseFare">
+                                                        <complexType>
+                                                          <attribute name="Amount" type="decimal" use="required" />
+                                                          <attribute name="CurrencyCode" type="string" use="optional" />
+                                                        </complexType>
+                                                      </element>
+                                                      <element minOccurs="0" name="EquivFare">
+                                                        <complexType>
+                                                          <attribute name="Amount" type="decimal" use="optional" />
+                                                          <attribute name="CurrencyCode" type="string" use="optional" />
+                                                        </complexType>
+                                                      </element>
+                                                      <element minOccurs="0" name="FareBasisCode">
+                                                        <simpleType>
+                                                          <restriction base="string">
+                                                            <minLength value="1" />
+                                                            <maxLength value="15" />
+                                                            <pattern value="[A-Z0-9]+(/[A-Z0-9]+)?" />
+                                                          </restriction>
+                                                        </simpleType>
+                                                      </element>
+                                                    </sequence>
+                                                    <attribute name="SideTripStartInd" type="boolean" use="optional" />
+                                                    <attribute name="SideTripEndInd" type="boolean" use="optional" />
+                                                    <attribute name="SideTripNumber" type="integer" use="optional" />
+                                                    <attribute name="FareComponentNumber" type="integer" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element minOccurs="0" name="HiddenStops">
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element maxOccurs="unbounded" name="HiddenStop">
+                                                        <complexType>
+                                                          <attribute name="LocationCode" type="string" use="required" />
+                                                        </complexType>
+                                                      </element>
+                                                    </sequence>
+                                                  </complexType>
+                                                </element>
+                                                <element name="MarketingAirline">
+                                                  <complexType>
+                                                    <attribute name="Code" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                                <element minOccurs="0" name="OperatingAirline">
+                                                  <complexType>
+                                                    <attribute name="Code" type="string" use="required" />
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                              <attribute name="DepartureDateTime" use="required">
+                                                <simpleType>
+                                                  <restriction base="string">
+                                                    <pattern value="[2][0-9]{3}-[0-1][0-9]-[0-3][0-9][T][0-9]{2}:[0-9]{2}:[0-9]{2}" />
+                                                  </restriction>
+                                                </simpleType>
+                                              </attribute>
+                                              <attribute name="ArrivalDateTime" use="required">
+                                                <simpleType>
+                                                  <restriction base="string">
+                                                    <pattern value="[2][0-9]{3}-[0-1][0-9]-[0-3][0-9][T][0-9]{2}:[0-9]{2}:[0-9]{2}" />
+                                                  </restriction>
+                                                </simpleType>
+                                              </attribute>
+                                              <attribute name="FlightNumber" type="integer" use="required" />
+                                              <attribute name="ResBookDesigCode" type="string" use="required" />
+                                              <attribute name="ForceConnectionInd" type="boolean" use="optional" />
+                                              <attribute name="ForceStopOverInd" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="RPH" type="integer" use="required" />
+                                        <attribute name="TicketingCarrier" type="string" use="required" />
+                                        <attribute name="ValidatingCarrier" type="string" use="required" />
+                                        <attribute name="SalePseudoCityCode" type="string" use="required" />
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="POS">
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="Source">
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="TPA_Extensions">
+                                <complexType>
+                                  <sequence>
+                                    <element name="UserInfo">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="AAACity">
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Action">
+                                            <complexType>
+                                              <attribute name="Code" use="required">
+                                                <simpleType>
+                                                  <restriction base="string">
+                                                    <minLength value="1" />
+                                                    <maxLength value="5" />
+                                                  </restriction>
+                                                </simpleType>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element name="AgentSine">
+                                            <complexType>
+                                              <attribute name="Code" use="required">
+                                                <simpleType>
+                                                  <restriction base="string">
+                                                    <maxLength value="3" />
+                                                  </restriction>
+                                                </simpleType>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Branch">
+                                            <complexType>
+                                              <attribute name="Code" type="integer" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element name="Partition">
+                                            <complexType>
+                                              <attribute name="ID" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element name="Service">
+                                            <complexType>
+                                              <attribute name="Name" type="string" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="SetAddress" type="string" />
+                                          <element minOccurs="0" name="Station">
+                                            <complexType>
+                                              <attribute name="Code" type="integer" use="required" />
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Transaction">
+                                            <complexType>
+                                              <attribute name="ID" type="integer" use="required" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                            </sequence>
+                            <attribute name="PseudoCityCode" type="string" use="optional" />
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="HotelBook">
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="Booking">
+                    <annotation>
+                      <documentation>Used to pass the booking key obtained from HotelPriceCheckRQ</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="key" use="required">
+                        <annotation>
+                          <documentation>key attribute name. Key cannot be empty and must not exceed 240 characters</documentation>
+                        </annotation>
+                        <simpleType>
+                          <restriction base="string">
+                            <minLength value="1" />
+                            <maxLength value="240" />
+                          </restriction>
+                        </simpleType>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="GDS_HotelBook">
+                    <annotation>
+                      <documentation>Used for GDS hotel booking</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="Customer">
+                          <annotation>
+                            <documentation>Used to pass customer related information.</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="CustLoyalty">
+                                <annotation>
+                                  <documentation>Used to pass frequent flyer number</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="MembershipID" type="string" use="required">
+                                    <annotation>
+                                      <documentation>MemberShipID</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="ProgramID" type="string" use="required">
+                                    <annotation>
+                                      <documentation>ProgramID</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="ID">
+                                <annotation>
+                                  <documentation>Used to pass Loyalty ID</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element name="Number" type="string">
+                                      <annotation>
+                                        <documentation>"Number" is used to specify the Loyalty ID number.</documentation>
+                                      </annotation>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="Guarantee">
+                          <annotation>
+                            <documentation>Used to pass guarantee details</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="CC_Info">
+                                <annotation>
+                                  <documentation>Credit Card details</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element name="PaymentCard">
+                                      <annotation>
+                                        <documentation>Payment card details</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Code" type="string" use="required">
+                                          <annotation>
+                                            <documentation>CC code</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="ExpireDate" type="string" use="required">
+                                          <annotation>
+                                            <documentation>Expiration date</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="Number" type="string" use="required">
+                                          <annotation>
+                                            <documentation>CC number</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element name="PersonName">
+                                      <annotation>
+                                        <documentation>Card holder details</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Surname" type="string">
+                                            <annotation>
+                                              <documentation>Card holder surname</documentation>
+                                            </annotation>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Text" type="string">
+                                <annotation>
+                                  <documentation>Used to specify miscellaneous payment-related information</documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                            <attribute name="Type">
+                              <annotation>
+                                <documentation>Guarantee type. Can be "GDPST - typically used for credit cards", "GDPSTH- deposit to customer", or "GDPSTT - deposit to agency</documentation>
+                              </annotation>
+                              <simpleType>
+                                <restriction base="string">
+                                  <enumeration value="G" />
+                                  <enumeration value="GAGT" />
+                                  <enumeration value="GDPST" />
+                                  <enumeration value="GC" />
+                                  <enumeration value="GCR" />
+                                  <enumeration value="GH" />
+                                  <enumeration value="GDPSTH" />
+                                  <enumeration value="GT" />
+                                  <enumeration value="GDPSTT" />
+                                </restriction>
+                              </simpleType>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="SpecialPrefs">
+                          <annotation>
+                            <documentation>Used to pass special preferences</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="Text" type="string">
+                                <annotation>
+                                  <documentation>"Text" is used to specify miscellaneous special preference information.</documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="MiscSegment">
+              <complexType>
+                <sequence>
+                  <element name="OriginLocation">
+                    <complexType>
+                      <attribute name="LocationCode" type="string" use="required" />
+                    </complexType>
+                  </element>
+                  <element name="Text" type="string" />
+                  <element name="VendorPrefs">
+                    <complexType>
+                      <sequence>
+                        <element name="Airline">
+                          <complexType>
+                            <attribute name="Code" type="string" use="required" />
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="DepartureDateTime" type="spct:date" use="required" />
+                <attribute name="InsertAfter" type="integer" use="optional" />
+                <attribute name="NumberInParty" type="integer" use="required" />
+                <attribute name="Status" type="string" use="required" />
+                <attribute name="Type" use="required">
+                  <simpleType>
+                    <restriction base="string">
+                      <enumeration value="INS" />
+                      <enumeration value="MCO" />
+                      <enumeration value="OTH" />
+                      <enumeration value="PTA" />
+                    </restriction>
+                  </simpleType>
+                </attribute>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="SpecialReqDetails">
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="AddRemark">
+                    <complexType>
+                      <sequence>
+                        <element name="RemarkInfo">
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="FOP_Remark">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="CC_Info">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="PaymentCard">
+                                            <complexType>
+                                              <attribute name="AirlineCode" type="string" use="optional" />
+                                              <attribute name="CardSecurityCode" type="string" use="optional" />
+                                              <attribute name="Code" type="string" use="required" />
+                                              <attribute name="ExpireDate" type="spct:expireDate" use="required" />
+                                              <attribute name="ExtendedPayment" type="string" use="optional" />
+                                              <attribute name="ManualApprovalCode" type="string" use="optional" />
+                                              <attribute name="Number" type="string" use="required" />
+                                              <attribute name="SuppressApprovalCode" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="Suppress" type="boolean" use="optional" />
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Type" type="string" use="optional" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="FutureQueuePlaceRemark">
+                                <complexType>
+                                  <attribute name="Date" type="spct:date" use="required" />
+                                  <attribute name="PrefatoryInstructionCode" type="string" use="required" />
+                                  <attribute name="PseudoCityCode" type="string" use="optional" />
+                                  <attribute name="QueueIdentifier" type="string" use="required" />
+                                  <attribute name="Time" type="spct:time" use="optional" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" maxOccurs="98" name="Remark">
+                                <complexType>
+                                  <sequence>
+                                    <element name="Text" type="string" />
+                                  </sequence>
+                                  <attribute name="Code" type="string" use="optional" />
+                                  <attribute name="SegmentNumber" type="string" use="optional" />
+                                  <attribute name="Type" use="required">
+                                    <simpleType>
+                                      <restriction base="string">
+                                        <enumeration value="Alpha-Coded" />
+                                        <enumeration value="Client Address" />
+                                        <enumeration value="Corporate" />
+                                        <enumeration value="Delivery Address" />
+                                        <enumeration value="General" />
+                                        <enumeration value="Group Name" />
+                                        <enumeration value="Hidden" />
+                                        <enumeration value="Historical" />
+                                        <enumeration value="Invoice" />
+                                        <enumeration value="Itinerary" />
+                                      </restriction>
+                                    </simpleType>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="AirSeat">
+                    <complexType>
+                      <sequence>
+                        <element name="Seats">
+                          <complexType>
+                            <sequence>
+                              <element maxOccurs="98" name="Seat">
+                                <complexType>
+                                  <attribute name="BoardingPass" type="boolean" use="optional" />
+                                  <attribute name="ChangeOfGauge" type="boolean" use="optional" />
+                                  <attribute name="NameNumber" type="string" use="required" />
+                                  <attribute name="Number" type="string" use="optional" />
+                                  <attribute name="Preference" type="string" use="optional" />
+                                  <attribute name="SegmentNumber" type="string" use="optional" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="SpecialService">
+                    <complexType>
+                      <sequence>
+                        <element name="SpecialServiceInfo">
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" maxOccurs="unbounded" name="AdvancePassenger">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="Document">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="IssueCountry" type="string" />
+                                          <element minOccurs="0" name="NationalityCountry" type="string" />
+                                          <element minOccurs="0" name="Visa">
+                                            <complexType>
+                                              <sequence>
+                                                <element name="ApplicableCountry" type="string" />
+                                                <element minOccurs="0" name="PlaceOfBirth" type="string" />
+                                                <element name="PlaceOfIssue" type="string" />
+                                              </sequence>
+                                              <attribute name="IssueDate" type="spct:fullDate" use="required" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="ExpirationDate" type="spct:fullDate" use="optional" />
+                                        <attribute name="Number" type="string" use="optional" />
+                                        <attribute name="Type" type="string" use="required" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="PersonName">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="GivenName" type="string" />
+                                          <element minOccurs="0" name="MiddleName" type="string" />
+                                          <element minOccurs="0" name="Surname" type="string" />
+                                        </sequence>
+                                        <attribute name="DateOfBirth" type="spct:fullDate" use="optional" />
+                                        <attribute name="DocumentHolder" type="boolean" use="optional" />
+                                        <attribute name="Gender" use="optional">
+                                          <simpleType>
+                                            <restriction base="string">
+                                              <enumeration value="F" />
+                                              <enumeration value="M" />
+                                              <enumeration value="FI" />
+                                              <enumeration value="MI" />
+                                              <enumeration value="U" />
+                                            </restriction>
+                                          </simpleType>
+                                        </attribute>
+                                        <attribute name="NameNumber" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="ResidentDestinationAddress">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="City" type="string" />
+                                          <element name="Country" type="string" />
+                                          <element minOccurs="0" name="Street" type="string" />
+                                          <element minOccurs="0" name="State" type="string" />
+                                          <element minOccurs="0" name="Zip" type="string" />
+                                        </sequence>
+                                        <attribute name="Type" type="string" use="required" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="VendorPrefs">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Airline">
+                                            <complexType>
+                                              <attribute name="Hosted" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="SegmentNumber" type="string" use="optional" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" maxOccurs="unbounded" name="SecureFlight">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="KnownTravelerNumber" type="string" />
+                                    <element minOccurs="0" name="PersonName">
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="GivenName" type="string" />
+                                          <element minOccurs="0" name="Surname" type="string" />
+                                        </sequence>
+                                        <attribute name="DateOfBirth" type="string" use="optional" />
+                                        <attribute name="Gender" use="optional">
+                                          <simpleType>
+                                            <restriction base="string">
+                                              <enumeration value="F" />
+                                              <enumeration value="M" />
+                                              <enumeration value="FI" />
+                                              <enumeration value="MI" />
+                                            </restriction>
+                                          </simpleType>
+                                        </attribute>
+                                        <attribute name="NameNumber" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="RedressNumber" type="string" />
+                                    <element minOccurs="0" name="VendorPrefs">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Airline">
+                                            <complexType>
+                                              <attribute name="Hosted" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="SegmentNumber" type="string" use="optional" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" maxOccurs="unbounded" name="Service">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="PersonName">
+                                      <complexType>
+                                        <attribute name="NameNumber" type="string" use="optional" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Text" type="string" />
+                                    <element minOccurs="0" name="VendorPrefs">
+                                      <complexType>
+                                        <sequence>
+                                          <element name="Airline">
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="optional" />
+                                              <attribute name="Hosted" type="boolean" use="optional" />
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="SegmentNumber" type="string" use="optional" />
+                                  <attribute name="SSR_Code" type="string" use="required" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element name="PostProcessing">
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="ARUNK" type="string" />
+                  <element minOccurs="0" name="QueuePlace">
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="MultiQueuePlace">
+                          <complexType>
+                            <sequence>
+                              <element maxOccurs="20" name="QueueIdentifier">
+                                <complexType>
+                                  <attribute name="Number" type="string" use="required" />
+                                  <attribute name="PrefatoryInstructionCode" type="string" use="required" />
+                                  <attribute name="PseudoCityCode" type="string" use="required" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="QueueInfo">
+                          <complexType>
+                            <sequence>
+                              <element maxOccurs="3" name="QueueIdentifier">
+                                <complexType>
+                                  <attribute name="Name" type="string" use="optional" />
+                                  <attribute name="Number" type="string" use="optional" />
+                                  <attribute name="PrefatoryInstructionCode" type="string" use="required" />
+                                  <attribute name="PseudoCityCode" type="string" use="optional" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" maxOccurs="6" name="UniqueID">
+                                <complexType>
+                                  <attribute name="ID" type="string" use="required" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="EndTransaction">
+                    <complexType>
+                      <sequence>
+                        <element name="Source">
+                          <complexType>
+                            <attribute name="ReceivedFrom" type="xsd:Text.Short" use="required" />
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="Email">
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="eTicket">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="PDF">
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required" />
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Ind" type="boolean" use="required" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Invoice">
+                                <complexType>
+                                  <attribute name="Ind" type="boolean" use="required" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Itinerary">
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="PDF">
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required" />
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="Segment">
+                                      <complexType>
+                                        <attribute name="EndNumber" type="integer" use="optional" />
+                                        <attribute name="Number" type="integer" use="required" />
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Ind" type="boolean" use="required" />
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="PersonName">
+                                <complexType>
+                                  <attribute name="NameNumber" type="string" use="required" />
+                                </complexType>
+                              </element>
+                            </sequence>
+                            <attribute name="Ind" type="boolean" use="required" />
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="PostBookingHKValidation">
+                    <complexType>
+                      <attribute name="waitInterval" type="rct:waitIntervalType" use="required" />
+                      <attribute name="numAttempts" type="rct:numAttemptsType" use="required" />
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="WaitForAirlineRecLoc">
+                    <complexType>
+                      <attribute name="waitInterval" type="rct:waitIntervalType" use="required" />
+                      <attribute name="numAttempts" type="rct:numAttemptsType" use="required" />
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="RedisplayReservation" type="boolean" use="optional" />
+                <attribute default="false" name="UnmaskCreditCard" type="boolean" />
+              </complexType>
+            </element>
+          </sequence>
+          <attribute name="targetCity">
+            <simpleType>
+              <restriction base="string">
+                <minLength value="3" />
+                <maxLength value="4" />
+              </restriction>
+            </simpleType>
+          </attribute>
+          <attribute name="haltOnAirPriceError" type="boolean" use="optional" />
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+</schema>
