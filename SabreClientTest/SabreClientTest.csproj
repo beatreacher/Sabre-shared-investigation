@@ -122,7 +122,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SabreApiTests.cs" />
+    <Compile Include="SabreApiTests\SabreApiTests.cs" />
+    <Compile Include="SabreApiTests\SessionTests.cs" />
+    <Compile Include="SabreApiTests\FlightScheduleTests.cs" />
+    <Compile Include="SabreApiTests\BargainFinderMaxTests.cs" />
+    <Compile Include="SabreApiTests\EnhancedAirBookTests.cs" />
+    <Compile Include="SabreApiTests\PNRTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\SabreApiClient\NLog.config">
@@ -158,9 +163,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

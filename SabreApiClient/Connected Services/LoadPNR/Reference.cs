@@ -39445,7 +39445,7 @@ namespace SabreApiClient.LoadPNR {
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://services.sabre.com/res/tir/v3_10")]
     public partial class TravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformation : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private TravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformationAssociatedDataAssociatedDataItem[][] associatedDataField;
+        private TravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformationAssociatedDataAssociatedDataItem[] associatedDataField;
         
         private string accountDataField;
         
@@ -39472,7 +39472,7 @@ namespace SabreApiClient.LoadPNR {
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
         [System.Xml.Serialization.XmlArrayItemAttribute("AssociatedDataItem", typeof(TravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformationAssociatedDataAssociatedDataItem), IsNullable=false)]
-        public TravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformationAssociatedDataAssociatedDataItem[][] AssociatedData {
+        public TravelItineraryReadRSTravelItineraryItineraryInfoItineraryPricingPriceQuoteMiscInformationTicketingFeesFeeInformationAssociatedDataAssociatedDataItem[] AssociatedData {
             get {
                 return this.associatedDataField;
             }
