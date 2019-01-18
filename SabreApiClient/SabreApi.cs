@@ -128,5 +128,58 @@ namespace SabreApiClient
                 _logger.Debug("GetAirBook finished");
             }
         }
+
+        public async Task<CreatePNR.PassengerDetailsRQResponse> CreatePNR(Session session, CreatePNR.PassengerDetailsRQ request)
+        {
+            try
+            {
+                _logger.Debug("CreatePNR started");
+                var header = SabreMapper.GetMessageHeader<CreatePNR.MessageHeader>(session.ConversationId, "PassengerDetailsRQ", session.Organization);
+                var security = new CreatePNR.Security { BinarySecurityToken = session.Token };
+
+                var proxy = new CreatePNR.PassengerDetailsPortTypeClient("PassengerDetailsPortType");
+                var response = await proxy.PassengerDetailsRQAsync(header, security, request);
+
+                ResponseProcessor.CheckErrors(request, response);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("CreatePNR finished");
+            }
+        }
+
+        public async Task<LoadPNR.TravelItineraryReadRQResponse> LoadPNR(Session session, LoadPNR.TravelItineraryReadRQ request)
+        {
+            try
+            {
+                //SabreApiClient.LoadPNR.
+                _logger.Debug("LoadPNR started");
+                var header = SabreMapper.GetMessageHeader<LoadPNR.MessageHeader>(session.ConversationId, "TravelItineraryReadRQ", session.Organization);
+                var security = new LoadPNR.Security1 { BinarySecurityToken = session.Token };
+
+                var proxy = new LoadPNR.TravelItineraryReadPortTypeClient("TravelItineraryReadPortType");
+                var response = await proxy.TravelItineraryReadRQAsync(header, security, request);
+
+                ResponseProcessor.CheckErrors(request, response);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("LoadPNR finished");
+            }
+        }
     }
 }

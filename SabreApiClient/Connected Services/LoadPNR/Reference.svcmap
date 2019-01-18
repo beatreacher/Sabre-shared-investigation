@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2ebf2036-8d83-4161-9ca6-99a3c90b5f44" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/TravelItineraryReadRQ3.10.0.wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="envelope.xsd" MetadataType="Schema" ID="d2ccef32-5f67-44dd-a812-2fd803f1ea88" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/envelope.xsd" />
+    <MetadataFile FileName="msg-header-2_0.xsd" MetadataType="Schema" ID="b6cebe76-f0bc-4f61-93f2-d8bc418c6c24" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/msg-header-2_0.xsd" />
+    <MetadataFile FileName="xlink.xsd" MetadataType="Schema" ID="ce8d4f2d-cf42-4366-8938-5c83e51dceb3" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/xlink.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="4c70ed97-f610-497d-8465-58e9f9bbc7e6" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="Air.xsd" MetadataType="Schema" ID="06f149df-3b54-475e-8965-5f578a3df110" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/Air.1.11.0.xsd" />
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="1a241892-3a04-4699-823f-d70d858e5338" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/xml.xsd" />
+    <MetadataFile FileName="STL_Header_v.xsd" MetadataType="Schema" ID="d7421811-f77e-4db9-ac92-f91836d528df" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/STL_Header_v.1.2.0.xsd" />
+    <MetadataFile FileName="wsse.xsd" MetadataType="Schema" ID="0772efa2-6ee0-48e6-badf-163dd7a7cc70" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/wsse.xsd" />
+    <MetadataFile FileName="TravelItineraryReadRS3.xsd" MetadataType="Schema" ID="18b434ba-eb48-45af-9a1c-ae8f7de6c79b" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/TravelItineraryReadRS3.10.0.xsd" />
+    <MetadataFile FileName="TravelItineraryReadRQRS3.xsd" MetadataType="Schema" ID="4c38acd6-542b-4c74-b61e-0ebdda170d46" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/TravelItineraryReadRQRS3.10.0.xsd" />
+    <MetadataFile FileName="Pricing.xsd" MetadataType="Schema" ID="e19e25be-63be-4d04-82d5-5d900366ed6e" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/Pricing.1.11.0.xsd" />
+    <MetadataFile FileName="TravelItineraryReadRQ3.xsd" MetadataType="Schema" ID="a3bd376b-7897-46cd-b629-e4068a1e286d" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/TravelItineraryReadRQ3.10.0.xsd" />
+    <MetadataFile FileName="Ancillaries.xsd" MetadataType="Schema" ID="a0f8bc9d-fed0-4d5b-b10d-fd999d5917ac" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/Ancillaries.1.11.0.xsd" />
+    <MetadataFile FileName="STL_For_SabreProtocol_v.xsd" MetadataType="Schema" ID="fdab4644-5ec7-4712-af55-dbe555316afc" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/STL_For_SabreProtocol_v.1.2.0.xsd" />
+    <MetadataFile FileName="OpenReservation.xsd" MetadataType="Schema" ID="c7c0f995-a35c-40d3-b546-e9829bfd2d91" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/OpenReservation.1.11.0.xsd" />
+    <MetadataFile FileName="TravelItineraryReadRQ3.wsdl" MetadataType="Wsdl" ID="e1881287-79f8-41ae-a0c8-e6b7c61447ab" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/pnrservices/TravelItineraryReadRQ3.10.0.wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

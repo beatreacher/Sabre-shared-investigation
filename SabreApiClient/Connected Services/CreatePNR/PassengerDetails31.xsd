@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.sabre.com/sp/pd/v3_3" xmlns="http://www.w3.org/2001/XMLSchema">
+  <include schemaLocation="PassengerDetails3.3.0RQ.xsd" />
+  <include schemaLocation="PassengerDetails3.3.0RS.xsd" />
+</schema>

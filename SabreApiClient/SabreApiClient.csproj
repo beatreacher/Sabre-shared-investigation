@@ -73,7 +73,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\CreatePNR\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\EnhancedAirBookRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\LoadPNR\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -219,6 +229,55 @@
     <None Include="Connected Services\CreatePassengerNameRecordRQ\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\CreatePNR\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\PassengerDetails3.wsdl" />
+    <None Include="Connected Services\CreatePNR\PassengerDetails3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\PassengerDetails31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\PassengerDetails32.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\SabreApiClient.CreatePNR.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePNR\SabreApiClient.CreatePNR.PassengerDetailsRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePNR\SabreApiClient.CreatePNR.PassengerDetailsRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePNR\SabreApiClient.CreatePNR.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CreatePNR\SpCommonSimpleTypes_v3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\STL2_MsgCommon_v02_01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\STL2_Payload_v02_01.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CreatePNR\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\EnhancedAirBookRQ\CommonSimpleTypes_v1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -272,6 +331,64 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\EnhancedAirBookRQ\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\Air.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\Ancillaries.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\OpenReservation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\Pricing.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\SabreApiClient.LoadPNR.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoadPNR\SabreApiClient.LoadPNR.Security1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoadPNR\SabreApiClient.LoadPNR.TravelItineraryReadRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoadPNR\SabreApiClient.LoadPNR.TravelItineraryReadRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoadPNR\STL_For_SabreProtocol_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\STL_Header_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\TravelItineraryReadRQ3.wsdl" />
+    <None Include="Connected Services\LoadPNR\TravelItineraryReadRQ3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\TravelItineraryReadRQRS3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\TravelItineraryReadRS3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LoadPNR\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\OTA_AirBookLLSRQ\envelope.xsd">
@@ -458,7 +575,9 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BargainFinderMax\" />
     <WCFMetadataStorage Include="Connected Services\CreatePassengerNameRecordRQ\" />
+    <WCFMetadataStorage Include="Connected Services\CreatePNR\" />
     <WCFMetadataStorage Include="Connected Services\EnhancedAirBookRQ\" />
+    <WCFMetadataStorage Include="Connected Services\LoadPNR\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirBookLLSRQ\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirScheduleService\" />
     <WCFMetadataStorage Include="Connected Services\SessionCloseRQ\" />
@@ -537,13 +656,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\CreatePassengerNameRecordRQ\configuration91.svcinfo" />
+    <None Include="Connected Services\CreatePNR\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\CreatePassengerNameRecordRQ\configuration.svcinfo" />
+    <None Include="Connected Services\CreatePNR\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\CreatePassengerNameRecordRQ\Reference.svcmap">
+    <None Include="Connected Services\CreatePNR\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LoadPNR\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LoadPNR\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LoadPNR\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
