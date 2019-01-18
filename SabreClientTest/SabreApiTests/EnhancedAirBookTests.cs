@@ -35,19 +35,31 @@ namespace SabreClientTest
             var sessionManager = new SessionManager(_logger);
             var session = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
+            //var odi = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment
+            //{
+            //    DepartureDateTime = "2019-03-09T14:50:00",
+            //    FlightNumber = "467",
+            //    NumberInParty = "1",
+            //    ResBookDesigCode = "Y",
+            //    Status = "NN",
+            //    InstantPurchase = false,
+            //    DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = "HKG" },
+            //    MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = "CX", FlightNumber = "467" },
+            //    OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = "TPE" }
+            //};
+
             var odi = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment
             {
-                DepartureDateTime = "2019-03-09T14:50:00",
-                FlightNumber = "467",
+                DepartureDateTime = "2019-04-15T16:55:00",
+                FlightNumber = "1800",
                 NumberInParty = "1",
-                ResBookDesigCode = "Y",
+                ResBookDesigCode = "E",
                 Status = "NN",
                 InstantPurchase = false,
-                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = "HKG" },
-                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = "CX", FlightNumber = "467" },
-                OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = "TPE" }
+                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = "JFK" },
+                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = "DL", FlightNumber = "1800" },
+                OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = "LAS" }
             };
-
 
             var client = new SabreApi(_logger);
             var enhacnedReq = new Enh.EnhancedAirBookRQ
@@ -57,7 +69,10 @@ namespace SabreClientTest
                 IgnoreOnError = true,
                 OTA_AirBookRQ = new Enh.EnhancedAirBookRQOTA_AirBookRQ
                 {
-                    HaltOnStatus = new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus[] { new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus { Code = "UC" } },
+                    HaltOnStatus = new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus[] 
+                    {
+                        new Enh.EnhancedAirBookRQOTA_AirBookRQHaltOnStatus { Code = "UC" }
+                    },
                     RetryRebook = new Enh.EnhancedAirBookRQOTA_AirBookRQRetryRebook { Option = true },
                     RedisplayReservation = new Enh.EnhancedAirBookRQOTA_AirBookRQRedisplayReservation
                     {
@@ -72,9 +87,17 @@ namespace SabreClientTest
                 PostProcessing = new Enh.EnhancedAirBookRQPostProcessing
                 {
                     IgnoreAfter = false,
-                    //RedisplayReservation = new Enh.EnhancedAirBookRQPostProcessingRedisplayReservation()
+                    RedisplayReservation = new Enh.EnhancedAirBookRQPostProcessingRedisplayReservation
+                    {
+                        UnmaskCreditCard = true,
+                        WaitInterval = "5000"
+                    }
                 },
-                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = false, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "PTRMID" } }
+                PreProcessing = new Enh.EnhancedAirBookRQPreProcessing
+                {
+                    IgnoreBefore = false,
+                    UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "PMVALJ" }
+                }
                 //PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = true/*, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } */}
             };
             var schedule = await client.GetEnhancedAirBook(session, enhacnedReq);
@@ -83,8 +106,8 @@ namespace SabreClientTest
             var resp = JsonConvert.SerializeObject(schedule.EnhancedAirBookRS);
             _logger.Debug(resp);
 
-            var response = await sessionManager.CloseSession(session);
-            response.Should().Be("Approved");
+            //var response = await sessionManager.CloseSession(session);
+            //response.Should().Be("Approved");
         }
     }
 }

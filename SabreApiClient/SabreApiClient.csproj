@@ -70,6 +70,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\EndTransactionLLSRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\EnhancedAirBookRQ\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -213,6 +218,55 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\CreatePNR\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\EndTransactionLLS2.wsdl" />
+    <None Include="Connected Services\EndTransactionLLSRQ\EndTransactionLLS2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\EndTransactionLLS21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\EndTransactionLLS22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\SabreApiClient.EndTransactionLLSRQ.EndTransactionRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\SabreApiClient.EndTransactionLLSRQ.EndTransactionRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\SabreApiClient.EndTransactionLLSRQ.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\SabreApiClient.EndTransactionLLSRQ.Security1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\STL_For_SabreProtocol_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\STL_Header_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\sws_common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EndTransactionLLSRQ\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\EnhancedAirBookRQ\CommonSimpleTypes_v1.xsd">
@@ -512,6 +566,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BargainFinderMax\" />
     <WCFMetadataStorage Include="Connected Services\CreatePNR\" />
+    <WCFMetadataStorage Include="Connected Services\EndTransactionLLSRQ\" />
     <WCFMetadataStorage Include="Connected Services\EnhancedAirBookRQ\" />
     <WCFMetadataStorage Include="Connected Services\LoadPNR\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirBookLLSRQ\" />
@@ -611,6 +666,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\LoadPNR\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EndTransactionLLSRQ\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EndTransactionLLSRQ\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EndTransactionLLSRQ\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
