@@ -15,30 +15,95 @@ namespace SabreClientTest
     [TestClass]
     public class PNRTests
     {
-        ILogger _logger = new LoggerAdapter(NLog.LogManager.GetCurrentClassLogger());
+        ILogger _logger;
+        SabreApi _client;
+        SessionManager _sessionManager;
+
+        //Session session;
+        public static Session CurrentSession = new Session(
+                "Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/CERTG!ICESMSLB\\/CRT.LB!1547822266488!114!9",
+                "9d28ccc5-ef13-4428-a304-771053a0d40d",
+                "379200526662920151",
+                "2019-01-18T14:37:46",
+                "92RG");
+
+        public PNRTests()
+        {
+            _logger = new LoggerAdapter(NLog.LogManager.GetCurrentClassLogger());
+            _sessionManager = new SessionManager(_logger);
+            _client = new SabreApi(_logger);
+        }
+
+        [TestMethod]
+        public async Task EndTransactionTest()
+        {
+            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+            var response = await EndTransaction(CurrentSession);
+        }
+
+        public async Task<SabreApiClient.EndTransactionLLSRQ.EndTransactionRQResponse> EndTransaction(Session session)
+        {
+            var req = new SabreApiClient.EndTransactionLLSRQ.EndTransactionRQ
+            {
+                Version = "2.0.9",
+                EndTransaction = new SabreApiClient.EndTransactionLLSRQ.EndTransactionRQEndTransaction
+                {
+                    Ind = true,
+                },
+                Source = new SabreApiClient.EndTransactionLLSRQ.EndTransactionRQSource
+                {
+                    ReceivedFrom = "SWS TEST"
+                }
+            };
+
+            var resp = await _client.EndTransaction(session, req);
+
+            var respSer = JsonConvert.SerializeObject(resp.EndTransactionRS);
+            _logger.Debug("-------------- EndTransaction --------------");
+            _logger.Debug(respSer);
+
+            return resp;
+        }
 
         [TestMethod]
         public async Task CreatePNRTest()
         {
-            //var sessionManager = new SessionManager(_logger);
-            //var session = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
-            var session = new Session(
-                "Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/CERTG!ICESMSLB\\/CRT.LB!1547813199832!4723!5", 
-                "532941e3-cc1e-49dc-b008-e1708ab80c13",
-                "115558435996450151", 
-                "2019-01-18T12:06:39", 
-                "92RG");
+            var sessionSer = JsonConvert.SerializeObject(CurrentSession);
+            _logger.Debug("-------------- session --------------");
+            _logger.Debug(sessionSer);
 
-            await CreatePNR(session, null);
 
-            //var response = await sessionManager.CloseSession(session);
-            //response.Should().Be("Approved");
+            await CreatePNR(CurrentSession, null, "JFK", "2019-04-15T16:55:00", "DL");
+
+            //await CreatePNR(CurrentSession, "ULJUAA", "DFW", "02-27", "DL");
+            //await CreatePNR(CurrentSession, "ULJUAA", "JFK", "2019-04-15T16:55:00", "DL");
+
+            var response = await _sessionManager.CloseSession(CurrentSession);
+            response.Should().Be("Approved");
         }
 
-        private async Task CreatePNR(Session session, string existedPnr)
+        [TestMethod]
+        public async Task LoadPNRTest()
         {
-            var client = new SabreApi(_logger);
+            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+
+            var pnrResp = await LoadPNR(CurrentSession, "HQOOAM");
+
+            var response = await _sessionManager.CloseSession(CurrentSession);
+            response.Should().Be("Approved");
+        }
+
+        public async Task<PNR.PassengerDetailsRQResponse> CreatePNR
+        (
+            Session session,
+            string existedPnr,
+            string originLocation,
+            string departureDateTime,
+            string airlineCode
+        )
+        {
             var req = new PNR.PassengerDetailsRQ
             {
                 version = "3.3.0",
@@ -48,20 +113,21 @@ namespace SabreClientTest
                 {
                     MiscSegment = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegment
                     {
-                        DepartureDateTime = "02-27",
+                        DepartureDateTime = departureDateTime,
                         NumberInParty = "1",
-                        Type = PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentType.OTH,
+                        //
+                        //Type = PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentType.OTH,
                         Status = "HK",
                         OriginLocation = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentOriginLocation
                         {
-                            LocationCode = "DFW"
+                            LocationCode = originLocation
                         },
                         Text = "RETENTION SEGMENT FOR SWS ORCHESTRATED SERVICES TEST",
                         VendorPrefs = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentVendorPrefs
                         {
                             Airline = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentVendorPrefsAirline
                             {
-                                Code = "DL"
+                                Code = airlineCode
                             }
                         }
                     }
@@ -84,14 +150,14 @@ namespace SabreClientTest
                         }
                     }
                 },
-                
+
                 PreProcessing = string.IsNullOrEmpty(existedPnr) ? //Use it to updating existing PNR
-                    new PNR.PassengerDetailsRQPreProcessing():
+                    new PNR.PassengerDetailsRQPreProcessing() :
                     new PNR.PassengerDetailsRQPreProcessing
                     {
                         IgnoreBefore = false,
                         UniqueID = new PNR.PassengerDetailsRQPreProcessingUniqueID { ID = existedPnr }
-                    }                ,
+                    },
                 SpecialReqDetails = new PNR.PassengerDetailsRQSpecialReqDetails
                 {
                     SpecialServiceRQ = new PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQ
@@ -188,20 +254,17 @@ namespace SabreClientTest
                     }
                 }
             };
-            var pnr = await client.CreatePNR(session, req);
+            var pnr = await _client.CreatePNR(session, req);
 
             var pnrSer = JsonConvert.SerializeObject(pnr.PassengerDetailsRS);
             _logger.Debug("-------------- PNR --------------");
             _logger.Debug(pnrSer);
+
+            return pnr;
         }
 
-        [TestMethod]
-        public async Task LoadPNRTest()
+        public async Task<LOR.TravelItineraryReadRQResponse> LoadPNR(Session session, string pnr)
         {
-            var sessionManager = new SessionManager(_logger);
-            var session = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
-            var client = new SabreApi(_logger);
-
             var req = new LOR.TravelItineraryReadRQ
             {
                 Version = "3.10.0",
@@ -209,19 +272,16 @@ namespace SabreClientTest
                 {
                     SubjectAreas = new string[] { "FULL" }
                 },
-                //UniqueID = new LOR.TravelItineraryReadRQUniqueID { ID = "UFHEMQ" }
-                //UniqueID = new LOR.TravelItineraryReadRQUniqueID { ID = "HQOOAM" }
-                UniqueID = new LOR.TravelItineraryReadRQUniqueID { ID = "PMVALJ" }
+                UniqueID = new LOR.TravelItineraryReadRQUniqueID { ID = pnr }
             };
 
-            var pnr = await client.LoadPNR(session, req);
+            var pnrResp = await _client.LoadPNR(session, req);
 
-            var pnrSer = JsonConvert.SerializeObject(pnr.TravelItineraryReadRS);
+            var pnrSer = JsonConvert.SerializeObject(pnrResp.TravelItineraryReadRS);
             _logger.Debug("-------------- PNR --------------");
             _logger.Debug(pnrSer);
 
-            var response = await sessionManager.CloseSession(session);
-            response.Should().Be("Approved");
+            return pnrResp;
         }
     }
 }

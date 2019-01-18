@@ -6,6 +6,7 @@ using SabreApiClient;
 using Autofac.Extras.NLog;
 
 using BFM = SabreApiClient.BargainFinderMax;
+using Domain.Models;
 
 namespace SabreClientTest
 {
@@ -13,7 +14,43 @@ namespace SabreClientTest
     public class SabreApiTests
     {
         ILogger _logger = new LoggerAdapter(NLog.LogManager.GetCurrentClassLogger());
-        
+        Session CurrentSession;// = PNRTests.CurrentSession;
+
+        [TestMethod]
+        public async Task WorkflowTest()
+        {
+            var sessionManager = new SessionManager(_logger);
+            var CurrentSession = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+
+            string airlineCode = "DL";
+            string flightNumber = "1800";
+            string originLocation = "LAS"; // "DFW"???
+            string destinationLocation = "JFK";
+            string resBookDesigCode = "E";
+
+            string departureDateTime = "2019-04-15T16:55:00"; //"02-27"
+            string pnrDepartureDateTime = "04-15";
+
+
+            var pnrTests = new PNRTests();
+            //var pnrResponse = await pnrTests.CreatePNR(CurrentSession, null, originLocation, "02-27", airlineCode);
+            var pnrResponse = await pnrTests.CreatePNR(CurrentSession, null, originLocation, pnrDepartureDateTime, airlineCode);
+
+            string pnrId = pnrResponse.PassengerDetailsRS.ItineraryRef.ID;
+
+            var e = new EnhancedAirBookTests();
+            var enhResp = await e.CreateEnhanced(CurrentSession, pnrId, flightNumber, originLocation, destinationLocation, airlineCode, departureDateTime, resBookDesigCode);
+
+            var EndTransaction = await pnrTests.EndTransaction(CurrentSession);
+
+            var updatedPnrResponse = await pnrTests.CreatePNR(CurrentSession, pnrId, originLocation, pnrDepartureDateTime, airlineCode);
+
+            var loadPnrResp = await pnrTests.LoadPNR(CurrentSession, pnrId);
+
+            var closeResp = await sessionManager.CloseSession(CurrentSession);
+        }
+
+
         [TestMethod]
         public async Task AirBookLLSRQTest()
         {
