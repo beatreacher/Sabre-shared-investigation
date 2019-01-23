@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
@@ -7,6 +8,7 @@ using Autofac.Extras.NLog;
 using Newtonsoft.Json;
 using Enh = SabreApiClient.EnhancedAirBookRQ;
 using Domain.Models;
+using System.Collections.Generic;
 
 namespace SabreClientTest
 {
@@ -29,39 +31,53 @@ namespace SabreClientTest
         [TestMethod]
         public async Task EnhancedAirBookTest()
         {
-            //var sessionManager = new SessionManager(_logger);
-            //var session = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
-            await CreateEnhanced(CurrentSession, "ULJUAA", "1800", "LAS", "JFK", "DL", "2019-04-15T16:55:00", "E");
+            await CreateEnhanced(CurrentSession, "ULJUAA",
+                new List<FlightDescription>
+                {
+                    new FlightDescription { OriginLocation = "JFK", DestinationLocation = "LAS", DepartureDateTime = "2019-02-15T08:30:00",
+                        MarketingAirline = "DL", FlightNumber="1549", Status="NN", ResBookDesigCode="E", NumberInParty = "1", InstantPurchase = false },
+                    new FlightDescription { OriginLocation = "LAS", DestinationLocation = "JFK", DepartureDateTime = "2019-02-26T23:15:00",
+                        MarketingAirline = "DL", FlightNumber="1694", Status="NN", ResBookDesigCode="E", NumberInParty = "1", InstantPurchase = false}
+                });
 
-            //var response = await sessionManager.CloseSession(session);
-            //response.Should().Be("Approved");
+            var response = await _sessionManager.CloseSession(CurrentSession);
+            response.Should().Be("Approved");
         }
 
         public async Task<Enh.EnhancedAirBookRQResponse> CreateEnhanced
         (
-            Session session, 
-            string pnr, 
-            string flightNumber, 
-            string originLocation,
-            string destinationLocation, 
-            string marketingAirlineCode, 
-            string departureDateTime, 
-            string resBookDesigCode
+            Session session,
+            string pnr,
+            IList<FlightDescription> flightDescriptions
         )
         {
-            var odi = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment
+            var enhacnedReq = GetEnhancedRequest(pnr, flightDescriptions);
+            var schedule = await _client.GetEnhancedAirBook(session, enhacnedReq);
+            schedule.Should().NotBeNull();
+
+            var resp = JsonConvert.SerializeObject(schedule.EnhancedAirBookRS);
+            _logger.Debug(resp);
+
+            return schedule;
+        }
+
+        private Enh.EnhancedAirBookRQ GetEnhancedRequest(string pnr, IList<FlightDescription> flightDescriptions)
+        {
+            var segments = flightDescriptions.Select(i => new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment
             {
-                DepartureDateTime = departureDateTime,
-                FlightNumber = flightNumber,
-                NumberInParty = "1",
-                ResBookDesigCode = resBookDesigCode,
-                Status = "NN",
-                InstantPurchase = false,
-                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = destinationLocation },
-                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = marketingAirlineCode, FlightNumber = flightNumber },
-                OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = originLocation }
-            };
+                DepartureDateTime = i.DepartureDateTime,
+                FlightNumber = i.FlightNumber,
+                NumberInParty = i.NumberInParty,
+                ResBookDesigCode = i.ResBookDesigCode,
+                Status = i.Status,
+                InstantPurchase = i.InstantPurchase,
+                DestinationLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentDestinationLocation { LocationCode = i.DestinationLocation },
+                OriginLocation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOriginLocation { LocationCode = i.OriginLocation },
+                MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = i.MarketingAirline, FlightNumber = i.FlightNumber },
+                OperatingAirline = string.IsNullOrWhiteSpace(i.OperatingAirline) ? null : new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOperatingAirline { Code = i.OperatingAirline }
+            }).ToArray();
 
             var enhacnedReq = new Enh.EnhancedAirBookRQ
             {
@@ -83,10 +99,7 @@ namespace SabreClientTest
                         NumAttempts = "5",
                         WaitInterval = "2000"
                     },
-                    OriginDestinationInformation = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegment[1]
-                    {
-                        odi
-                    }
+                    OriginDestinationInformation = segments
                 },
                 PostProcessing = new Enh.EnhancedAirBookRQPostProcessing
                 {
@@ -104,13 +117,8 @@ namespace SabreClientTest
                 }
                 //PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = true/*, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } */}
             };
-            var schedule = await _client.GetEnhancedAirBook(session, enhacnedReq);
-            schedule.Should().NotBeNull();
 
-            var resp = JsonConvert.SerializeObject(schedule.EnhancedAirBookRS);
-            _logger.Debug(resp);
-
-            return schedule;
+            return enhacnedReq;
         }
     }
 }

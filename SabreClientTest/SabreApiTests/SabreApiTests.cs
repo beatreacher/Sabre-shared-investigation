@@ -7,6 +7,7 @@ using Autofac.Extras.NLog;
 
 using BFM = SabreApiClient.BargainFinderMax;
 using Domain.Models;
+using System.Collections.Generic;
 
 namespace SabreClientTest
 {
@@ -39,7 +40,16 @@ namespace SabreClientTest
             string pnrId = pnrResponse.PassengerDetailsRS.ItineraryRef.ID;
 
             var e = new EnhancedAirBookTests();
-            var enhResp = await e.CreateEnhanced(CurrentSession, pnrId, flightNumber, originLocation, destinationLocation, airlineCode, departureDateTime, resBookDesigCode);
+            var enhResp = await e.CreateEnhanced(
+                CurrentSession, 
+                pnrId,
+                new List<FlightDescription>
+                {
+                    new FlightDescription { OriginLocation = originLocation, DestinationLocation = destinationLocation, DepartureDateTime = departureDateTime,
+                        MarketingAirline = airlineCode, FlightNumber=flightNumber, Status="NN", ResBookDesigCode=resBookDesigCode, NumberInParty = "1",
+                        InstantPurchase = false }
+                    
+                });
 
             var EndTransaction = await pnrTests.EndTransaction(CurrentSession);
 

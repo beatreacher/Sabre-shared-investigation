@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
@@ -10,6 +11,7 @@ using BFM = SabreApiClient.BargainFinderMax;
 using Domain.Models;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace SabreClientTest
 {
@@ -34,10 +36,16 @@ namespace SabreClientTest
             try
             {
                 CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
-                var bargainFinderMax = await GetBargainFinderMax(CurrentSession,
-                    "JFK", "LAS", "2019-02-15T00:00:00",
-                    "LAS", "JFK", "2019-02-27T00:00:00",
-                    "50ITINS", BFM.AirTripType.OpenJaw);
+                var bargainFinderMax = await GetBargainFinderMax
+                (
+                    CurrentSession,
+                    new List<FlightDescription>
+                    {
+                        new FlightDescription { OriginLocation = "JFK", DestinationLocation = "LAS", DepartureDateTime = "2019-02-15T00:00:00" },
+                        new FlightDescription { OriginLocation = "LAS", DestinationLocation = "JFK", DepartureDateTime = "2019-02-27T00:00:00" }
+                    },
+                    "50ITINS", BFM.AirTripType.Return
+                );
 
                 //bargainFinderMax.Should().NotBeNull();
                 //bargainFinderMax.OTA_AirLowFareSearchRS.Should().NotBeNull();
@@ -63,25 +71,12 @@ namespace SabreClientTest
         public async Task<BFM.BargainFinderMaxRQResponse> GetBargainFinderMax
         (
             Session session,
-            string originLocation1,
-            string destinationLocation1,
-            string departureDateTime1,
-            string originLocation2,
-            string destinationLocation2,
-            string departureDateTime2,
+            IList<FlightDescription> flightDescriptions,
             string itemsCount,
             BFM.AirTripType tripType
         )
         {
-            var req = GetBargainRequest(
-                    originLocation1,
-                    destinationLocation1,
-                    departureDateTime1,
-                    originLocation2,
-                    destinationLocation2,
-                    departureDateTime2,
-                    itemsCount,
-                    tripType);
+            var req = GetBargainRequest(flightDescriptions, itemsCount, tripType);
 
             //var bfmReq = JsonConvert.SerializeObject(req, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             //File.WriteAllText("bfmReq.txt", bfmReq);
@@ -97,32 +92,18 @@ namespace SabreClientTest
 
         private static BFM.OTA_AirLowFareSearchRQ GetBargainRequest
         (
-            string originLocation1,
-            string destinationLocation1,
-            string departureDateTime1,
-            string originLocation2,
-            string destinationLocation2,
-            string departureDateTime2,
+            IList<FlightDescription> flightDescriptions,
             string itemsCount,
             BFM.AirTripType tripType
         )
         {
-            var odi1 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
+            var odis = flightDescriptions.Select(i => new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
             {
-                Item = departureDateTime1,
-                RPH = "1",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = originLocation1 },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = destinationLocation1 },
-            };
-            var odi2 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
-            {
-                Item = departureDateTime2,
-                RPH = "2",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = originLocation2 },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = destinationLocation2 },
-            };
-
-            var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[] { odi1, odi2 };
+                RPH = i.RPH,
+                Item = i.DepartureDateTime,
+                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = i.OriginLocation },
+                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = i.DestinationLocation },
+            }).ToArray();
 
             var travelPreferences = new BFM.AirSearchPrefsType
             {

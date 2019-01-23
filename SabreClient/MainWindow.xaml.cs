@@ -81,12 +81,11 @@ namespace SabreClient
                 var bfms = await bfm.GetBargainFinderMax
                 (
                     CurrentSession,
-                    txtOriginLocation1.Text,
-                    txtDestinationLocation1.Text,
-                    txtDeparture1.Text,
-                    txtOriginLocation2.Text,
-                    txtDestinationLocation2.Text,
-                    txtDeparture2.Text,
+                    new List<FlightDescription>
+                    {
+                        new FlightDescription { OriginLocation = txtOriginLocation1.Text, DestinationLocation = txtDestinationLocation1.Text, DepartureDateTime = txtDeparture1.Text },
+                        new FlightDescription { OriginLocation = txtOriginLocation2.Text, DestinationLocation = txtDestinationLocation2.Text, DepartureDateTime = txtDeparture2.Text }
+                    }                    ,
                     txtItemsCount.Text,
                     AirTripTypes[cmbTripType.Text]
                 );
@@ -117,7 +116,6 @@ namespace SabreClient
             {
                 this.Cursor = cursor;
             }
-            
         }
 
         private async void btnCreatePnr_Click(object sender, RoutedEventArgs ev)
@@ -176,7 +174,24 @@ namespace SabreClient
             await SessionInitialize();
 
             var enhancedAirBookTests = new EnhancedAirBookTests();
-            var enhResp = await enhancedAirBookTests.CreateEnhanced(CurrentSession, txtPNR.Text, txtFlightNumber.Text, txtOriginLocation1.Text, txtDestinationLocation1.Text, txtAirlineCode.Text, txtDeparture1.Text, txtResBookDesigCode.Text);
+            var enhResp = await enhancedAirBookTests.CreateEnhanced(
+                CurrentSession, 
+                txtPNR.Text,
+                new List<FlightDescription>
+                {
+                    new FlightDescription
+                    {
+                        OriginLocation = txtOriginLocation1.Text,
+                        DestinationLocation = txtDestinationLocation1.Text,
+                        DepartureDateTime = txtDeparture1.Text,
+                        MarketingAirline = txtAirlineCode.Text,
+                        FlightNumber = txtFlightNumber.Text,
+                        Status = "NN",
+                        ResBookDesigCode = txtResBookDesigCode.Text,
+                        NumberInParty = "1",
+                        InstantPurchase = false
+                    }
+                });
 
             var resp = JsonConvert.SerializeObject(enhResp.EnhancedAirBookRS, Formatting.Indented, JSS);
             File.WriteAllText("enhanced.txt", resp);
