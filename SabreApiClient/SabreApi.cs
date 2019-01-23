@@ -55,6 +55,7 @@ namespace SabreApiClient
             try
             {
                 _logger.Debug("GetBargainFinderMax started");
+
                 var header = SabreMapper.GetMessageHeader<BargainFinderMax.MessageHeader>(session.ConversationId, "BargainFinderMaxRQ", session.Organization);
                 var security = new BargainFinderMax.Security { BinarySecurityToken = session.Token };
 
