@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fa22a38a-202c-44aa-b871-e6e0b115fe07" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://webservices.sabre.com/wsdl/tpfc/EndTransactionLLS2.0.9RQ.wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="0b754277-fbf1-47ed-b358-cdfbd88161fd" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/xml.xsd" />
+    <MetadataFile FileName="sws_common.xsd" MetadataType="Schema" ID="1404a684-b91d-49f1-9b91-079d60ab8bc3" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/sws_common.xsd" />
+    <MetadataFile FileName="xlink.xsd" MetadataType="Schema" ID="1e21e929-ebd4-4805-a845-05a8b15078e0" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/xlink.xsd" />
+    <MetadataFile FileName="EndTransactionLLS2.xsd" MetadataType="Schema" ID="ce062916-dc8c-4c0e-bc60-95522fd8253d" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/EndTransactionLLS2.0.9RQ.xsd" />
+    <MetadataFile FileName="EndTransactionLLS21.xsd" MetadataType="Schema" ID="5b313108-72e1-419d-a173-3f6dc1586948" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/EndTransactionLLS2.0.9RS.xsd" />
+    <MetadataFile FileName="STL_For_SabreProtocol_v.xsd" MetadataType="Schema" ID="8fbe79a3-ba0f-4379-b7a2-3872aae44322" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/STL_For_SabreProtocol_v.1.2.0.xsd" />
+    <MetadataFile FileName="wsse.xsd" MetadataType="Schema" ID="7c81e68b-7ed8-4a27-bf57-e09bdf85c973" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/wsse.xsd" />
+    <MetadataFile FileName="EndTransactionLLS22.xsd" MetadataType="Schema" ID="f6fee1a6-e797-4eb4-a825-5b61b1f77a15" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/EndTransactionLLS2.0.9RQRS.xsd" />
+    <MetadataFile FileName="STL_Header_v.xsd" MetadataType="Schema" ID="9c01993f-f88b-4438-ab35-9ba4aee8bd37" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/STL_Header_v.1.2.0.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="091378ff-ebf5-468c-ad4c-8d2edb187d7e" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="envelope.xsd" MetadataType="Schema" ID="f8555001-7414-4249-b1bb-c21f4dda9ebd" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/envelope.xsd" />
+    <MetadataFile FileName="EndTransactionLLS2.wsdl" MetadataType="Wsdl" ID="06756271-bca7-43a2-994d-b6c6f7b3dced" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/EndTransactionLLS2.0.9RQ.wsdl" />
+    <MetadataFile FileName="msg-header-2_0.xsd" MetadataType="Schema" ID="c2371f0b-2970-4990-9a0e-f0dd3014e0e3" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/msg-header-2_0.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

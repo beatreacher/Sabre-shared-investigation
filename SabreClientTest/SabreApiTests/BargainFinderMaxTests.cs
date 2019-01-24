@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
@@ -7,200 +8,102 @@ using Autofac.Extras.NLog;
 using Newtonsoft.Json;
 
 using BFM = SabreApiClient.BargainFinderMax;
+using Domain.Models;
+using System.IO;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace SabreClientTest
 {
     [TestClass]
     public class BargainFinderMaxTests
     {
-        ILogger _logger = new LoggerAdapter(NLog.LogManager.GetCurrentClassLogger());
+        ILogger _logger;
+        SabreApi _client;
+        SessionManager _sessionManager;
+        public static Session CurrentSession;
+
+        public BargainFinderMaxTests()
+        {
+            _logger = new LoggerAdapter(NLog.LogManager.GetCurrentClassLogger());
+            _sessionManager = new SessionManager(_logger);
+            _client = new SabreApi(_logger);
+        }
 
         [TestMethod]
         public async Task GetBargainFinderMaxTest()
         {
             try
             {
-                var sessionManager = new SessionManager(_logger);
-                var session = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
-
-                var client = new SabreApi(_logger);
-
-                //var schedule = await client.GetFlightSchedules(session, GetFlightScheduleRequest());
-                //schedule.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment.Length.Should().BeGreaterThan(1);
-                //AirSchedService.OTA_AirScheduleRSOriginDestinationOptionsOriginDestinationOption[] options = 
-                //    schedule.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption;
-                //AirSchedService.OTA_AirScheduleRSOriginDestinationOptionsOriginDestinationOptionFlightSegment[] segments = 
-                //    schedule.OTA_AirScheduleRS.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment;
-
-                var req = GetBargainRequest();
-
-                //var jss = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
-                //var reqSer = JsonConvert.SerializeObject(req, jss);
-                //_logger.Debug(reqSer);
-
-                var bargainFinderMax = await client.GetBargainFinderMax(session, req);
+                CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+                var bargainFinderMax = await GetBargainFinderMax
+                (
+                    CurrentSession,
+                    new List<FlightDescription>
+                    {
+                        new FlightDescription { OriginLocation = "JFK", DestinationLocation = "LAS", DepartureDateTime = "2019-02-15T00:00:00" },
+                        new FlightDescription { OriginLocation = "LAS", DestinationLocation = "JFK", DepartureDateTime = "2019-02-27T00:00:00" }
+                    },
+                    "50ITINS", BFM.AirTripType.Return
+                );
 
                 //bargainFinderMax.Should().NotBeNull();
                 //bargainFinderMax.OTA_AirLowFareSearchRS.Should().NotBeNull();
 
-                var bfmAirLowFareSearchRS = JsonConvert.SerializeObject(bargainFinderMax.OTA_AirLowFareSearchRS);
+                //var bfmAirLowFareSearchRS = JsonConvert.SerializeObject(bargainFinderMax.OTA_AirLowFareSearchRS, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                var bfmAirLowFareSearchRS = JsonConvert.SerializeObject(bargainFinderMax.OTA_AirLowFareSearchRS, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                 _logger.Debug(bfmAirLowFareSearchRS);
-
-                //var its = ((BFM.OTA_AirLowFareSearchRSPricedItineraries)bargainFinderMax.OTA_AirLowFareSearchRS.Items.FirstOrDefault(s => s is BFM.OTA_AirLowFareSearchRSPricedItineraries)).PricedItinerary.First();
 
                 //foreach (var item in bargainFinderMax.OTA_AirLowFareSearchRS.Items)
                 //{
                 //    item.Should().NotBeOfType<BFM.ErrorsType>();
                 //}
-                //var airReq = GetAirBookRequest(its);
-                //var schedule = await client.GetAirBook(session, airReq);
 
-                var response = await sessionManager.CloseSession(session);
+                var response = await _sessionManager.CloseSession(CurrentSession);
                 response.Should().Be("Approved");
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw;
             }
         }
 
-
-        private static BFM.OTA_AirLowFareSearchRQ GetBargainRequest()
+        public async Task<BFM.BargainFinderMaxRQResponse> GetBargainFinderMax
+        (
+            Session session,
+            IList<FlightDescription> flightDescriptions,
+            string itemsCount,
+            BFM.AirTripType tripType
+        )
         {
-            var odi1 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
-            {
-                //Item = "2019-03-09T00:00:00",
-                Item = "2019-04-16T12:08:00",
-                RPH = "1",
-                //OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "TPE" },
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "LAS" },
-                //DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "HKG" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "JFK" },
-                TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
-                {
-                    SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
-                    {
-                        Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.X,
-                        CodeSpecified = true
-                    },
-                    IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    {
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "KA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "AA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "BR"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CX"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "B6"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "HA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "DL"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "KE"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "VS"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "BA"
-                        }
-                    },
-                    Baggage = new BFM.BaggageType { FreePieceRequired = true }
-                }
-            };
-            var odi2 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
-            {
-                Item = "2019-07-16T11:35:00",
-                RPH = "2",
-                //OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "HKG" },
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "JFK" },
-                //DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "EWR" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "LAS" },
-                TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
-                {
-                    SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
-                    {
-                        Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.O,
-                        CodeSpecified = true
-                    },
-                    IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    {
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "KA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "AA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "BR"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "CX"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "B6"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "HA"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "DL"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "KE"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "VS"
-                        },
-                        new BFM.IncludeVendorPrefType
-                        {
-                            Code = "BA"
-                        }
-                    },
-                    Baggage = new BFM.BaggageType { FreePieceRequired = true }
-                }
-            };
+            var req = GetBargainRequest(flightDescriptions, itemsCount, tripType);
 
-            //var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[] { odi1, odi2 };
-            var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[] { odi1 };
+            //var bfmReq = JsonConvert.SerializeObject(req, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            //File.WriteAllText("bfmReq.txt", bfmReq);
+            //Process.Start("bfmReq.txt");
+
+            var bargainFinderMax = await _client.GetBargainFinderMax(session, req);
+
+            //var bfmAirLowFareSearchRS = JsonConvert.SerializeObject(bargainFinderMax.OTA_AirLowFareSearchRS, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            //_logger.Debug(bfmAirLowFareSearchRS);
+
+            return bargainFinderMax;
+        }
+
+        private static BFM.OTA_AirLowFareSearchRQ GetBargainRequest
+        (
+            IList<FlightDescription> flightDescriptions,
+            string itemsCount,
+            BFM.AirTripType tripType
+        )
+        {
+            var odis = flightDescriptions.Select(i => new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
+            {
+                RPH = i.RPH,
+                Item = i.DepartureDateTime,
+                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = i.OriginLocation },
+                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = i.DestinationLocation },
+            }).ToArray();
 
             var travelPreferences = new BFM.AirSearchPrefsType
             {
@@ -214,14 +117,21 @@ namespace SabreClientTest
                 },
                 TPA_Extensions = new BFM.AirSearchPrefsTypeTPA_Extensions
                 {
-                    //TripType = new BFM.AirSearchPrefsTypeTPA_ExtensionsTripType { Value = BFM.AirTripType.OpenJaw }
-                    TripType = new BFM.AirSearchPrefsTypeTPA_ExtensionsTripType { Value = BFM.AirTripType.OpenJaw }
+                    OnlineIndicator = new BFM.AirSearchPrefsTypeTPA_ExtensionsOnlineIndicator
+                    {
+                        Ind = true
+                    },
+                    TripType = new BFM.AirSearchPrefsTypeTPA_ExtensionsTripType
+                    {
+                        Value = tripType,
+                        ValueSpecified = true
+                    }
                 }
             };
 
             var travelerInfoSummary = new BFM.TravelerInfoSummaryType
             {
-                SeatsRequested = new string[] { "1" },
+                SeatsRequested = new string[] { "2" },
                 AirTravelerAvail = new BFM.TravelerInformationType[]
                 {
                     new BFM.TravelerInformationType
@@ -231,7 +141,8 @@ namespace SabreClientTest
                             new BFM.PassengerTypeQuantityType
                             {
                                 Code = "ADT",
-                                Quantity = "1"
+                                Quantity = "2",
+                                Changeable = true
                             }
                         }
                     }
@@ -241,11 +152,13 @@ namespace SabreClientTest
             var req = new BFM.OTA_AirLowFareSearchRQ
             {
                 Version = "4.3.0",
+                AvailableFlightsOnly = true,
+                DirectFlightsOnly = true, //
                 TPA_Extensions = new BFM.OTA_AirLowFareSearchRQTPA_Extensions
                 {
                     IntelliSellTransaction = new BFM.TransactionType
                     {
-                        RequestType = new BFM.TransactionTypeRequestType { Name = "50ITINS" }
+                        RequestType = new BFM.TransactionTypeRequestType { Name = itemsCount }
                     }
                 },
                 POS = new BFM.SourceType[1]
@@ -267,59 +180,6 @@ namespace SabreClientTest
             };
 
             return req;
-
-
-            /*var o1 = GetBFMOriginDestination(options[0].FlightSegment[0], "2019-03-09T00:00:00");
-            var o2 = GetBFMOriginDestination(options[1].FlightSegment[0], "2019-03-14T00:00:00");
-            var odis = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation[2] { o1, o2 };*/
-
-            /*var odi1 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
-            {
-                Item = "2019-04-16T12:08:00",
-                RPH = "1",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "LAS" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "JFK" },
-                TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
-                {
-                    SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
-                    {
-                        Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.X,
-                        CodeSpecified = true
-                    },
-                    //IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    //{
-                    //    new BFM.IncludeVendorPrefType
-                    //    {
-                    //        Code = "B6"
-                    //    }
-                    //},
-                    Baggage = new BFM.BaggageType { FreePieceRequired = true }
-                }
-            };
-            var odi2 = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
-            {
-                Item = "2019-07-16T11:35:00",
-                RPH = "2",
-                OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = "JFK" },
-                DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = "LAS" },
-                TPA_Extensions = new BFM.OTA_AirLowFareSearchRQOriginDestinationInformationTPA_Extensions
-                {
-                    SegmentType = new BFM.ExchangeOriginDestinationInformationTypeSegmentType
-                    {
-                        Code = BFM.ExchangeOriginDestinationInformationTypeSegmentTypeCode.O,
-                        CodeSpecified = true
-                    },
-                    //IncludeVendorPref = new BFM.IncludeVendorPrefType[]
-                    //{
-                    //    new BFM.IncludeVendorPrefType
-                    //    {
-                    //        Code = "AA"
-                    //    }
-                    //},
-                    Baggage = new BFM.BaggageType { FreePieceRequired = true }
-                }
-            };*/
-
         }
     }
 }

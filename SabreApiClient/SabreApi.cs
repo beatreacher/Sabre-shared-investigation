@@ -55,6 +55,7 @@ namespace SabreApiClient
             try
             {
                 _logger.Debug("GetBargainFinderMax started");
+
                 var header = SabreMapper.GetMessageHeader<BargainFinderMax.MessageHeader>(session.ConversationId, "BargainFinderMaxRQ", session.Organization);
                 var security = new BargainFinderMax.Security { BinarySecurityToken = session.Token };
 
@@ -179,6 +180,33 @@ namespace SabreApiClient
             finally
             {
                 _logger.Debug("LoadPNR finished");
+            }
+        }
+
+        public async Task<EndTransactionLLSRQ.EndTransactionRQResponse> EndTransaction(Session session, EndTransactionLLSRQ.EndTransactionRQ request)
+        {
+            try
+            {
+                //SabreApiClient.EndTransactionLLSRQ
+                _logger.Debug("EndTransaction started");
+                var header = SabreMapper.GetMessageHeader<EndTransactionLLSRQ.MessageHeader>(session.ConversationId, "EndTransactionLLSRQ", session.Organization);
+                var security = new EndTransactionLLSRQ.Security1 { BinarySecurityToken = session.Token };
+
+                var proxy = new EndTransactionLLSRQ.EndTransactionPortTypeClient("EndTransactionPortType");
+                var response = await proxy.EndTransactionRQAsync(header, security, request);
+
+                ResponseProcessor.CheckErrors(request, response);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("EndTransaction finished");
             }
         }
     }
