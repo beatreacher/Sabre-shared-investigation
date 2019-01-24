@@ -13,14 +13,15 @@
         <StackPanel Orientation="Vertical">
             <Grid Margin="10" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.1*" />
-                    <ColumnDefinition Width="0.2*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="0.1*" />
-                    <ColumnDefinition Width="0.2*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="0.1*" />
-                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.1*" MinWidth="190" />
+                    <ColumnDefinition Width="0.2*" MinWidth="250" />
+                    <ColumnDefinition Width="10px" />
+                    <ColumnDefinition Width="0.1*" MinWidth="150" />
+                    <ColumnDefinition Width="0.2*" MinWidth="250" />
+                    <ColumnDefinition Width="10px" />
+                    <ColumnDefinition Width="0.1*" MinWidth="150" />
+                    <ColumnDefinition Width="0.2*" MinWidth="250" />
+                    <ColumnDefinition Width="*" MinWidth="250" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -38,25 +39,27 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">OriginLocation1:</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">OriginLocation:</TextBlock>
                 <TextBox x:Name="txtOriginLocation1" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="LAX" />
 
-                <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">DestinationLocation1:</TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">DestinationLocation:</TextBlock>
                 <TextBox x:Name="txtDestinationLocation1" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="JFK" />
 
-                <TextBlock Grid.Column="6" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">Departure1:</TextBlock>
+                <TextBlock Grid.Column="6" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">Departure:</TextBlock>
                 <TextBox x:Name="txtDeparture1" Grid.Column="7" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="2019-04-16T00:00:00" />
 
+                <Button x:Name="btnAddBfmDestinationPoint" Grid.Column="8" Grid.Row="0" MinWidth="250" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="btnAddBfmDestinationPoint_Click">Add Flight Segment</Button>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">OriginLocation2:</TextBlock>
+                <!--<TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">OriginLocation2:</TextBlock>
                 <TextBox x:Name="txtOriginLocation2" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="JFK" />
 
                 <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">DestinationLocation2:</TextBlock>
                 <TextBox x:Name="txtDestinationLocation2" Grid.Column="4" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="LAX" />
 
                 <TextBlock Grid.Column="6" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">Departure2:</TextBlock>
-                <TextBox x:Name="txtDeparture2" Grid.Column="7" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="2019-04-28T00:00:00" />
+                <TextBox x:Name="txtDeparture2" Grid.Column="7" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="2019-04-28T00:00:00" />-->
 
+                <TextBlock Grid.Column="0"  Grid.Row="2" >BFM</TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center">ItemsCount:</TextBlock>
                 <TextBox x:Name="txtItemsCount" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="50ITINS" />
 
@@ -133,6 +136,40 @@
             <!--<TextBlock Margin="0,10,0,0">Pnr Load:</TextBlock>
             <TextBox x:Name="txtPnrLoadResponse" TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top">PnrLoadResponse</TextBox>-->
             <Button x:Name="btnLoadPnr" Margin="10,10,0,0" MinWidth="150" HorizontalAlignment="Left" Click="btnLoadPnr_Click">Load Pnr</Button>
+
+            <TextBlock Margin="10">BFM Search Segments</TextBlock>
+            <ListView Margin="10" Name="lvBfmFlightDescriptions">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="OriginLocation" Width="250" DisplayMemberBinding="{Binding OriginLocation}" />
+                        <GridViewColumn Header="DestinationLocation" Width="250" DisplayMemberBinding="{Binding DestinationLocation}" />
+                        <GridViewColumn Header="DepartureDateTime" Width="250" DisplayMemberBinding="{Binding DepartureDateTime}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button x:Name="btnClearBfmDestinationPoint" Margin="10,10,0,0" MinWidth="250" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="btnClearBfmDestinationPoint_Click">Clear All Flight Segments</Button>
+
+            <TextBlock Margin="10">BFM Results</TextBlock>
+            <TreeView>
+                <TreeViewItem Header="Employee1">
+                    <TreeViewItem Header="Jesper"/>
+                    <TreeViewItem Header="Aaberg"/>
+                    <TreeViewItem Header="12345"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Employee2">
+                    <TreeViewItem Header="Dominik"/>
+                    <TreeViewItem Header="Paiha"/>
+                    <TreeViewItem Header="98765"/>
+                </TreeViewItem>
+            </TreeView>
+
+            <!--<TreeView x:Name="tvEnhanced" ItemsSource="{Binding Itineraries}" Margin="10" >
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding ChildNodes}">
+                        <TextBlock Text="{Binding}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>-->
         </StackPanel>
     </ScrollViewer>
 </Window>

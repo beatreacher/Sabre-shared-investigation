@@ -15,6 +15,8 @@ using SabreApiClient;
 using SabreClientTest;
 
 using BFM = SabreApiClient.BargainFinderMax;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace SabreClient
 {
@@ -34,6 +36,10 @@ namespace SabreClient
                 { "OpenJaw", BFM.AirTripType.OpenJaw },
                 { "Other", BFM.AirTripType.Other }
             };
+
+        IList<FlightDescription> BfmFlightDescriptions = new List<FlightDescription>();
+        IList<FlightDescription> EnhancedFlightDescriptions = new List<FlightDescription>();
+        BFM.PricedItineraryType[] Itineraries = null;
 
         private BFM.PricedItineraryType _minItinerary;
         private decimal _minAmount;
@@ -81,11 +87,12 @@ namespace SabreClient
                 var bfms = await bfm.GetBargainFinderMax
                 (
                     CurrentSession,
-                    new List<FlightDescription>
-                    {
-                        new FlightDescription { OriginLocation = txtOriginLocation1.Text, DestinationLocation = txtDestinationLocation1.Text, DepartureDateTime = txtDeparture1.Text },
-                        new FlightDescription { OriginLocation = txtOriginLocation2.Text, DestinationLocation = txtDestinationLocation2.Text, DepartureDateTime = txtDeparture2.Text }
-                    }                    ,
+                    BfmFlightDescriptions,
+                    //new List<FlightDescription>
+                    //{
+                    //    new FlightDescription { OriginLocation = txtOriginLocation1.Text, DestinationLocation = txtDestinationLocation1.Text, DepartureDateTime = txtDeparture1.Text },
+                    //    new FlightDescription { OriginLocation = txtOriginLocation2.Text, DestinationLocation = txtDestinationLocation2.Text, DepartureDateTime = txtDeparture2.Text }
+                    //},
                     txtItemsCount.Text,
                     AirTripTypes[cmbTripType.Text]
                 );
@@ -102,6 +109,7 @@ namespace SabreClient
                 {
                     return;
                 }
+                Itineraries = itineraries.PricedItinerary;
 
                 GetMinItinerary(itineraries.PricedItinerary);
                 ShowCheapestFlyInfo();
@@ -325,5 +333,22 @@ namespace SabreClient
             Process.Start("minItinerarySerialized.txt");
         }
 
+        private void btnAddBfmDestinationPoint_Click(object sender, RoutedEventArgs e)
+        {
+            BfmFlightDescriptions.Add(new FlightDescription { OriginLocation = txtOriginLocation1.Text, DestinationLocation = txtDestinationLocation1.Text, DepartureDateTime = txtDeparture1.Text });
+
+            lvBfmFlightDescriptions.ItemsSource = BfmFlightDescriptions;
+            ICollectionView view = CollectionViewSource.GetDefaultView(lvBfmFlightDescriptions.ItemsSource);
+            view.Refresh();
+        }
+
+        private void btnClearBfmDestinationPoint_Click(object sender, RoutedEventArgs e)
+        {
+            BfmFlightDescriptions.Clear();
+
+            lvBfmFlightDescriptions.ItemsSource = BfmFlightDescriptions;
+            ICollectionView view = CollectionViewSource.GetDefaultView(lvBfmFlightDescriptions.ItemsSource);
+            view.Refresh();
+        }
     }
 }
