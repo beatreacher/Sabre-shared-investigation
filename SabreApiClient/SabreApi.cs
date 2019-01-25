@@ -209,5 +209,32 @@ namespace SabreApiClient
                 _logger.Debug("EndTransaction finished");
             }
         }
+
+        public async Task<ExchangeBookingRQ.ExchangeBookingRQResponse> ExchangeBooking(Session session, ExchangeBookingRQ.ExchangeBookingRQ request)
+        {
+            try
+            {
+                //SabreApiClient.ExchangeBookingRQ
+                _logger.Debug("ExchangeBooking started");
+                var header = SabreMapper.GetMessageHeader<ExchangeBookingRQ.MessageHeader>(session.ConversationId, "ExchangeBookingRQ", session.Organization);
+                var security = new ExchangeBookingRQ.Security { BinarySecurityToken = session.Token };
+
+                var proxy = new ExchangeBookingRQ.ExchangeBookingPortTypeClient("ExchangeBookingPortType");
+                var response = await proxy.ExchangeBookingRQAsync(header, security, request);
+
+                ResponseProcessor.CheckErrors(request, response);
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("ExchangeBooking finished");
+            }
+        }
     }
 }

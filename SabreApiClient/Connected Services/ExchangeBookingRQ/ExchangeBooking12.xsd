@@ -1,0 +1,2540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:eb="http://services.sabre.com/sp/exchange/booking/v1" xmlns:spct="http://services.sabre.com/sp/common/simple/v3" xmlns:ebct="http://services.sabre.com/sp/exchange/booking/common/types/v1" xmlns:stlp="http://services.sabre.com/STL_Payload/v02_01" xmlns:xsd="http://services.sabre.com/STL_MessageCommon/v02_01" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.sabre.com/sp/exchange/booking/v1" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="built-ins/STL2_MsgCommon_v02_01.xsd" namespace="http://services.sabre.com/STL_MessageCommon/v02_01" />
+  <import schemaLocation="built-ins/STL2_Payload_v02_01.xsd" namespace="http://services.sabre.com/STL_Payload/v02_01" />
+  <import schemaLocation="ExchangeBookingCommonTypes1.0.0.xsd" namespace="http://services.sabre.com/sp/exchange/booking/common/types/v1" />
+  <import schemaLocation="SpCommonSimpleTypes_v3.xsd" namespace="http://services.sabre.com/sp/common/simple/v3" />
+  <element name="ExchangeBookingRQ">
+    <annotation>
+      <documentation>Exchange Booking Request</documentation>
+    </annotation>
+    <complexType>
+      <complexContent mixed="false">
+        <extension base="stlp:STL_Request_Payload">
+          <sequence>
+            <element name="Itinerary" type="eb:ItineraryType">
+              <annotation>
+                <documentation>Itinerary</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" name="Cancel" type="eb:CancelType">
+              <annotation>
+                <documentation>Cancel</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" name="AirBook" type="eb:AirBookType">
+              <annotation>
+                <documentation>AirBook</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" maxOccurs="30" name="CreditVerificationRQ" type="eb:CreditVerificationRQType">
+              <annotation>
+                <documentation>CreditVerificationRQ</documentation>
+              </annotation>
+            </element>
+            <element maxOccurs="9" name="AutomatedExchanges" type="eb:AutomatedExchangesType">
+              <annotation>
+                <documentation>AutomatedExchanges</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" name="MiscSegmentSell" type="eb:MiscSegmentSellType">
+              <annotation>
+                <documentation>MiscSegmentSell</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" name="SpecialService" type="eb:SpecialServiceType">
+              <annotation>
+                <documentation>SpecialService</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" name="DeleteAccountingLines" type="eb:DeleteAccountingLinesType">
+              <annotation>
+                <documentation>DeleteAccountingLines</documentation>
+              </annotation>
+            </element>
+            <element minOccurs="0" name="DeletePriceQuote" type="eb:DeletePriceQuoteType">
+              <annotation>
+                <documentation>DeletePriceQuote</documentation>
+              </annotation>
+            </element>
+            <element name="PostProcessing" type="eb:PostProcessingType">
+              <annotation>
+                <documentation>PostProcessing</documentation>
+              </annotation>
+            </element>
+          </sequence>
+          <attribute default="false" name="healthCheck" type="string" use="optional">
+            <annotation>
+              <documentation>Health Check</documentation>
+            </annotation>
+          </attribute>
+          <attribute name="targetCity" type="string" use="optional">
+            <annotation>
+              <documentation>"TargetCity" is used to specify to which city service should change context
+                                using ContextChange (AAA) and the rest of the service uses new security. If empty or
+                                equals current city the context doesn't change.
+                            </documentation>
+            </annotation>
+          </attribute>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  <complexType name="ItineraryType">
+    <annotation>
+      <documentation>ItineraryType</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" name="SegmentPricing">
+        <annotation>
+          <documentation>
+                        "SegmentPricing" is used to instruct the system to price specific segments during exchange
+                        comparison step. If the PNR is to remain unchanged after Cancel and AirBook steps, please
+                        specify all existing segments as the ones to be priced.
+                    </documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element maxOccurs="16" name="SegmentSelect">
+              <annotation>
+                <documentation>SegmentSelect</documentation>
+              </annotation>
+              <complexType>
+                <attribute name="number" type="integer" use="required">
+                  <annotation>
+                    <documentation>number attribute name</documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute name="id" type="string" use="required">
+      <annotation>
+        <documentation>"id" is used to specify a record locator.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="CancelType">
+    <annotation>
+      <documentation>CancelType</documentation>
+    </annotation>
+    <sequence>
+      <element maxOccurs="unbounded" name="Segment">
+        <annotation>
+          <documentation>Segment</documentation>
+        </annotation>
+        <complexType>
+          <attribute name="Number" type="eb:CancelSegmentNumber" use="required">
+            <annotation>
+              <documentation>
+                                "Number" is used to specify a particular segment number to cancel.
+                            </documentation>
+            </annotation>
+          </attribute>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="AirBookType">
+    <annotation>
+      <documentation>AirBookType</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="HaltOnStatus">
+        <annotation>
+          <documentation>Halt on Status</documentation>
+        </annotation>
+        <complexType>
+          <attribute name="Code" use="required">
+            <annotation>
+              <documentation>
+                                "Code" is used to specify values that cause subsequent pricing, and beyond processing to
+                                stop if they appear. In order to successfully price an air itinerary the status code
+                                associated with the individual segments cannot be "NN," "NO," "UC," or "US." After
+                                successfully booking flights, the system will compare the status codes returned from the
+                                carrier against the client-specified codes to determine if subsequent pricing, and
+                                beyond processing should occur.
+                            </documentation>
+            </annotation>
+            <simpleType>
+              <restriction base="string">
+                <minLength value="1" />
+              </restriction>
+            </simpleType>
+          </attribute>
+        </complexType>
+      </element>
+      <element name="OriginDestinationInformation">
+        <annotation>
+          <documentation>
+                        "ArrivalDateTime" is used to specify the time and date of flight arrival. Please note that the
+                        value within this attribute if passed cannot be null.
+                    </documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element maxOccurs="10" name="FlightSegment">
+              <annotation>
+                <documentation>Flight Segment</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element name="DestinationLocation">
+                    <annotation>
+                      <documentation>DestinationLocation</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="LocationCode" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "LocationCode" is used to specify the arrival airport code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="Equipment">
+                    <annotation>
+                      <documentation>Equipment</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="AirEquipType" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "AirEquipType" is used to specify the equipment type of the
+                                                        aircraft being booked.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element name="MarketingAirline">
+                    <annotation>
+                      <documentation>MarketingAirline</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="Code" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Code" is used to specify the marketing airline code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="FlightNumber" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "FlightNumber" is used to specify the flight number. OPEN can
+                                                        also be passed if the user desires an open space ticket.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="MarriageGrp">
+                    <annotation>
+                      <documentation>
+                                                Information whether the flight segment is part of a married connection.
+                                                "O" means "no". "I" means "yes"
+                                            </documentation>
+                    </annotation>
+                    <simpleType>
+                      <restriction base="string">
+                        <enumeration value="O" />
+                        <enumeration value="I" />
+                      </restriction>
+                    </simpleType>
+                  </element>
+                  <element minOccurs="0" name="OperatingAirline">
+                    <annotation>
+                      <documentation>OperatingAirline</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="Code" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Code" is used to specify the operating airline code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element name="OriginLocation">
+                    <annotation>
+                      <documentation>OriginLocation</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="LocationCode" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "LocationCode" is used to specify the departure airport code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="ArrivalDateTime" type="spct:dateTime" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "ArrivalDateTime" is used to specify the time and date of flight arrival.
+                                            Please note that the value within this attribute if passed cannot be null.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="DepartureDateTime" type="spct:dateTime" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "DepartureDateTime" is used to specify the time and date of flight
+                                            departure.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="FlightNumber" type="string" use="required">
+                  <annotation>
+                    <documentation>
+                                            "FlightNumber" is used to specify the flight number. OPEN can also be passed
+                                            if the user desires an open space ticket.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="NumberInParty" type="string" use="required">
+                  <annotation>
+                    <documentation>
+                                            "NumberInParty" is used to specify the number of passengers that need to be
+                                            booked during this transaction.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="ResBookDesigCode" type="string" use="required">
+                  <annotation>
+                    <documentation>
+                                            "ResBookDesigCode" is used to specify the booking class.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="Status" type="string" use="required">
+                  <annotation>
+                    <documentation>
+                                            "Status" is used to specify the action code to be used to sell the flight
+                                            inventory. Valid values for "Status": NN, HL, GK, QF, SA, MM, or OPEN.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="InstantPurchase" type="boolean" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "InstantPurchase" is equal to "true" EnhancedAirBook will call OTA_AirBookRQ
+                                            and if it is equal to "false" EnhancedAirBook will call OTA_AirBookLLSRQ.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="CreditVerificationRQType">
+    <annotation>
+      <documentation>CreditVerificationRQType</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" name="Credit">
+        <annotation>
+          <documentation>Credit</documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" name="CC_Info">
+              <annotation>
+                <documentation>CC_Info</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element name="PaymentCard">
+                    <annotation>
+                      <documentation>PaymentCard</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="AirlineCode" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "AirlineCode" is used to specify the airline code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="CardSecurityCode" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "CardSecurityCode" is used to specify a credit card security
+                                                        code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="Code" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Code" is used to specify the credit card vendor code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="ExpireDate" type="spct:expireDate" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "ExpireDate" is to specify the credit card expiration date.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="ExtendedPayment" type="integer" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "ExtendedPayment" is used to specify extended payment if
+                                                        applicable This qualifier is only available to BSP Mexico
+                                                        clients.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="Number" type="integer" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Number" is used to specify the credit card number.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="ItinTotalFare">
+              <annotation>
+                <documentation>ItinTotalFare</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element name="TotalFare">
+                    <annotation>
+                      <documentation>TotalFare</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="Amount" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Amount" is used to specify the total fare amount.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="CurrencyCode" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "CurrencyCode" is used to specify the currency code of the total
+                                                        fare amount.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+          <attribute name="AutoStore" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "AutoStore" is used to auto store the manual approval code within the PNR.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="DisplayReference" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "DisplayReference" is used to display Payment Web Service Reference number if available.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="RemarkNumber" type="integer" use="optional">
+            <annotation>
+              <documentation>
+                                "RemarkNumber" is used to request a "Tasa Administrativa" approval code for Colombian
+                                agents and refer it to the corresponding payment remarks. It must used together with
+                                .../Credit/@TasaAdministrative
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="ServiceFee" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "ServiceFee" is used to indicate that authorization amount is for service fee amount for
+                                Argentinian agents.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="TasaAdministrativa" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "TasaAdministrativa" is used to request a "Tasa Administrativa" approval code for
+                                Colombian agents.
+                            </documentation>
+            </annotation>
+          </attribute>
+        </complexType>
+      </element>
+      <element minOccurs="0" name="DescriptiveBilling">
+        <annotation>
+          <documentation>
+                        "DescriptiveBilling" is used to Create Amex or TP Airplus DBI with Linear Format.
+                    </documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" name="CC_Info">
+              <annotation>
+                <documentation>CC_Info</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element name="PaymentCard">
+                    <annotation>
+                      <documentation>PaymentCard</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="Code" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Code" is used to specify the credit card vendor code. Currently
+                                                        system will accept only "AX" or "TP".
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="NameNumber" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "NameNumber" is used to associate the DBI data with a passenger.
+                                                        If the request is applicable to all passengers input "ALL".
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="Number" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "Number" is used to specify the credit card number.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="FreeText">
+                    <annotation>
+                      <documentation>
+                                                "FreeText" is used to enter data elements.
+                                            </documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="Amex">
+                          <annotation>
+                            <documentation>Amex element name</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="R1" type="string">
+                                <annotation>
+                                  <documentation>R1 element name</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="R2" type="string">
+                                <annotation>
+                                  <documentation>R2 element name</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="R3" type="string">
+                                <annotation>
+                                  <documentation>R3 element name</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="R4" type="string">
+                                <annotation>
+                                  <documentation>R4 element name</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="R5" type="string">
+                                <annotation>
+                                  <documentation>R5 element name</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="R6" type="string">
+                                <annotation>
+                                  <documentation>R6 element name</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="OI" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "OI" is used to enter Original Invoice
+                                                                        information. Maximum 10 Alphanumeric characters
+                                                                        are allowed.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="Vat" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "Vat" is used to enter VAT information. Maximum
+                                                                        8 Numeric characters are allowed.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="Airplus">
+                          <annotation>
+                            <documentation>Airplus</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="PK" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "PK" is used to specify Personal ID
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="KS" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "KS" is used to enter cost account number.
+                                                                        Maximum 10 Alphanumeric characters are allowed.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="IK" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "IK" is used to enter account number.Maximum 1
+                                                                        Alphanumeric character is allowed.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="PR" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "PR" is used to enter project number. Maximum 14
+                                                                        Alphanumeric characters are allowed.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="AK" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "AK" is used to enter action code.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="DS" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "DS" is used to enter department code. Maximum
+                                                                        10 Alphanumeric characters are allowed.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="AE" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "AE" is used to enter accounting unit. Maximum 8
+                                                                        Alphanumeric characters are allowed.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="BD" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "BD" is used to enter file date information.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="RZ" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "RZ" is used to enter destination information.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="AU" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        "AU" is used to enter order number information.
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="Add" type="boolean" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "Add" is used to add the DBI information using the linear format.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="Delete" type="boolean" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "Delete" is used to delete the DBI information using the linear format.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="Modify" type="boolean" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "Modify" is used to modify the DBI information using the linear format.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+          <attribute name="Display" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "Display" is used to display DBI information. It is not to be used with any elements.
+                            </documentation>
+            </annotation>
+          </attribute>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="AutomatedExchangesType">
+    <annotation>
+      <documentation>AutomatedExchangesType</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" name="ExchangeComparison">
+        <annotation>
+          <documentation>
+                        The "ExchangeComparison" node is used to derive the price of the exchange.
+                    </documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" name="ExchangeOverrides">
+              <annotation>
+                <documentation>ExchangeOverrides</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="ChangeFee" type="string">
+                    <annotation>
+                      <documentation>ChangeFee</documentation>
+                    </annotation>
+                  </element>
+                  <element minOccurs="0" name="FeeOnPenalty">
+                    <annotation>
+                      <documentation>FeeOnPenalty</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element maxOccurs="2" name="Tax">
+                          <annotation>
+                            <documentation>Tax element name</documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Amount" type="string" use="required">
+                              <annotation>
+                                <documentation>Amount</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="Code" type="string" use="required">
+                              <annotation>
+                                <documentation>Code attribute name</documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="TicketFeeAmount" type="string">
+                    <annotation>
+                      <documentation>TicketFeeAmount</documentation>
+                    </annotation>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+            <element name="PriceRequestInformation">
+              <annotation>
+                <documentation>PriceRequestInformation</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element name="OptionalQualifiers">
+                    <annotation>
+                      <documentation>OptionalQualifiers</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="FlightQualifiers">
+                          <annotation>
+                            <documentation>FlightQualifiers</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element name="VendorPrefs">
+                                <annotation>
+                                  <documentation>VendorPrefs</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element name="Airline">
+                                      <annotation>
+                                        <documentation>Airline</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Code" type="string" use="required">
+                                          <annotation>
+                                            <documentation>Code attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="MiscQualifiers">
+                          <annotation>
+                            <documentation>MiscQualifiers</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="Endorsements">
+                                <annotation>
+                                  <documentation>Endorsements</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="Endorsement" type="string">
+                                      <annotation>
+                                        <documentation>Endorsement
+                                                                                </documentation>
+                                      </annotation>
+                                    </element>
+                                    <element minOccurs="0" name="EndorsementOverride" type="string">
+                                      <annotation>
+                                        <documentation>EndorsementOverride
+                                                                                </documentation>
+                                      </annotation>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="TourCode">
+                                <annotation>
+                                  <documentation>TourCode</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element name="Text" type="string">
+                                      <annotation>
+                                        <documentation>Text element name
+                                                                                </documentation>
+                                      </annotation>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element name="PricingQualifiers">
+                          <annotation>
+                            <documentation>PricingQualifiers</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="Account">
+                                <annotation>
+                                  <documentation>Account</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element name="Code" type="string">
+                                      <annotation>
+                                        <documentation>Code element name
+                                                                                </documentation>
+                                      </annotation>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Force" type="boolean" use="optional">
+                                    <annotation>
+                                      <documentation>Force attribute name
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="BargainFinder">
+                                <annotation>
+                                  <documentation>BargainFinder</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="Rebook" type="boolean" use="required">
+                                    <annotation>
+                                      <documentation>Rebook</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Brand" type="string">
+                                <annotation>
+                                  <documentation>Brand element name</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="ChangeFeeCollectionOptions">
+                                <annotation>
+                                  <documentation>ChangeFeeCollectionOptions
+                                                                    </documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="CollectFee">
+                                      <annotation>
+                                        <documentation>CollectFee
+                                                                                </documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="InTotal" type="boolean" use="optional">
+                                          <annotation>
+                                            <documentation>InTotal
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="OnEMD" type="boolean" use="optional">
+                                          <annotation>
+                                            <documentation>On EMD
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="ReportFeeAsCP" type="boolean" use="optional">
+                                          <annotation>
+                                            <documentation>Report Fee as
+                                                                                            CP
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="AsTax" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>AsTax attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="CommandPricing" type="string">
+                                <annotation>
+                                  <documentation>Command Pricing</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="Corporate">
+                                <annotation>
+                                  <documentation>Corporate</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element name="ID" type="string">
+                                      <annotation>
+                                        <documentation>ID element name
+                                                                                </documentation>
+                                      </annotation>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Force" type="boolean" use="optional">
+                                    <annotation>
+                                      <documentation>Force attribute name
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="CountryInformation">
+                                <annotation>
+                                  <documentation>CountryInformation</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="Residency" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>Residency</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="Employment" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>Employment</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="Nationality" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>Nationality</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Diagnostic" type="string">
+                                <annotation>
+                                  <documentation>Diagnostic</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="FareOptions">
+                                <annotation>
+                                  <documentation>FareOptions</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="Private" type="boolean" use="optional">
+                                    <annotation>
+                                      <documentation>Private</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="Public" type="boolean" use="optional">
+                                    <annotation>
+                                      <documentation>Public</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element name="NameSelect">
+                                <annotation>
+                                  <documentation>NameSelect</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="NameNumber" type="string" use="required">
+                                    <annotation>
+                                      <documentation>NameNumber</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="Overrides">
+                                <annotation>
+                                  <documentation>Overrides</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="NoAdvancePurchase">
+                                      <annotation>
+                                        <documentation>NoAdvancePurchase
+                                                                                </documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required">
+                                          <annotation>
+                                            <documentation>Ind attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="NoFareRestrictions">
+                                      <annotation>
+                                        <documentation>NoFareRestrictions
+                                                                                </documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required">
+                                          <annotation>
+                                            <documentation>Ind attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="NoMinMaxStay">
+                                      <annotation>
+                                        <documentation>NoMinMaxStay
+                                                                                </documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required">
+                                          <annotation>
+                                            <documentation>Ind attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="NoPenalty">
+                                      <annotation>
+                                        <documentation>NoPenalty</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required">
+                                          <annotation>
+                                            <documentation>Ind attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="PassengerType">
+                                <annotation>
+                                  <documentation>PassengerType</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="Code" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>Code attribute name
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="Force" type="boolean" use="optional">
+                                    <annotation>
+                                      <documentation>Force attribute name
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="PlusUp">
+                                <annotation>
+                                  <documentation>PlusUp</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="TicketDesignator" type="string">
+                                      <annotation>
+                                        <documentation>TicketDesignator
+                                                                                </documentation>
+                                      </annotation>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Amount" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+                                                                                Amount
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="SpanishLargeFamilyDiscountLevel">
+                                <annotation>
+                                  <documentation>SpanishLargeFamilyDiscountLevel
+                                                                    </documentation>
+                                </annotation>
+                                <simpleType>
+                                  <restriction base="string">
+                                    <enumeration value="1" />
+                                    <enumeration value="2" />
+                                  </restriction>
+                                </simpleType>
+                              </element>
+                              <element minOccurs="0" name="Taxes">
+                                <annotation>
+                                  <documentation>Taxes element name</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="NoTax">
+                                      <annotation>
+                                        <documentation>NoTax element name
+                                                                                </documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Ind" type="boolean" use="required">
+                                          <annotation>
+                                            <documentation>Ind attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="20" name="TaxExempt">
+                                      <annotation>
+                                        <documentation>TaxExempt</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Code" type="string" use="required">
+                                          <annotation>
+                                            <documentation>Code attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="20" name="TaxOverride">
+                                      <annotation>
+                                        <documentation>TaxOverride
+                                                                                </documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Amount" type="string" use="required">
+                                          <annotation>
+                                            <documentation>Amount
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="Code" type="string" use="required">
+                                          <annotation>
+                                            <documentation>Code attribute
+                                                                                            name
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="QuebecSalesTax" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>Quebec Sales Tax
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="VAT_TaxCode" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>VAT Tax code</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                            </sequence>
+                            <attribute name="AlternateCurrencyCode" type="string" use="optional">
+                              <annotation>
+                                <documentation>Alternate Currency Code</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="AutoRedirect" type="boolean" use="optional">
+                              <annotation>
+                                <documentation>Auto Redirect</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="FareFocusExclude" type="boolean" use="optional">
+                              <annotation>
+                                <documentation>FareFocusExclude</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="RoundTheWorld" type="boolean" use="optional">
+                              <annotation>
+                                <documentation>RoundTheWorld</documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+          <attribute name="ExemptPaperSurcharge" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "ExemptPaperSurcharge" is used to specify whether or not to exempt the paper ticket
+                                surcharge.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="OriginalTicketNumber" type="string" use="required">
+            <annotation>
+              <documentation>
+                                "OriginalTicketNumber" is used to specify the original ticket number.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="TicketMedia" use="optional">
+            <annotation>
+              <documentation>
+                                "TicketMedia" is used to specify the ticket media.
+                            </documentation>
+            </annotation>
+            <simpleType>
+              <restriction base="string">
+                <enumeration value="E" />
+                <enumeration value="P" />
+              </restriction>
+            </simpleType>
+          </attribute>
+        </complexType>
+      </element>
+      <element minOccurs="0" name="PriceComparison">
+        <annotation>
+          <documentation>PriceComparison</documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" name="AcceptablePriceIncrease">
+              <annotation>
+                <documentation>AcceptablePriceIncrease</documentation>
+              </annotation>
+              <complexType>
+                <choice>
+                  <element name="Amount" type="ebct:positiveAmount">
+                    <annotation>
+                      <documentation>Amount</documentation>
+                    </annotation>
+                  </element>
+                  <element name="Percent" type="ebct:positiveAmount">
+                    <annotation>
+                      <documentation>Percent</documentation>
+                    </annotation>
+                  </element>
+                </choice>
+                <attribute default="false" name="haltOnNonAcceptablePrice" type="boolean">
+                  <annotation>
+                    <documentation>haltOnNonAcceptablePrice attribute name</documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="AcceptablePriceDecrease">
+              <annotation>
+                <documentation>AcceptablePriceDecrease</documentation>
+              </annotation>
+              <complexType>
+                <choice>
+                  <element name="Amount" type="ebct:positiveAmount">
+                    <annotation>
+                      <documentation>Amount</documentation>
+                    </annotation>
+                  </element>
+                  <element name="Percent" type="ebct:positiveAmount">
+                    <annotation>
+                      <documentation>Percent</documentation>
+                    </annotation>
+                  </element>
+                </choice>
+                <attribute default="false" name="haltOnNonAcceptablePrice" type="boolean">
+                  <annotation>
+                    <documentation>haltOnNonAcceptablePrice attribute name</documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+          <attribute name="amountSpecified" type="ebct:amount" use="required">
+            <annotation>
+              <documentation>amountSpecified attribute name</documentation>
+            </annotation>
+          </attribute>
+        </complexType>
+      </element>
+      <element minOccurs="0" name="ExchangeConfirmation">
+        <annotation>
+          <documentation>
+                        The "ExchangeConfirmation" node is used to confirm the exchange. This node should be sent after
+                        receiving a successful response from the initial exchange comparision. "ExchangeConfirmation"
+                        cannot combine with "ExchangeComparison."
+                    </documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" name="OptionalQualifiers">
+              <annotation>
+                <documentation>OptionalQualifiers</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="FOP_Qualifiers">
+                    <annotation>
+                      <documentation>FOP_Qualifiers</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element maxOccurs="30" name="BasicFOP">
+                          <annotation>
+                            <documentation>BasicFOP</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="CC_Info">
+                                <annotation>
+                                  <documentation>CC_Info</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="PaymentCard">
+                                      <annotation>
+                                        <documentation>PaymentCard
+                                                                                </documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Code" type="string" use="required">
+                                          <annotation>
+                                            <documentation>
+                                                                                            "Code" is used to specify
+                                                                                            the credit card vendor code.
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="ExpireDate" type="spct:expireDate" use="required">
+                                          <annotation>
+                                            <documentation>
+                                                                                            "ExpireDate" is used to
+                                                                                            specify the credit card
+                                                                                            expiration date.
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="ManualApprovalCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+                                                                                            "ManualApprovalCode" is used
+                                                                                            to specify a manual credit
+                                                                                            card.
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="Number" type="string" use="required">
+                                          <annotation>
+                                            <documentation>
+                                                                                            "Number" is used to specify
+                                                                                            the credit card number. If
+                                                                                            credit through the Sabre
+                                                                                            system is to be accessed
+                                                                                            please add "*" prior to the
+                                                                                            value of the "Number" within
+                                                                                            the attribute.
+                                                                                        </documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="Suppress" type="boolean" use="optional">
+                                    <annotation>
+                                      <documentation>
+                                                                                "Suppress" is used to suppress credit
+                                                                                card information.
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="PayLaterPlan">
+                                <annotation>
+                                  <documentation>PayLaterPlan</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="AirlinePlanCode" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+                                                                                "AirlinePlanCode" is used to specify
+                                                                                Airline Plan Code.
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="InstallmentCount" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+                                                                                "InstallmentCount" is used to specify a
+                                                                                count of installments.
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                            </sequence>
+                            <attribute name="Type" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "Type" is used to specify the form of payment.
+                                                                    Possible values: CA (Cash) or CK (Check). In order
+                                                                    to specify a credit card as a form of payment
+                                                                    clients need to omit the @Type attribute, and
+                                                                    populate .../CC_Info.
+                                                                </documentation>
+                              </annotation>
+                              <simpleType>
+                                <restriction base="string">
+                                  <enumeration value="CA" />
+                                  <enumeration value="CK" />
+                                </restriction>
+                              </simpleType>
+                            </attribute>
+                            <attribute name="Virtual" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "Virtual" is used to pass virtual form of payment
+                                                                    information. "Virtual" string is maximum 18
+                                                                    characters long.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="PayLater" type="boolean" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "PayLater" is used to indicate that the FOP details
+                                                                    will be related to Pay Later Plan
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="MiscQualifiers">
+                    <annotation>
+                      <documentation>MiscQualifiers</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="BaggageAllowance">
+                          <annotation>
+                            <documentation>BaggageAllowance</documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Number" type="string" use="required">
+                              <annotation>
+                                <documentation>
+                                                                    "Number" is used to specify the number of free bags.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="Commission">
+                          <annotation>
+                            <documentation>Commission</documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Amount" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "Amount" is used to specify a commission amount.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="AmountOnPenalty" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "AmountOnPenalty" is used to specify a penalty
+                                                                    commission amount.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="Percent" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "Percent" is used to specify a commission amount.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="EndorsementOverride" type="string">
+                          <annotation>
+                            <documentation>
+                                                            "EndorsementOverride" is used to override endorsement within
+                                                            the Exchange Confirmation.
+                                                        </documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="Hemisphere">
+                          <annotation>
+                            <documentation>Hemisphere</documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Code" type="integer" use="required">
+                              <annotation>
+                                <documentation>
+                                                                    "Code" is used to specify a hemisphere code.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="Journey">
+                          <annotation>
+                            <documentation>Journey</documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Code" type="integer" use="required">
+                              <annotation>
+                                <documentation>
+                                                                    "Code" is used to specify a journey code.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="NewTicketFullCommission">
+                          <annotation>
+                            <documentation>NewTicketFullCommission</documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Amount" type="string" use="required">
+                              <annotation>
+                                <documentation>
+                                                                    "Amount" is used to specify new ticket full commission amount for ARC locations only.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="RefundableAmountOnEMD" type="string">
+                          <annotation>
+                            <documentation>"RefundableAmountOnEMD" is used to pass the refundable amount on EMD.</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="Taxes">
+                          <annotation>
+                            <documentation>Taxes element name</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element name="TaxExempt">
+                                <annotation>
+                                  <documentation>TaxExempt</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="Code" type="string" use="required">
+                                    <annotation>
+                                      <documentation>
+                                                                                Please note that this element/attribute
+                                                                                is only applicable to subscribers based
+                                                                                in the Dominican Republic. "Code" is
+                                                                                used to specify a tax code to exempt.
+                                                                            </documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" name="TourCode">
+                          <annotation>
+                            <documentation>TourCode</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element name="Text" type="string">
+                                <annotation>
+                                  <documentation>"Text" is used to specify a tour code during exchange confirmation step.</documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                      <attribute name="MiniItin" type="boolean" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "MiniItin" is used to specify whether or not to print a mini
+                                                        itinerary.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="PNR_Override" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "PNR_Override" is used to specify whether or not to override the
+                                                        PNR.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="ROE_Override" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "ROE_Override" is used to specify whether or not to override the
+                                                        rate of exchange.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+          <attribute name="DoNotIssueEMDForChangeFee" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "DoNotIssueEMDForChangeFee" is used to indicate not to issue EMD for change fee.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="Print" use="optional">
+            <annotation>
+              <documentation>
+                                "Print" is used to specify whether or not to print.
+                            </documentation>
+            </annotation>
+            <simpleType>
+              <restriction base="string">
+                <enumeration value="DP" />
+                <enumeration value="DPB" />
+                <enumeration value="DPE" />
+                <enumeration value="DPI" />
+                <enumeration value="DPO" />
+              </restriction>
+            </simpleType>
+          </attribute>
+          <attribute name="RemoteCoupon" use="optional">
+            <annotation>
+              <documentation>
+                                "RemoteCoupon" is used to specify a remote coupon.
+                            </documentation>
+            </annotation>
+            <simpleType>
+              <restriction base="string">
+                <enumeration value="RA" />
+                <enumeration value="RB" />
+                <enumeration value="RC" />
+                <enumeration value="RE" />
+              </restriction>
+            </simpleType>
+          </attribute>
+          <attribute name="SelfSaleInd" type="boolean" use="optional">
+            <annotation>
+              <documentation>
+                                "SelfSaleInd" is used to specify a self sale indicator.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="TicketDeliveryOffice" type="string" use="optional">
+            <annotation>
+              <documentation>
+                                "TicketDeliveryOffice" is used to specify a ticket delivery office.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="WaiverCode" type="string" use="optional">
+            <annotation>
+              <documentation>
+                                "WaiverCode" is used to specify a waiver code.
+                            </documentation>
+            </annotation>
+          </attribute>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="MiscSegmentSellType">
+    <annotation>
+      <documentation>MiscSegmentSellType</documentation>
+    </annotation>
+    <sequence>
+      <element name="MiscSegment">
+        <annotation>
+          <documentation>MiscSegment</documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element name="OriginLocation">
+              <annotation>
+                <documentation>OriginLocation</documentation>
+              </annotation>
+              <complexType>
+                <attribute name="LocationCode" type="string" use="required">
+                  <annotation>
+                    <documentation>
+                                            "LocationCode" is used to specify the location to be associated with the
+                                            miscellaneous segment.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <element name="Text" type="string">
+              <annotation>
+                <documentation>
+                                    "Text" is used to specify free text information to be associated with the
+                                    miscellaneous segment.
+                                </documentation>
+              </annotation>
+            </element>
+            <element name="VendorPrefs">
+              <annotation>
+                <documentation>VendorPrefs</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element name="Airline">
+                    <annotation>
+                      <documentation>Airline</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="Code" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Code" is used to specify a particular vendor code.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+              </complexType>
+            </element>
+          </sequence>
+          <attribute name="DepartureDateTime" type="spct:date" use="required">
+            <annotation>
+              <documentation>
+                                "DepartureDateTime" is used to specify the date associated with the miscellaneous
+                                segment.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="InsertAfter" type="integer" use="optional">
+            <annotation>
+              <documentation>
+                                "InsertAfter" is used to specify an existing segment to place the new miscellaneous
+                                segment after.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="NumberInParty" type="integer" use="required">
+            <annotation>
+              <documentation>
+                                "NumberInParty" is used to specify the number of parties associated with the
+                                miscellaneous segment.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="Status" type="string" use="required">
+            <annotation>
+              <documentation>
+                                "Status" is used to specify the action code to be used to sell the segment.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="Type" use="required">
+            <annotation>
+              <documentation>
+                                "Type" is used to specify the type of miscellaneous segment, i.e. OTH, MCO, PTA, or INS.
+                            </documentation>
+            </annotation>
+            <simpleType>
+              <restriction base="string">
+                <enumeration value="INS" />
+                <enumeration value="MCO" />
+                <enumeration value="OTH" />
+                <enumeration value="PTA" />
+              </restriction>
+            </simpleType>
+          </attribute>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="SpecialServiceType">
+    <annotation>
+      <documentation>SpecialServiceType</documentation>
+    </annotation>
+    <sequence>
+      <element name="SpecialServiceInfo">
+        <annotation>
+          <documentation>SpecialServiceInfo</documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" maxOccurs="unbounded" name="AdvancePassenger">
+              <annotation>
+                <documentation>
+                                    This node is used to specify the APIS (Advance Passenger Information)
+                                </documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="Document">
+                    <annotation>
+                      <documentation>Document</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="IssueCountry" type="string">
+                          <annotation>
+                            <documentation>IssueCountry</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="NationalityCountry" type="string">
+                          <annotation>
+                            <documentation>NationalityCountry</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="Visa">
+                          <annotation>
+                            <documentation>Visa element name</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="ApplicableCountry" type="string">
+                                <annotation>
+                                  <documentation>
+                                                                        You must use a valid 2 or 3 character country
+                                                                        code (alpha characters only)
+                                                                    </documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="PlaceOfBirth" type="string">
+                                <annotation>
+                                  <documentation>PlaceOfBirth</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="PlaceOfIssue" type="string">
+                                <annotation>
+                                  <documentation>PlaceOfIssue</documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                            <attribute name="IssueDate" type="spct:fullDate" use="required">
+                              <annotation>
+                                <documentation>IssueDate</documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                      <attribute name="ExpirationDate" type="spct:fullDate" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "ExpirationDate" is used to specify the document expiration
+                                                        date. "ExpirationDate" follows this format: YYYY-MM-DD
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="Number" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "Number" is used to specify the document number.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="Type" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Type" is used to specify the document type. Acceptable values
+                                                        include: "A" - Alien resident card, "C" - Permanent resident
+                                                        card, "F" - Facilitation document, "I" - National ID card, "IN"
+                                                        - Nexus Card. Also: "M" - Military, "N" - Naturalization
+                                                        certificate, "P" - Passport, "T" - Refugee travel document and
+                                                        re-entry permit, US Travel document, "V" - Border crossing card.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="PersonName">
+                    <annotation>
+                      <documentation>PersonName</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="GivenName" type="string">
+                          <annotation>
+                            <documentation>GivenName</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="MiddleName" type="string">
+                          <annotation>
+                            <documentation>MiddleName</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="Surname" type="string">
+                          <annotation>
+                            <documentation>Surname</documentation>
+                          </annotation>
+                        </element>
+                      </sequence>
+                      <attribute name="DateOfBirth" type="spct:fullDate" use="optional">
+                        <annotation>
+                          <documentation>"DateOfBirth" follows this format: YYYY-MM-DD
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="DocumentHolder" type="boolean" use="optional">
+                        <annotation>
+                          <documentation>"DocumentHolder" is used to identify the primary
+                                                        passport holder when the passport document is issued for
+                                                        multiple passengers
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="Gender" use="optional">
+                        <annotation>
+                          <documentation>Gender</documentation>
+                        </annotation>
+                        <simpleType>
+                          <restriction base="string">
+                            <enumeration value="F" />
+                            <enumeration value="M" />
+                            <enumeration value="FI" />
+                            <enumeration value="MI" />
+                            <enumeration value="U" />
+                          </restriction>
+                        </simpleType>
+                      </attribute>
+                      <attribute name="NameNumber" type="string" use="optional">
+                        <annotation>
+                          <documentation>"NameNumber" is used to indicate the name number
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="ResidentDestinationAddress">
+                    <annotation>
+                      <documentation>ResidentDestinationAddress</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="City" type="string">
+                          <annotation>
+                            <documentation>City element name</documentation>
+                          </annotation>
+                        </element>
+                        <element name="Country" type="string">
+                          <annotation>
+                            <documentation>Country</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="Street" type="string">
+                          <annotation>
+                            <documentation>Street</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="State" type="string">
+                          <annotation>
+                            <documentation>State element name</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="Zip" type="string">
+                          <annotation>
+                            <documentation>
+                                                            "Zip" is used to specify Zip or Postal Code.
+                                                        </documentation>
+                          </annotation>
+                        </element>
+                      </sequence>
+                      <attribute name="Type" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        "Type" is used to specify the address type. Acceptable values
+                                                        are "R" - residence address, "D" - destination address.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="SegmentNumber" type="string" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "SegmentNumber" is used to specify an itinerary segment to associate the SSR
+                                            to. "A" can be specified to associate the SSR to all segments.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <element minOccurs="0" maxOccurs="unbounded" name="SecureFlight">
+              <annotation>
+                <documentation>SecureFlight</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="KnownTravelerNumber" type="string">
+                    <annotation>
+                      <documentation>KnownTravelerNumber</documentation>
+                    </annotation>
+                  </element>
+                  <element minOccurs="0" name="PersonName">
+                    <annotation>
+                      <documentation>PersonName</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="GivenName" type="string">
+                          <annotation>
+                            <documentation>GivenName</documentation>
+                          </annotation>
+                        </element>
+                        <element minOccurs="0" name="Surname" type="string">
+                          <annotation>
+                            <documentation>Surname</documentation>
+                          </annotation>
+                        </element>
+                      </sequence>
+                      <attribute name="DateOfBirth" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "DateOfBirth" and "Gender" cannot combine with
+                                                        ".../RedressNumber". "DateOfBirth" accepts dates formatted as:
+                                                        YYYY-MM-DD and YY-MM-DD
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="Gender" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        Gender attribute name
+                                                    </documentation>
+                        </annotation>
+                        <simpleType>
+                          <restriction base="string">
+                            <enumeration value="F" />
+                            <enumeration value="M" />
+                            <enumeration value="FI" />
+                            <enumeration value="MI" />
+                          </restriction>
+                        </simpleType>
+                      </attribute>
+                      <attribute name="NameNumber" type="string" use="optional">
+                        <annotation>
+                          <documentation>"NameNumber" is used to indicate the name number
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="RedressNumber" type="string">
+                    <annotation>
+                      <documentation>
+                                                "RedressNumber" cannot combine with ".../PersonName@DateOfBirth" or
+                                                ".../PersonName@Gender".
+                                            </documentation>
+                    </annotation>
+                  </element>
+                </sequence>
+                <attribute name="SegmentNumber" type="string" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "SegmentNumber" is used to specify an itinerary segment to associate the SSR
+                                            to. "A" can be specified to associate the SSR to all segments.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <element minOccurs="0" maxOccurs="unbounded" name="Service">
+              <annotation>
+                <documentation>Service</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="PersonName">
+                    <annotation>
+                      <documentation>
+                                                Optional, BUT some SSRCodes require a name number.
+                                            </documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="NameNumber" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+                                                        "Number" is used to specify a passenger name number.
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="Text" type="string">
+                    <annotation>
+                      <documentation>
+                                                "Text" is used to specify miscellaneous free text information. Optional,
+                                                BUT many SSRCodes RQs require text.
+                                            </documentation>
+                    </annotation>
+                  </element>
+                  <element minOccurs="0" name="VendorPrefs">
+                    <annotation>
+                      <documentation>VendorPrefs</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element name="Airline">
+                          <annotation>
+                            <documentation>Airline</documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Code" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "Code" is only applicable to the "OSI" SSRCode, and
+                                                                    is used to specify the airline that the SSR needs to
+                                                                    be sent to.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="SegmentNumber" type="string" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "SegmentNumber" is used to specify an itinerary segment to associate the SSR
+                                            to.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="SSR_Code" type="string" use="required">
+                  <annotation>
+                    <documentation>
+                                            "SSR_Code" is used to specify an SSR code. If SSR_Code="OSI" @SegmentNumber
+                                            cannot be utilized.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="DeleteAccountingLinesType">
+    <annotation>
+      <documentation>DeleteAccountingLinesType</documentation>
+    </annotation>
+    <sequence>
+      <element minOccurs="0" maxOccurs="unbounded" name="Delete">
+        <annotation>
+          <documentation>Delete</documentation>
+        </annotation>
+        <complexType>
+          <attribute name="endNumber" type="integer" use="optional">
+            <annotation>
+              <documentation>"endNumber" when used with @Number to specify a range of accounting lines to
+                                delete.
+                            </documentation>
+            </annotation>
+          </attribute>
+          <attribute name="number" type="integer" use="required">
+            <annotation>
+              <documentation>"number" is used to specify particular accounting lines.</documentation>
+            </annotation>
+          </attribute>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute name="all" type="boolean" use="optional">
+      <annotation>
+        <documentation>"all" is used to delete all accounting lines, cannot combine with ...@None.
+                </documentation>
+      </annotation>
+    </attribute>
+    <attribute name="none" type="boolean" use="optional">
+      <annotation>
+        <documentation>"none" is used to indicate not to delete any of the accounting lines, cannot combine with
+                    ...@All.
+                </documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="DeletePriceQuoteType">
+    <annotation>
+      <documentation>DeletePriceQuoteType</documentation>
+    </annotation>
+    <sequence>
+      <element name="AirItineraryPricingInfo">
+        <annotation>
+          <documentation>AirItineraryPricingInfo</documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" maxOccurs="unbounded" name="Record">
+              <annotation>
+                <documentation>Record</documentation>
+              </annotation>
+              <complexType>
+                <attribute name="All" type="boolean" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "All" is used to delete all price quote records associated with a particular
+                                            PNR. "All" cannot combine with any other qualifier within .../Record.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="EndNumber" type="integer" use="optional">
+                  <annotation>
+                    <documentation>
+                                            'EndNumber" when used with @Number to specify a range of price quote records
+                                            to delete.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="Number" type="integer" use="optional">
+                  <annotation>
+                    <documentation>
+                                            'Number" is used to specify a particular price quote record.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <element minOccurs="0" maxOccurs="unbounded" name="ReissueRecord">
+              <annotation>
+                <documentation>ReissueRecord</documentation>
+              </annotation>
+              <complexType>
+                <attribute name="All" type="boolean" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "All" is used to delete all price quote reissue records associated with a
+                                            particular PNR. "All" cannot combine with any other qualifier within
+                                            .../ReissueRecord.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="EndNumber" type="integer" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "EndNumber" when used with @Number to specify a range of price quote reissue
+                                            records to delete.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+                <attribute name="Number" type="integer" use="optional">
+                  <annotation>
+                    <documentation>
+                                            "Number" is used to specify a particular price quote reissue record.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="PostProcessingType">
+    <annotation>
+      <documentation>PostProcessingType</documentation>
+    </annotation>
+    <sequence>
+      <element name="EndTransaction">
+        <annotation>
+          <documentation>
+                        "EndTransaction" is used to end the transaction and finalize the record.
+                    </documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element minOccurs="0" name="Source">
+              <annotation>
+                <documentation>Source</documentation>
+              </annotation>
+              <complexType>
+                <attribute name="ReceivedFrom" type="xsd:Text.Short" use="required">
+                  <annotation>
+                    <documentation>
+                                            "ReceivedFrom" is used to receive the record.
+                                        </documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <element minOccurs="0" name="Email">
+              <annotation>
+                <documentation>
+                                    "Email" is used to send an email notification upon end transaction to any email
+                                    addresses contained within the particular record.
+                                </documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="eTicket">
+                    <annotation>
+                      <documentation>
+                                                "eTicket" is used to send an email notification containing a text-based
+                                                copy of the eTicket. eTicket cannot combine with .../Invoice, or
+                                                .../Itinerary.
+                                            </documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="PDF">
+                          <annotation>
+                            <documentation>
+                                                            "eTicket" is used to send an email notification containing a
+                                                            PDF-based copy of the eTicket.
+                                                        </documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Ind" type="boolean" use="required">
+                              <annotation>
+                                <documentation>Ind attribute name</documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                      <attribute name="Ind" type="boolean" use="required">
+                        <annotation>
+                          <documentation>Ind attribute name</documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="Invoice">
+                    <annotation>
+                      <documentation>
+                                                "Invoice" is used to send an email notification containing a text-based
+                                                copy of the invoice. Invoice cannot combine with .../eTicket, or
+                                                .../Itinerary.
+                                            </documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="Ind" type="boolean" use="required">
+                        <annotation>
+                          <documentation>Ind attribute name</documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="Itinerary">
+                    <annotation>
+                      <documentation>
+                                                "Itinerary" is used to send an email notification containing a
+                                                text-based copy of the itinerary. Itinerary cannot combine with
+                                                .../eTicket, or .../Invoice.
+                                            </documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="PDF">
+                          <annotation>
+                            <documentation>
+                                                            "PDF" is used to send an email notification containing a
+                                                            PDF-based copy of the itinerary.
+                                                        </documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="Ind" type="boolean" use="required">
+                              <annotation>
+                                <documentation>Ind attribute name</documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" maxOccurs="unbounded" name="Segment">
+                          <annotation>
+                            <documentation>
+                                                            "PDF" is used to send an email notification containing a
+                                                            PDF-based copy of the itinerary.
+                                                        </documentation>
+                          </annotation>
+                          <complexType>
+                            <attribute name="EndNumber" type="integer" use="optional">
+                              <annotation>
+                                <documentation>
+                                                                    "EndNumber" is used to specify an ending segment in
+                                                                    the range to include in the email message.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="Number" type="integer" use="required">
+                              <annotation>
+                                <documentation>
+                                                                    "Number" is used to specify a segment number to
+                                                                    include in the email message.
+                                                                </documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                      <attribute name="Ind" type="boolean" use="required">
+                        <annotation>
+                          <documentation>Ind attribute name</documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="PersonName">
+                    <annotation>
+                      <documentation>
+                                                "NameNumber" is used to specify a particular passenger name number to
+                                                send the email notification to. Please note that the email address in
+                                                the PNR's email field must be name associated to the specified name
+                                                number.
+                                            </documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="NameNumber" type="string" use="required">
+                        <annotation>
+                          <documentation>
+                                                        NameNumber attribute name
+                                                    </documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="Ind" type="boolean" use="required">
+                  <annotation>
+                    <documentation>Ind attribute name</documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute default="false" name="acceptIncompleteTransactions" type="boolean" use="optional">
+      <annotation>
+        <documentation>
+                    "acceptIncompleteTransactions" is used to accept a transaction where at least one PQR creation on a
+                    ticket number failed.
+                </documentation>
+      </annotation>
+    </attribute>
+    <attribute default="false" name="returnPQRInfo" type="boolean" use="optional">
+      <annotation>
+        <documentation>
+                    "returnPQRInfo" is used to instruct the system to return the details of generated Price Quote
+                    Reissue information in the service response.
+                </documentation>
+      </annotation>
+    </attribute>
+    <attribute default="false" name="redisplayReservation" type="boolean" use="optional">
+      <annotation>
+        <documentation>
+                    "redisplayReservation" is used to instruct the system to display the reservation details within the
+                    service response
+                </documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <simpleType name="CancelSegmentNumber">
+    <annotation>
+      <documentation xml:lang="en">Used for Numeric values, from 1 inclusive</documentation>
+    </annotation>
+    <restriction base="integer">
+      <minInclusive value="1" />
+    </restriction>
+  </simpleType>
+</schema>

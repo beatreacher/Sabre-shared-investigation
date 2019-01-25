@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="cafcf201-9cc4-42a3-b1e6-cc61de0c7523" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/ExchangeBooking1.0.0RQ.wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="msg-header-2_0.xsd" MetadataType="Schema" ID="18cf0a2d-3040-49d9-bfde-c9b0378ec2ab" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/msg-header-2_0.xsd" />
+    <MetadataFile FileName="xlink.xsd" MetadataType="Schema" ID="338a27f9-83f3-49e2-ab52-7556ba0a0191" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/xlink.xsd" />
+    <MetadataFile FileName="ExchangeBooking1.xsd" MetadataType="Schema" ID="106c2475-b25a-4d30-9c7a-462e27e74f42" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/ExchangeBooking1.0.0RS.xsd" />
+    <MetadataFile FileName="envelope.xsd" MetadataType="Schema" ID="6050e2c1-829c-4e5c-87c2-92e68b1a0e33" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/envelope.xsd" />
+    <MetadataFile FileName="STL2_Payload_v02_01.xsd" MetadataType="Schema" ID="787356a3-7ca4-4e8c-964d-36c5b966c328" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/STL2_Payload_v02_01.xsd" />
+    <MetadataFile FileName="OpenReservation.xsd" MetadataType="Schema" ID="d242be43-0aef-4ff1-91a3-3c3f63f50fc9" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/OpenReservation.1.11.0_SP.xsd" />
+    <MetadataFile FileName="ExchangeBooking1.wsdl" MetadataType="Wsdl" ID="0681fcd8-3fea-4406-ae45-73a527f23ed1" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/ExchangeBooking1.0.0RQ.wsdl" />
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="d0dbe6ad-a6f1-4088-9f50-682c65da6e21" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/xml.xsd" />
+    <MetadataFile FileName="STL2_MsgCommon_v02_01.xsd" MetadataType="Schema" ID="b925b506-e6c0-42e8-b1f6-b40b8c75172c" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/STL2_MsgCommon_v02_01.xsd" />
+    <MetadataFile FileName="ExchangeBooking11.xsd" MetadataType="Schema" ID="0855ed5c-3c98-4aab-be19-acd5a8f168b7" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/ExchangeBooking1.0.0RQRS.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="2d7bc0a7-9a6c-43be-bb73-351c76316815" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="Air.xsd" MetadataType="Schema" ID="10f5d5a8-1723-44d8-862c-71cf96171da6" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/Air.1.11.0_SP.xsd" />
+    <MetadataFile FileName="SpCommonSimpleTypes_v3.xsd" MetadataType="Schema" ID="947d3ab8-38c8-476d-980f-dda751251760" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/SpCommonSimpleTypes_v3.xsd" />
+    <MetadataFile FileName="wsse.xsd" MetadataType="Schema" ID="4d33d3f3-b6ae-4003-9989-e65f36406340" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/wsse.xsd" />
+    <MetadataFile FileName="Ancillaries.xsd" MetadataType="Schema" ID="e8d7a772-a255-456e-8e33-1baae4c2294d" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/Ancillaries.1.11.0_SP.xsd" />
+    <MetadataFile FileName="PNRBuilderTypes_v1.xsd" MetadataType="Schema" ID="291ab965-284d-495f-a0c4-7f2891ce081c" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/PNRBuilderTypes_v1.17.0_SP.xsd" />
+    <MetadataFile FileName="ExchangeBooking12.xsd" MetadataType="Schema" ID="c8894d66-d311-4127-b43c-294045dfdbaf" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/ExchangeBooking1.0.0RQ.xsd" />
+    <MetadataFile FileName="Pricing.xsd" MetadataType="Schema" ID="c5848edc-a649-4e9f-bd8a-5ed153d12dd9" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/built-ins/Pricing.1.11.0_SP.xsd" />
+    <MetadataFile FileName="ExchangeBookingCommonTypes1.xsd" MetadataType="Schema" ID="3deb4c3d-30d8-4859-a01b-baca9f4cce5e" SourceId="1" SourceUrl="http://files.developer.sabre.com/wsdl/sabreXML1.0.00/ServicesPlatform/ExchangeBookingRQ/1.0.0/ExchangeBookingCommonTypes1.0.0.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
