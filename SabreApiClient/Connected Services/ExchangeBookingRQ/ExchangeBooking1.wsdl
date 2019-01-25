@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:book="http://services.sabre.com/sp/exchange/booking/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eb="http://www.ebxml.org/namespaces/messageHeader" xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/12/secext" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sws="https://webservices.sabre.com/websvc" targetNamespace="https://webservices.sabre.com/websvc" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema>
+      <xsd:import schemaLocation="ExchangeBooking1.0.0RQRS.xsd" namespace="http://services.sabre.com/sp/exchange/booking/v1" />
+      <xsd:import schemaLocation="built-ins/msg-header-2_0.xsd" namespace="http://www.ebxml.org/namespaces/messageHeader" />
+      <xsd:import schemaLocation="built-ins/wsse.xsd" namespace="http://schemas.xmlsoap.org/ws/2002/12/secext" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ExchangeBookingInput">
+    <wsdl:part name="header" element="eb:MessageHeader" />
+    <wsdl:part name="header2" element="wsse:Security" />
+    <wsdl:part name="body" element="book:ExchangeBookingRQ" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeBookingOutput">
+    <wsdl:part name="header" element="eb:MessageHeader" />
+    <wsdl:part name="header2" element="wsse:Security" />
+    <wsdl:part name="body" element="book:ExchangeBookingRS" />
+  </wsdl:message>
+  <wsdl:portType name="ExchangeBookingPortType">
+    <wsdl:operation name="ExchangeBookingRQ">
+      <wsdl:input message="sws:ExchangeBookingInput" />
+      <wsdl:output message="sws:ExchangeBookingOutput" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExchangeBookingSoapBinding" type="sws:ExchangeBookingPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ExchangeBookingRQ">
+      <soap:operation soapAction="ExchangeBookingRQ" />
+      <wsdl:input>
+        <soap:header message="sws:ExchangeBookingInput" part="header" use="literal" />
+        <soap:header message="sws:ExchangeBookingInput" part="header2" use="literal" />
+        <soap:body use="literal" parts="body" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:header message="sws:ExchangeBookingOutput" part="header" use="literal" />
+        <soap:header message="sws:ExchangeBookingOutput" part="header2" use="literal" />
+        <soap:body use="literal" parts="body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExchangeBookingService">
+    <wsdl:port name="ExchangeBookingPortType" binding="sws:ExchangeBookingSoapBinding">
+      <soap:address location="https://webservices.havail.sabre.com" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

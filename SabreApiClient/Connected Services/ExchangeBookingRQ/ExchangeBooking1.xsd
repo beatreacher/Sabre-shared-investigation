@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns:spct="http://services.sabre.com/sp/common/simple/v3" xmlns:pnrb="http://webservices.sabre.com/pnrbuilder/v1_17/sp" xmlns:stlp="http://services.sabre.com/STL_Payload/v02_01" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.sabre.com/sp/exchange/booking/v1" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="built-ins/STL2_Payload_v02_01.xsd" namespace="http://services.sabre.com/STL_Payload/v02_01" />
+  <import schemaLocation="built-ins/PNRBuilderTypes_v1.17.0_SP.xsd" namespace="http://webservices.sabre.com/pnrbuilder/v1_17/sp" />
+  <import schemaLocation="SpCommonSimpleTypes_v3.xsd" namespace="http://services.sabre.com/sp/common/simple/v3" />
+  <element name="ExchangeBookingRS">
+    <annotation>
+      <documentation>Exchange Booking Response</documentation>
+    </annotation>
+    <complexType>
+      <complexContent mixed="false">
+        <extension base="stlp:STL_Response_Payload">
+          <sequence>
+            <element minOccurs="0" maxOccurs="9" name="ExchangeConfirmation">
+              <annotation>
+                <documentation>
+									"ExchangeConfirmation" is used to pass details pertaining to user specified acceptable price difference
+								</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="PriceComparison">
+                    <annotation>
+                      <documentation>PriceComparison</documentation>
+                    </annotation>
+                    <complexType>
+                      <attribute name="amountReturned" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+														"amountReturned" is used to return the total amount associated with pricing of the exchange. "AmountReturned"="-200.00" reflects the refund amount.
+													</documentation>
+                        </annotation>
+                      </attribute>
+                      <attribute name="amountSpecified" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+														"amountSpecified"="200.00" reflects the add collect amount. "AmountSpecified" is used to return the amount specified in the /ExchangeBookingRQ/AutomatedExchanges/PriceComparison that was used for comparision purposes against the actual total amount associated with the exchange.
+													</documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="PQR_Number" type="string" use="optional">
+                  <annotation>
+                    <documentation>
+											"PQR_Number" is used to pass the PQR number.
+										</documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <element minOccurs="0" maxOccurs="unbounded" name="PriceQuoteReissue">
+              <annotation>
+                <documentation>
+									"PriceQuoteReissue" is used to pass information on the generated PQR record
+								</documentation>
+              </annotation>
+              <complexType>
+                <sequence>
+                  <element minOccurs="0" name="MiscInformation">
+                    <annotation>
+                      <documentation>MiscInformation</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" maxOccurs="unbounded" name="BaggageFees">
+                          <annotation>
+                            <documentation>BaggageFees</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="Text" type="string">
+                                <annotation>
+                                  <documentation>
+																		"Text" is used to return baggage fee-related information.
+																	</documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" maxOccurs="unbounded" name="SignatureLine">
+                          <annotation>
+                            <documentation>SignatureLine</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="FreeText" type="string">
+                                <annotation>
+                                  <documentation>
+																		"FreeText" is used to return miscellaneous free text.
+																	</documentation>
+                                </annotation>
+                              </element>
+                              <element minOccurs="0" name="Text" type="string">
+                                <annotation>
+                                  <documentation>
+																		"Text" is used to return miscellaneous free text.
+																	</documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                            <attribute name="CreationAgent" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+																	"CreationAgent" is used to return the agent sine that stored the price.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="CreateDateTime" type="spct:dateTime" use="optional">
+                              <annotation>
+                                <documentation>
+																	"CreateDateTime" is used to return creation date/time information.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="ExpirationDate" type="spct:date" use="optional">
+                              <annotation>
+                                <documentation>
+																	"ExpirationDate" is used to return expiration date information.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="ExpirationTime" type="spct:time" use="optional">
+                              <annotation>
+                                <documentation>
+																	"ExpirationTime" is used to return expiration time information.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="HomePseudoCityCode" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+																	"HomePseudoCityCode" is used to return the base sine in location associated to the agent sine that stored the price.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="PseudoCityCode" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+																	"PseudoCityCode" is used to return the location associated to the agent sine when they stored the price.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="Source" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+																	"Source" is used to return the pricing source.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                            <attribute name="Status" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+																	"Status" is used to return the pricing record status.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                        <element minOccurs="0" maxOccurs="unbounded" name="TicketingFees">
+                          <annotation>
+                            <documentation>TicketingFees</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" maxOccurs="unbounded" name="FeeInformation">
+                                <annotation>
+                                  <documentation>
+																		"FeeInformation" is used to return fee-related information if applicable.
+																	</documentation>
+                                </annotation>
+                                <complexType>
+                                  <simpleContent>
+                                    <extension base="string">
+                                      <attribute name="AccountData" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"AccountData" is used to return fee-related account data if applicable.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="Amount" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"Amount" is used to return the fee amount if applicable.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="DisplayOnOutputInd" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																					"DisplayOnOutputInd" is used to indicate whether or not the fee can be displayed on output.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="FunctionCode" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"FunctionCode" is used to return fee-related function code data if applicable.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="GuaranteeType" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"GuaranteeType" is used to return the fee guarantee type if applicable.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="NonCommissionInd" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"NonCommissionInd" is used to indicate whether or not commission can be claimed on the fee.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="NonRefundableInd" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"NonRefundableInd" is used to indicate whether or not the fee is non-refundable.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="OnlineInterlineService" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"OnlineInterlineService" is used to return online/interline service-related information if applicable.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                      <attribute name="ServiceType" type="string" use="optional">
+                                        <annotation>
+                                          <documentation>
+																						"ServiceType" is used to return fee-related service type data if applicable.
+																					</documentation>
+                                        </annotation>
+                                      </attribute>
+                                    </extension>
+                                  </simpleContent>
+                                </complexType>
+                              </element>
+                            </sequence>
+                            <attribute name="Disclaimer" type="string" use="optional">
+                              <annotation>
+                                <documentation>
+																	"Disclaimer" is used to return fee-related disclaimer information if applicable.
+																</documentation>
+                              </annotation>
+                            </attribute>
+                          </complexType>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="PricedItinerary">
+                    <annotation>
+                      <documentation>PricedItinerary</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" name="AirItineraryPricingInfo">
+                          <annotation>
+                            <documentation>
+															"DocNumber" is used to return the document number.
+														</documentation>
+                          </annotation>
+                          <complexType>
+                            <sequence>
+                              <element minOccurs="0" name="ExchangeDetails">
+                                <annotation>
+                                  <documentation>ExchangeDetails</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="Category35NetFare">
+                                      <annotation>
+                                        <documentation>Category35NetFare</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="BaseFare">
+                                            <annotation>
+                                              <documentation>BaseFare</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Amount" type="decimal" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Amount" is used to represent the base fare amount.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                              <attribute name="CurrencyCode" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"CurrencyCode" is used to represent the base fare currency code.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="EquivFare">
+                                            <annotation>
+                                              <documentation>EquivFare</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Amount" type="decimal" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Amount" is used to represent the equivalent amount paid amount.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                              <attribute name="CurrencyCode" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"CurrencyCode" is used to represent the equivalent amount paid currency.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Tax">
+                                            <annotation>
+                                              <documentation>Tax element name</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="TotalAmount" type="decimal" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"TotalAmount" is used to represent the total tax amount.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="TotalFare">
+                                            <annotation>
+                                              <documentation>TotalFare</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Amount" type="decimal" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Amount" is used to represent the ticket total amount.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                              <attribute name="CurrencyCode" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"CurrencyCode" is used to represent the ticket total currency.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="TicketType" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"TicketType" is used to represent ticket type. "O" represents old/exchange ticket. "N" represents new ticket.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="ChangeFeeInformation">
+                                      <annotation>
+                                        <documentation>
+																					"ChangeFeeInformation" is used to return change fee-related information.
+																				</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <simpleContent>
+                                          <extension base="string">
+                                            <attribute name="Amount" type="string" use="optional">
+                                              <annotation>
+                                                <documentation>
+																									"Amount" is used to return the change fee amount.
+																								</documentation>
+                                              </annotation>
+                                            </attribute>
+                                          </extension>
+                                        </simpleContent>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="MiscInformation">
+                                      <annotation>
+                                        <documentation>MiscInformation</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Commission">
+                                            <annotation>
+                                              <documentation>Commission</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Amount" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Amount" is used to return the commission amount.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                              <attribute name="OnPenaltyAmount" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"OnPenaltyAmount" is used to return the commission amount.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="HemisphereCode" type="string">
+                                            <annotation>
+                                              <documentation>
+																								"HemisphereCode" is used to return the hemisphere code.
+																							</documentation>
+                                            </annotation>
+                                          </element>
+                                          <element minOccurs="0" name="JourneyCode" type="string">
+                                            <annotation>
+                                              <documentation>
+																								"JourneyCode" is used to return the journey code.
+																							</documentation>
+                                            </annotation>
+                                          </element>
+                                          <element minOccurs="0" name="PaymentInfo">
+                                            <annotation>
+                                              <documentation>PaymentInfo</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="Payment">
+                                                  <annotation>
+                                                    <documentation>Payment</documentation>
+                                                  </annotation>
+                                                  <complexType>
+                                                    <sequence>
+                                                      <element minOccurs="0" name="Form" type="string">
+                                                        <annotation>
+                                                          <documentation>
+																														"Form" is used to return form of payment-related information.
+																													</documentation>
+                                                        </annotation>
+                                                      </element>
+                                                    </sequence>
+                                                  </complexType>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="TourCode">
+                                            <annotation>
+                                              <documentation>TourCode</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="Text" type="string">
+                                                  <annotation>
+                                                    <documentation>
+																											"Text" is used to return tour code-related information.
+																										</documentation>
+                                                  </annotation>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="Waiver">
+                                            <annotation>
+                                              <documentation>Waiver</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="Code" type="string">
+                                                  <annotation>
+                                                    <documentation>
+																											"Code" is used to return waiver code-related information.
+																										</documentation>
+                                                  </annotation>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="ValidatingCarrier" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"ValidatingCarrier" is used to return validating carrier-related information.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="NonFlightInformation">
+                                      <annotation>
+                                        <documentation>NonFlightInformation</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="DocNumber" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"DocNumber" is used to return the document number.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="CurrencyCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"CurrencyCode" is used to return the currency code.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="TicketValue" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"TicketValue" is used to return the ticket value.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="PersonName">
+                                      <annotation>
+                                        <documentation>PersonName</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Surname" type="string">
+                                            <annotation>
+                                              <documentation>
+																								"Surname" is used to return the passenger's surname.
+																							</documentation>
+                                            </annotation>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="Text" type="string">
+                                      <annotation>
+                                        <documentation>
+																					"Text" is used to return miscellaneous free text.
+																				</documentation>
+                                      </annotation>
+                                    </element>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="TransactionInformation">
+                                      <annotation>
+                                        <documentation>TransactionInformation</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Text" type="string">
+                                            <annotation>
+                                              <documentation>Text element name</documentation>
+                                            </annotation>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="Amount" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"Amount" is used to return the amount.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="CurrencyCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"CurrencyCode" is used to return the currency code.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                  <attribute name="DocNumber" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"DocNumber" is used to return the document number.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="CurrencyCode" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"CurrencyCode" is used to return the currency code.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="ExchangeReissue" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"ExchangeReissue" is used to return exchange/reissue-related information.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="PQR_Ind" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"PQR_Ind" is used to return the PQR indicator if applicable.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="PQR_Status" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"PQR_Status" is used to return the PQR status if applicable.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="Source" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"Source" is used to return source-related information.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="TicketValue" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"TicketValue" is used to return the ticket value.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="FareCalculation">
+                                <annotation>
+                                  <documentation>FareCalculation</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="Text" type="string">
+                                      <annotation>
+                                        <documentation>
+																					"Text" is used to return the fare calculation line.
+																				</documentation>
+                                      </annotation>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="ItinTotalFare">
+                                <annotation>
+                                  <documentation>ItinTotalFare</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" name="BaseFare">
+                                      <annotation>
+                                        <documentation>BaseFare</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Amount" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"Amount" is used to return the applicable amount.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="CurrencyCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"CurrencyCode" is used to return the applicable currency code.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="EquivFare">
+                                      <annotation>
+                                        <documentation>EquivFare</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Amount" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"Amount" is used to return the applicable amount.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="CurrencyCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"CurrencyCode" is used to return the applicable currency code.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Taxes">
+                                      <annotation>
+                                        <documentation>Taxes element name</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" maxOccurs="unbounded" name="Tax">
+                                            <annotation>
+                                              <documentation>Tax element name</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Amount" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Amount" is used to return the applicable amount.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                              <attribute name="PaidInd" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"PaidInd" is used to indicate whether or not the tax has been paid.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                              <attribute name="TaxCode" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"TaxCode" is used to return the tax code.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="TaxCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"TaxCode" is used to return the tax code.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="TotalAmount" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"TotalAmount" is used to return the applicable amount.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="TotalFare">
+                                      <annotation>
+                                        <documentation>TotalFare</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <attribute name="Amount" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"Amount" is used to return the applicable amount.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="CurrencyCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"CurrencyCode" is used to return the applicable currency code.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                    <element minOccurs="0" name="Warnings">
+                                      <annotation>
+                                        <documentation>Warnings</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="Warning">
+                                            <annotation>
+                                              <documentation>Warning</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="ShortText" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"ShortText" is used to return miscellaneous warning-related information.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" maxOccurs="unbounded" name="PassengerTypeQuantity">
+                                <annotation>
+                                  <documentation>PassengerTypeQuantity</documentation>
+                                </annotation>
+                                <complexType>
+                                  <attribute name="Code" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"Code" is used to return the passenger type code used to price the itinerary.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                  <attribute name="Quantity" type="string" use="optional">
+                                    <annotation>
+                                      <documentation>
+																				"Number" is used to return the passenger name number.
+																			</documentation>
+                                    </annotation>
+                                  </attribute>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" name="PTC_FareBreakdown">
+                                <annotation>
+                                  <documentation>PTC_FareBreakdown</documentation>
+                                </annotation>
+                                <complexType>
+                                  <sequence>
+                                    <element minOccurs="0" maxOccurs="unbounded" name="FlightSegment">
+                                      <annotation>
+                                        <documentation>FlightSegment</documentation>
+                                      </annotation>
+                                      <complexType>
+                                        <sequence>
+                                          <element minOccurs="0" name="BaggageAllowance">
+                                            <annotation>
+                                              <documentation>BaggageAllowance</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Number" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Number" is used to return the baggage allowance.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="FareBasis">
+                                            <annotation>
+                                              <documentation>FareBasis</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Code" is used to return the fare basis code used to price the itinerary.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="MarketingAirline">
+                                            <annotation>
+                                              <documentation>MarketingAirline</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="Code" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"Code" is used to return the marketing airline code.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                              <attribute name="FlightNumber" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"FlightNumber" is used to return the marketing airline flight number.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="OriginLocation">
+                                            <annotation>
+                                              <documentation>OriginLocation</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <attribute name="LocationCode" type="string" use="optional">
+                                                <annotation>
+                                                  <documentation>
+																										"LocationCode" is used to return the departure airport code.
+																									</documentation>
+                                                </annotation>
+                                              </attribute>
+                                            </complexType>
+                                          </element>
+                                          <element minOccurs="0" name="ValidityDates">
+                                            <annotation>
+                                              <documentation>ValidityDates</documentation>
+                                            </annotation>
+                                            <complexType>
+                                              <sequence>
+                                                <element minOccurs="0" name="NotValidAfter" type="spct:fullDate">
+                                                  <annotation>
+                                                    <documentation>
+																											"NotValidAfter" is used to return the ending validity date.
+																										</documentation>
+                                                  </annotation>
+                                                </element>
+                                                <element minOccurs="0" name="NotValidBefore" type="spct:fullDate">
+                                                  <annotation>
+                                                    <documentation>
+																											"NotValidBefore" is used to return the beginning validity date.
+																										</documentation>
+                                                  </annotation>
+                                                </element>
+                                              </sequence>
+                                            </complexType>
+                                          </element>
+                                        </sequence>
+                                        <attribute name="ConnectionInd" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"ConnectionInd" is used to return the connection indicator associated with the particular flight segment.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="DepartureDateTime" type="spct:dateOrTime" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"DepartureDateTime" is used to return the time and date of flight departure.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="FlightNumber" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"FlightNumber" is used to return the flight number.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="ResBookDesigCode" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"ResBookDesigCode" is used to return the booking class of service.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                        <attribute name="RPH" type="string" use="optional">
+                                          <annotation>
+                                            <documentation>
+																							"RPH" is used as a reference place holder.
+																						</documentation>
+                                          </annotation>
+                                        </attribute>
+                                      </complexType>
+                                    </element>
+                                  </sequence>
+                                </complexType>
+                              </element>
+                              <element minOccurs="0" maxOccurs="unbounded" name="ResTicketingRestrictions" type="string">
+                                <annotation>
+                                  <documentation>
+																		"ResTicketingRestrictions" is used to return miscellaneous reservation/ticketing restriction-related text.
+																	</documentation>
+                                </annotation>
+                              </element>
+                            </sequence>
+                          </complexType>
+                        </element>
+                      </sequence>
+                      <attribute name="InputMessage" type="string" use="optional">
+                        <annotation>
+                          <documentation>
+														"InputMessage" is used to return the pricing input command associated with the particular price quote record.
+													</documentation>
+                        </annotation>
+                      </attribute>
+                    </complexType>
+                  </element>
+                  <element minOccurs="0" name="ResponseHeader">
+                    <annotation>
+                      <documentation>ResponseHeader</documentation>
+                    </annotation>
+                    <complexType>
+                      <sequence>
+                        <element minOccurs="0" maxOccurs="unbounded" name="Text" type="string">
+                          <annotation>
+                            <documentation>
+															"Text" is used to return miscellaneous free text information.
+														</documentation>
+                          </annotation>
+                        </element>
+                      </sequence>
+                    </complexType>
+                  </element>
+                </sequence>
+                <attribute name="PQR_Number" type="string" use="optional">
+                  <annotation>
+                    <documentation>
+											"PQR_Number" is used to pass the PQR number.
+										</documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+            <any minOccurs="0" maxOccurs="1" namespace="http://webservices.sabre.com/pnrbuilder/v1_17/sp">
+              <annotation>
+                <documentation>Reservation</documentation>
+              </annotation>
+            </any>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+</schema>
