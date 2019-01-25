@@ -121,6 +121,31 @@ namespace ApiService.Controllers
             }
         }
 
+        [HttpPost]
+        [ActionName("EnhancedAirBook")]
+        public async Task<SabreApiClient.EnhancedAirBookRQ.EnhancedAirBookRQResponse> EnhancedAirBook(object requestObject)
+        {
+            try
+            {
+                _logger.Debug("EnhancedAirBook started");
+                var request = JsonConvert.DeserializeObject<SabreApiClient.EnhancedAirBookRQ.EnhancedAirBookRQ>(requestObject.ToString(), new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
+                Session session = GetSession(Request);
+
+                var enhacned = await _sabreApiClient.GetEnhancedAirBook(session, request);
+
+                return enhacned;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("EnhancedAirBook finished");
+            }
+        }
+
         private static Session GetSession(HttpRequestMessage request)
         {
             if (!request.Headers.Contains("Token")

@@ -11,5 +11,15 @@ namespace SabreApiClient.Interfaces
             );
 
         Task<BargainFinderMax.BargainFinderMaxRQResponse> GetBargainFinderMax(Session session, BargainFinderMax.OTA_AirLowFareSearchRQ request);
+
+        Task<EnhancedAirBookRQ.EnhancedAirBookRQResponse> GetEnhancedAirBook(Session session, EnhancedAirBookRQ.EnhancedAirBookRQ request);
+
+        Task<CreatePNR.PassengerDetailsRQResponse> CreatePNR(Session session, CreatePNR.PassengerDetailsRQ request);
+
+        Task<LoadPNR.TravelItineraryReadRQResponse> LoadPNR(Session session, LoadPNR.TravelItineraryReadRQ request);
+
+        Task<EndTransactionLLSRQ.EndTransactionRQResponse> EndTransaction(Session session, EndTransactionLLSRQ.EndTransactionRQ request);
+
+        Task<ExchangeBookingRQ.ExchangeBookingRQResponse> ExchangeBooking(Session session, ExchangeBookingRQ.ExchangeBookingRQ request);
     }
 }

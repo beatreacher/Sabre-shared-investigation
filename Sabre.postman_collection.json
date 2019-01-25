@@ -7,12 +7,37 @@
 	"item": [
 		{
 			"name": "Get Sabre Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca83fb4a-e1e0-43ec-ba6a-0af3fc1d7292",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"Session\", jsonData);\r",
+							"postman.setEnvironmentVariable(\"Token\", jsonData.Token);\r",
+							"postman.setEnvironmentVariable(\"ConversationId\", jsonData.ConversationId);\r",
+							"postman.setEnvironmentVariable(\"MessageId\", jsonData.MessageId);\r",
+							"postman.setEnvironmentVariable(\"TimeStamp\", jsonData.TimeStamp);\r",
+							"postman.setEnvironmentVariable(\"Organization\", jsonData.Organization);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\">\r\n   <SOAP-ENV:Header>\r\n      <eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"1.0\">\r\n         <eb:From>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">999999</eb:PartyId>\r\n         </eb:From>\r\n         <eb:To>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">123123</eb:PartyId>\r\n         </eb:To>\r\n         <eb:CPAId>92RG</eb:CPAId>\r\n         <eb:ConversationId>SWS-Test-92RG</eb:ConversationId>\r\n         <eb:Service eb:type=\"OTA\">SessionCreateRQ</eb:Service>\r\n         <eb:Action>SessionCreateRQ</eb:Action>\r\n         <eb:MessageData>\r\n            <eb:MessageId>1000</eb:MessageId>\r\n            <eb:Timestamp>2012-06-07T10:00:00</eb:Timestamp>\r\n            <eb:TimeToLive>2013-06-06T23:59:59</eb:TimeToLive>\r\n         </eb:MessageData>\r\n      </eb:MessageHeader>\r\n      <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n         <wsse:UsernameToken>\r\n            <wsse:Username>7971</wsse:Username>\r\n            <wsse:Password>WS102513</wsse:Password>\r\n            <Organization>92RG</Organization>\r\n            <Domain>DEFAULT</Domain>\r\n         </wsse:UsernameToken>\r\n      </wsse:Security>\r\n   </SOAP-ENV:Header>\r\n   <SOAP-ENV:Body>\r\n      <SessionCreateRQ>\r\n         <POS>\r\n            <Source PseudoCityCode=\"92RG\"/>\r\n         </POS>\r\n      </SessionCreateRQ>\r\n   </SOAP-ENV:Body>\r\n</SOAP-ENV:Envelope>"
+					"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n   <s:Header>\r\n      <h:Security xmlns:h=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n         <UsernameToken>\r\n            <Username>7971</Username>\r\n            <Password>WS102513</Password>\r\n            <Organization xmlns=\"\">92RG</Organization>\r\n            <Domain xmlns=\"\">DEFAULT</Domain>\r\n         </UsernameToken>\r\n      </h:Security>\r\n      <h:MessageHeader xmlns:h=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId>9aq99999</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId>123ws123</PartyId>\r\n         </To>\r\n         <ConversationId>1234567</ConversationId>\r\n         <Action>SessionCreateRQ</Action>\r\n      </h:MessageHeader>\r\n   </s:Header>\r\n   <s:Body xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n      <SessionCreateRQ xmlns=\"http://www.opentravel.org/OTA/2002/11\" />\r\n   </s:Body>\r\n</s:Envelope>"
 				},
 				"url": {
 					"raw": "https://sws3-crt.cert.sabre.com",
@@ -59,6 +84,37 @@
 			"response": []
 		},
 		{
+			"name": "EnhancedAirBookRQ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:eb=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\" xmlns:v3=\"http://services.sabre.com/sp/eab/v3_2\">\r\n   <SOAP-ENV:Header>\r\n      <eb:MessageHeader SOAP-ENV:mustUnderstand=\"1\" eb:version=\"2.0\">\r\n         <eb:From>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">123ws123</eb:PartyId>\r\n         </eb:From>\r\n         <eb:To>\r\n            <eb:PartyId type=\"urn:x12.org:IO5:01\">9aq99999</eb:PartyId>\r\n         </eb:To>\r\n         <eb:CPAId>92RG</eb:CPAId>\r\n         <eb:ConversationId>1234567</eb:ConversationId>\r\n         <eb:Service eb:type=\"OTA\">EnhancedAirBookRQ</eb:Service>\r\n         <eb:Action>EnhancedAirBookRQ</eb:Action>\r\n         <eb:MessageData>\r\n            <eb:MessageId>1180524413084380611</eb:MessageId>\r\n            <eb:Timestamp>2019-01-14T11:28:28</eb:Timestamp>\r\n            <eb:TimeToLive>2019-01-15T11:28:28</eb:TimeToLive>\r\n         </eb:MessageData>\r\n      </eb:MessageHeader>\r\n      <wsse:Security xmlns:wsse=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:wsu=\"http://schemas.xmlsoap.org/ws/2002/12/utility\">\r\n         <wsse:BinarySecurityToken valueType=\"String\" EncodingType=\"wsse:Base64Binary\">Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/ACPCRTC!ICESMSLB\\/CRT.LB!1547465308455!9267!13</wsse:BinarySecurityToken>\r\n      </wsse:Security>\r\n   </SOAP-ENV:Header>\r\n   <SOAP-ENV:Body>\r\n      <v3:EnhancedAirBookRQ version=\"3.2.0\" HaltOnError=\"true\" IgnoreOnError=\"true\">\r\n         <v3:OTA_AirBookRQ>\r\n            <v3:OriginDestinationInformation>\r\n               <v3:FlightSegment ArrivalDateTime=\"2019-03-24T04:40:00\" DepartureDateTime=\"2019-03-23T18:40:00\" FlightNumber=\"1305\" NumberInParty=\"1\" ResBookDesigCode=\"G\" Status=\"NN\">\r\n                  <v3:DestinationLocation LocationCode=\"EZE\"/>\r\n                  <v3:Equipment AirEquipType=\"330\"/>\r\n                  <v3:MarketingAirline Code=\"AR\" FlightNumber=\"1305\"/>\r\n                  <v3:MarriageGrp Ind=\"false\"/>\r\n                  <v3:OperatingAirline Code=\"AR\"/>\r\n                  <v3:OriginLocation LocationCode=\"MIA\"/>\r\n               </v3:FlightSegment>\r\n               <v3:FlightSegment ArrivalDateTime=\"2019-03-24T09:25:00\" DepartureDateTime=\"2019-03-24T07:10:00\" FlightNumber=\"2280\" NumberInParty=\"1\" ResBookDesigCode=\"G\" Status=\"NN\">\r\n                  <v3:DestinationLocation LocationCode=\"SCL\"/>\r\n                  <v3:Equipment AirEquipType=\"E90\"/>\r\n                  <v3:MarketingAirline Code=\"AR\" FlightNumber=\"2280\"/>\r\n                  <v3:MarriageGrp Ind=\"true\"/>\r\n                  <v3:OperatingAirline Code=\"AU\"/>\r\n                  <v3:OriginLocation LocationCode=\"EZE\"/>\r\n               </v3:FlightSegment>\r\n               <v3:FlightSegment ArrivalDateTime=\"2019-03-30T20:15:00\" DepartureDateTime=\"2019-03-30T18:20:00\" FlightNumber=\"2287\" NumberInParty=\"1\" ResBookDesigCode=\"G\" Status=\"NN\">\r\n                  <v3:DestinationLocation LocationCode=\"EZE\"/>\r\n                  <v3:Equipment AirEquipType=\"E90\"/>\r\n                  <v3:MarketingAirline Code=\"AR\" FlightNumber=\"2287\"/>\r\n                  <v3:MarriageGrp Ind=\"false\"/>\r\n                  <v3:OperatingAirline Code=\"AU\"/>\r\n                  <v3:OriginLocation LocationCode=\"SCL\"/>\r\n               </v3:FlightSegment>\r\n               <v3:FlightSegment ArrivalDateTime=\"2019-03-31T07:25:00\" DepartureDateTime=\"2019-03-30T23:15:00\" FlightNumber=\"1302\" NumberInParty=\"1\" ResBookDesigCode=\"G\" Status=\"NN\">\r\n                  <v3:DestinationLocation LocationCode=\"MIA\"/>\r\n                  <v3:Equipment AirEquipType=\"330\"/>\r\n                  <v3:MarketingAirline Code=\"AR\" FlightNumber=\"1302\"/>\r\n                  <v3:MarriageGrp Ind=\"true\"/>\r\n                  <v3:OperatingAirline Code=\"AR\"/>\r\n                  <v3:OriginLocation LocationCode=\"EZE\"/>\r\n               </v3:FlightSegment>\r\n            </v3:OriginDestinationInformation>\r\n         </v3:OTA_AirBookRQ>\r\n         <v3:OTA_AirPriceRQ>\r\n            <!--v3:PriceComparison /-->\r\n            <v3:PriceRequestInformation Retain=\"true\">\r\n               <v3:OptionalQualifiers>\r\n                  <v3:PricingQualifiers>\r\n                     <v3:PassengerType Code=\"ADT\" Quantity=\"1\"/>\r\n                  </v3:PricingQualifiers>\r\n               </v3:OptionalQualifiers>\r\n            </v3:PriceRequestInformation>\r\n         </v3:OTA_AirPriceRQ>\r\n         <v3:PostProcessing IgnoreAfter=\"false\"/>\r\n         <v3:PreProcessing IgnoreBefore=\"false\"/>\r\n      </v3:EnhancedAirBookRQ>\r\n\r\n   </SOAP-ENV:Body>\r\n</SOAP-ENV:Envelope>"
+				},
+				"url": {
+					"raw": "https://sws-crt.cert.sabre.com/",
+					"protocol": "https",
+					"host": [
+						"sws-crt",
+						"cert",
+						"sabre",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "BargainFinderMax",
 			"request": {
 				"method": "POST",
@@ -71,7 +127,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n   <s:Header>\r\n      <h:Security xmlns:h=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n         <BinarySecurityToken>Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/ACPCRTC!ICESMSLB\\/CRT.LB!1545928899920!7429!9</BinarySecurityToken>\r\n      </h:Security>\r\n      <h:MessageHeader xmlns:h=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId>WebServiceClient</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId>WebServiceSupplier</PartyId>\r\n         </To>\r\n         <CPAId>92RG</CPAId>\r\n         <ConversationId>V1@280b16ec-5eac-46c0-893f-c88f8e8cb632@310b16ec-5dad-46c0-893f-c88f8e8cb643@780b16ec-5eac-46c0-893f-c88f8e8cb699</ConversationId>\r\n         <Service>BargainFinderMaxRQ</Service>\r\n         <Action>BargainFinderMaxRQ</Action>\r\n         <MessageData>\r\n            <MessageId>1fe8f7ad-990e-46c0-b19f-29930e4435cb</MessageId>\r\n            <Timestamp>2018-12-27T16:53:31Z</Timestamp>\r\n         </MessageData>\r\n      </h:MessageHeader>\r\n   </s:Header>\r\n   <s:Body xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n      <OTA_AirLowFareSearchRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"3.4.0\">\r\n         <POS>\r\n            <Source PseudoCityCode=\"PCC\">\r\n               <RequestorID Type=\"1\" ID=\"1\">\r\n                  <CompanyName Code=\"TN\">TN</CompanyName>\r\n               </RequestorID>\r\n            </Source>\r\n         </POS>\r\n         <OriginDestinationInformation RPH=\"1\">\r\n            <ArrivalDateTime>2019-01-09T00:00:00</ArrivalDateTime>\r\n            <OriginLocation LocationCode=\"TPE\" />\r\n            <DestinationLocation LocationCode=\"HKG\" />\r\n            <TPA_Extensions>\r\n               <SegmentType Code=\"X\" />\r\n               <IncludeVendorPref Code=\"CX\" />\r\n               <Baggage FreePieceRequired=\"true\" />\r\n            </TPA_Extensions>\r\n         </OriginDestinationInformation>\r\n         <OriginDestinationInformation RPH=\"2\">\r\n            <ArrivalDateTime>2019-01-14T00:00:00</ArrivalDateTime>\r\n            <OriginLocation LocationCode=\"HKG\" />\r\n            <DestinationLocation LocationCode=\"EWR\" />\r\n            <TPA_Extensions>\r\n               <SegmentType Code=\"O\" />\r\n               <IncludeVendorPref Code=\"CX\" />\r\n               <Baggage FreePieceRequired=\"true\" />\r\n            </TPA_Extensions>\r\n         </OriginDestinationInformation>\r\n         <TravelPreferences>\r\n            <CabinPref />\r\n            <TPA_Extensions>\r\n               <TripType />\r\n            </TPA_Extensions>\r\n         </TravelPreferences>\r\n         <TravelerInfoSummary>\r\n            <SeatsRequested>1</SeatsRequested>\r\n            <AirTravelerAvail>\r\n               <PassengerTypeQuantity Code=\"ADT\" Quantity=\"1\" />\r\n            </AirTravelerAvail>\r\n         </TravelerInfoSummary>\r\n         <TPA_Extensions>\r\n            <IntelliSellTransaction>\r\n               <RequestType Name=\"50ITINS\" />\r\n            </IntelliSellTransaction>\r\n         </TPA_Extensions>\r\n      </OTA_AirLowFareSearchRQ>\r\n   </s:Body>\r\n</s:Envelope>"
+					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n   <s:Header>\r\n      <h:Security xmlns:h=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n         <BinarySecurityToken>Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/ACPCRTC!ICESMSLB\\/CRT.LB!1548175574430!2229!17</BinarySecurityToken>\r\n      </h:Security>\r\n      <h:MessageHeader xmlns:h=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId>WebServiceClient</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId>WebServiceSupplier</PartyId>\r\n         </To>\r\n         <CPAId>92RG</CPAId>\r\n         <ConversationId>1234567</ConversationId>\r\n         <Service>BargainFinderMaxRQ</Service>\r\n         <Action>BargainFinderMaxRQ</Action>\r\n         <MessageData>\r\n            <MessageId>1669872603744130611</MessageId>\r\n            <Timestamp>2019-01-22T16:46:14</Timestamp>\r\n         </MessageData>\r\n      </h:MessageHeader>\r\n   </s:Header>\r\n   <s:Body xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n\t\t      <OTA_AirLowFareSearchRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" Version=\"3.4.0\" AvailableFlightsOnly=\"true\">\r\n         <POS>\r\n            <Source PseudoCityCode=\"92RG\">\r\n               <RequestorID Type=\"1\" ID=\"1\">\r\n                  <CompanyName Code=\"TN\">TN</CompanyName>\r\n               </RequestorID>\r\n            </Source>\r\n         </POS>\r\n         <OriginDestinationInformation RPH=\"1\">\r\n            <DepartureDateTime>2019-02-21T00:00:00</DepartureDateTime>\r\n            <OriginLocation LocationCode=\"TPE\"/>\r\n            <DestinationLocation LocationCode=\"HKG\"/>\r\n            <TPA_Extensions>\r\n               <SegmentType Code=\"X\"/>\r\n               <IncludeVendorPref Code=\"CX\"/>\r\n               <Baggage FreePieceRequired=\"true\"/>\r\n            </TPA_Extensions>\r\n         </OriginDestinationInformation>\r\n         <OriginDestinationInformation RPH=\"2\">\r\n            <DepartureDateTime>2019-02-21T00:00:00</DepartureDateTime>\r\n            <OriginLocation LocationCode=\"HKG\"/>\r\n            <DestinationLocation LocationCode=\"EWR\"/>\r\n            <TPA_Extensions>\r\n               <SegmentType Code=\"O\"/>\r\n               <IncludeVendorPref Code=\"CX\"/>\r\n               <Baggage FreePieceRequired=\"true\"/>\r\n            </TPA_Extensions>\r\n         </OriginDestinationInformation>\r\n        <TravelPreferences ValidInterlineTicket=\"false\" SmokingAllowed=\"false\" ETicketDesired=\"false\">\r\n            <CabinPref PreferLevel=\"Only\" Cabin=\"Y\"/>\r\n            <TPA_Extensions>\r\n               <XOFares Value=\"true\"/>\r\n            </TPA_Extensions>\r\n         </TravelPreferences>\r\n         <TravelerInfoSummary SpecificPTC_Indicator=\"true\">\r\n            <SeatsRequested>2</SeatsRequested>\r\n            <AirTravelerAvail>\r\n               <PassengerTypeQuantity Code=\"ADT\" Quantity=\"1\"/>\r\n               <PassengerTypeQuantity Code=\"CNN\" Quantity=\"1\"/>\r\n               <PassengerTypeQuantity Code=\"INF\" Quantity=\"1\"/>\r\n            </AirTravelerAvail>\r\n            <PriceRequestInformation>\r\n               <TPA_Extensions>\r\n                  <PointOfSaleOverride Code=\"TPE\"/>\r\n               </TPA_Extensions>\r\n            </PriceRequestInformation>\r\n         </TravelerInfoSummary>\r\n         <TPA_Extensions>\r\n            <IntelliSellTransaction>\r\n               <RequestType Name=\"50ITINS\"/>\r\n               <CompressResponse Value=\"false\"/>\r\n            </IntelliSellTransaction>\r\n         </TPA_Extensions>\r\n      </OTA_AirLowFareSearchRQ>\r\n   </s:Body>\r\n</s:Envelope>"
 				},
 				"url": {
 					"raw": "https://sws3-crt.cert.sabre.com",
@@ -284,6 +340,67 @@
 						"api",
 						"sabre",
 						"GetBargainFinderMax"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. EnhancedAirBookRQ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": " applications/json"
+					},
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "ConversationId",
+						"type": "text",
+						"value": "{{ConversationId}}"
+					},
+					{
+						"key": "MessageId",
+						"type": "text",
+						"value": "{{MessageId}}"
+					},
+					{
+						"key": "TimeStamp",
+						"type": "text",
+						"value": "{{TimeStamp}}"
+					},
+					{
+						"key": "Organization",
+						"type": "text",
+						"value": "{{Organization}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OTA_AirBookRQ\": {\r\n    \"RetryRebook\": {\r\n      \"Option\": true\r\n    },\r\n    \"HaltOnStatus\": [\r\n      {\r\n        \"Code\": \"UC\"\r\n      }\r\n    ],\r\n    \"OriginDestinationInformation\": [\r\n      {\r\n        \"DestinationLocation\": {\r\n          \"LocationCode\": \"LAS\"\r\n        },\r\n        \"MarketingAirline\": {\r\n          \"Code\": \"DL\",\r\n          \"FlightNumber\": \"1549\"\r\n        },\r\n        \"MarriageGrpSpecified\": false,\r\n        \"OriginLocation\": {\r\n          \"LocationCode\": \"JFK\"\r\n        },\r\n        \"DepartureDateTime\": \"2019-02-15T08:30:00\",\r\n        \"FlightNumber\": \"1549\",\r\n        \"NumberInParty\": \"1\",\r\n        \"ResBookDesigCode\": \"E\",\r\n        \"Status\": \"NN\",\r\n        \"InstantPurchaseSpecified\": false\r\n      },\r\n      {\r\n        \"DestinationLocation\": {\r\n          \"LocationCode\": \"JFK\"\r\n        },\r\n        \"MarketingAirline\": {\r\n          \"Code\": \"DL\",\r\n          \"FlightNumber\": \"1694\"\r\n        },\r\n        \"MarriageGrpSpecified\": false,\r\n        \"OriginLocation\": {\r\n          \"LocationCode\": \"LAS\"\r\n        },\r\n        \"DepartureDateTime\": \"2019-02-26T23:15:00\",\r\n        \"FlightNumber\": \"1694\",\r\n        \"NumberInParty\": \"1\",\r\n        \"ResBookDesigCode\": \"E\",\r\n        \"Status\": \"NN\",\r\n        \"InstantPurchaseSpecified\": false\r\n      }\r\n    ],\r\n    \"RedisplayReservation\": {\r\n      \"NumAttempts\": \"5\",\r\n      \"WaitInterval\": \"2000\"\r\n    }\r\n  },\r\n  \"PostProcessing\": {\r\n    \"RedisplayReservation\": {\r\n      \"WaitInterval\": \"5000\",\r\n      \"UnmaskCreditCardSpecified\": false\r\n    },\r\n    \"IgnoreAfterSpecified\": false\r\n  },\r\n  \"PreProcessing\": {\r\n    \"UniqueID\": {\r\n      \"ID\": \"ULJUAA\"\r\n    },\r\n    \"IgnoreBeforeSpecified\": false\r\n  },\r\n  \"HaltOnErrorSpecified\": false,\r\n  \"IgnoreOnErrorSpecified\": false,\r\n  \"version\": \"3.9.0\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:57685/api/sabre/EnhancedAirBook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "57685",
+					"path": [
+						"api",
+						"sabre",
+						"EnhancedAirBook"
 					]
 				}
 			},

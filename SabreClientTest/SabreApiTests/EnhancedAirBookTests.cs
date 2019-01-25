@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using Enh = SabreApiClient.EnhancedAirBookRQ;
 using Domain.Models;
 using System.Collections.Generic;
+using System.IO;
+using System.Diagnostics;
 
 namespace SabreClientTest
 {
@@ -54,13 +56,17 @@ namespace SabreClientTest
         )
         {
             var enhacnedReq = GetEnhancedRequest(pnr, flightDescriptions);
-            var schedule = await _client.GetEnhancedAirBook(session, enhacnedReq);
-            schedule.Should().NotBeNull();
+            var enhacnedReqSer = JsonConvert.SerializeObject(enhacnedReq, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            File.WriteAllText("enhacnedReqSer.txt", enhacnedReqSer);
+            Process.Start("enhacnedReqSer.txt");
 
-            var resp = JsonConvert.SerializeObject(schedule.EnhancedAirBookRS);
+            var enhacned = await _client.GetEnhancedAirBook(session, enhacnedReq);
+            enhacned.Should().NotBeNull();
+
+            var resp = JsonConvert.SerializeObject(enhacned.EnhancedAirBookRS);
             _logger.Debug(resp);
 
-            return schedule;
+            return enhacned;
         }
 
         private Enh.EnhancedAirBookRQ GetEnhancedRequest(string pnr, IList<FlightDescription> flightDescriptions)
