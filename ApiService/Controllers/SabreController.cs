@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -21,47 +22,6 @@ namespace ApiService.Controllers
             _sessionManager = sessionManager;
             _sabreApiClient = sabreApiClient;
             _logger = logger;
-        }
-
-
-        private static SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQ GetFlightScheduleRequest()
-        {
-            string originLocation = "DFW";
-            string destinationLocation = "LHR";
-            string departureDateTime = "12-21";
-            string arrivalDateTime = null;
-            SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQOriginDestinationInformationFlightSegmentConnectionLocations connectionLocations = null;
-
-            var originFlightLocation = new SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQOriginDestinationInformationFlightSegmentOriginLocation
-            {
-                LocationCode = originLocation
-            };
-
-            var destinationFlightLocation = new SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQOriginDestinationInformationFlightSegmentDestinationLocation
-            {
-                LocationCode = destinationLocation
-            };
-
-            var flightSegment = new SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQOriginDestinationInformationFlightSegment
-            {
-                DepartureDateTime = departureDateTime,
-                DestinationLocation = destinationFlightLocation,
-                OriginLocation = originFlightLocation,
-                ArrivalDateTime = arrivalDateTime,
-                ConnectionLocations = connectionLocations
-            };
-
-            var destinationInfo = new SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQOriginDestinationInformation
-            {
-                FlightSegment = flightSegment
-            };
-
-            var req = new SabreApiClient.OTA_AirScheduleService.OTA_AirScheduleRQ
-            {
-                OriginDestinationInformation = destinationInfo
-            };
-
-            return req;
         }
 
         [HttpPost]
@@ -143,7 +103,7 @@ namespace ApiService.Controllers
             try
             {
                 _logger.Debug("GetBargainFinderMax started");
-                var request = JsonConvert.DeserializeObject<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ>(requestObject.ToString());
+                var request = JsonConvert.DeserializeObject<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ>(requestObject.ToString(), new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
                 Session session = GetSession(Request);
 
                 var bargainFinderMax = await _sabreApiClient.GetBargainFinderMax(session, request);
