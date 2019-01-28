@@ -37,6 +37,7 @@ namespace SabreClient
                 { "Other", BFM.AirTripType.Other }
             };
 
+        string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss";
         IList<FlightDescription> BfmFlightDescriptions = new List<FlightDescription>();
         IList<FlightDescription> EnhancedFlightDescriptions = new List<FlightDescription>();
         BFM.PricedItineraryType[] Itineraries = null;
@@ -104,7 +105,7 @@ namespace SabreClient
 
                 var itineraries = (BFM.OTA_AirLowFareSearchRSPricedItineraries)bfms.OTA_AirLowFareSearchRS.Items.FirstOrDefault(i => i is BFM.OTA_AirLowFareSearchRSPricedItineraries);
                 var airOrders = (BFM.OTA_AirLowFareSearchRSTPA_Extensions)bfms.OTA_AirLowFareSearchRS.Items.FirstOrDefault(i => i is BFM.OTA_AirLowFareSearchRSTPA_Extensions);
-                
+
                 if (itineraries == null)
                 {
                     return;
@@ -183,7 +184,7 @@ namespace SabreClient
 
             var enhancedAirBookTests = new EnhancedAirBookTests();
             var enhResp = await enhancedAirBookTests.CreateEnhanced(
-                CurrentSession, 
+                CurrentSession,
                 txtPNR.Text,
                 new List<FlightDescription>
                 {
@@ -279,7 +280,7 @@ namespace SabreClient
 
                 //txtOriginLocation1.Text = fs.DepartureAirport.LocationCode;
                 //txtDestinationLocation1.Text = fs.ArrivalAirport.LocationCode;
-            
+
                 txtResBookDesigCode.Text = txtCheapResBookDesigCode.Text;
                 txtFlightNumber.Text = txtCheapFlightNumber.Text;
                 txtAirlineCode.Text = txtCheapAirlineCode.Text;
@@ -302,19 +303,54 @@ namespace SabreClient
 
         private void GetMinItinerary(BFM.PricedItineraryType[] itineraries)
         {
-            _minItinerary = itineraries[0];
-            _minAmount = _minItinerary.AirItineraryPricingInfo[0].ItinTotalFare.TotalFare.Amount;
+            var flights = new List<FlightInfo>();
             foreach (var itinerary in itineraries)
             {
-                foreach (var pricing in itinerary.AirItineraryPricingInfo)
+                var flight = new FlightInfo();
+                var originDestinationOptions = itinerary.AirItinerary.OriginDestinationOptions;
+                var originOptions = originDestinationOptions.First();
+                var destinationOptions = originDestinationOptions.Last();
+                var date = DateTime.ParseExact(destinationOptions.FlightSegment.Last().ArrivalDateTime, DateTimeFormat, System.Globalization.CultureInfo.InvariantCulture);
+                var offset = destinationOptions.FlightSegment.Last().ArrivalTimeZone.GMTOffset;
+
+                flight.NumberOfFlights = originOptions.FlightSegment.Length + destinationOptions.FlightSegment.Length;
+                flight.ArrivalAirportCode = destinationOptions.FlightSegment.Last().ArrivalAirport.LocationCode;
+                flight.ArrivalDateTime = new DateTimeOffset(date, new TimeSpan(Convert.ToInt32(offset), 0, 0));
+
+                date = DateTime.ParseExact(originOptions.FlightSegment.First().DepartureDateTime, DateTimeFormat, System.Globalization.CultureInfo.InvariantCulture);
+                offset = originOptions.FlightSegment.First().DepartureTimeZone.GMTOffset;
+
+                flight.OriginAirportCode = originOptions.FlightSegment.First().DepartureAirport.LocationCode;
+                flight.DepartureDateTime= new DateTimeOffset(date, new TimeSpan(Convert.ToInt32(offset), 0, 0));
+
+                //we have to do this for each segment. This version is ONLY for testing
+                flight.AirlineCode = destinationOptions.FlightSegment.Last().OperatingAirline.Code;
+                flight.ResBookDesignCode = destinationOptions.FlightSegment.Last().ResBookDesigCode;
+
+                //Duration
+                
+                foreach(var option in itinerary.AirItinerary.OriginDestinationOptions)
                 {
-                    if (pricing.ItinTotalFare.TotalFare.Amount < _minAmount)
-                    {
-                        _minAmount = pricing.ItinTotalFare.TotalFare.Amount;
-                        _minItinerary = itinerary;
-                    }
+                    var firstFlight = option.FlightSegment.First();
+                    var firstFlightDate = DateTime.ParseExact(firstFlight.DepartureDateTime, DateTimeFormat, System.Globalization.CultureInfo.InvariantCulture);
+                    var firstFlightOffset = firstFlight.DepartureTimeZone.GMTOffset;
+                    var firstFlightDateTimeOffset = new DateTimeOffset(firstFlightDate, new TimeSpan(Convert.ToInt32(firstFlightOffset), 0, 0));
+
+                    var lastFlight = option.FlightSegment.Last();
+                    var lastFlightDate = DateTime.ParseExact(lastFlight.ArrivalDateTime, DateTimeFormat, System.Globalization.CultureInfo.InvariantCulture);
+                    var lastFlightOffset = lastFlight.ArrivalTimeZone.GMTOffset;
+                    var lastFlightDateTimeOffset = new DateTimeOffset(lastFlightDate, new TimeSpan(Convert.ToInt32(lastFlightOffset), 0, 0));
+
+                    flight.Duration+= (lastFlightDateTimeOffset - firstFlightDateTimeOffset).TotalMinutes / 60;
+
                 }
+                
+                flight.Price = itinerary.AirItineraryPricingInfo.First().ItinTotalFare.TotalFare.Amount;
+                flight.SerializedJson = JsonConvert.SerializeObject(itinerary);
+                flights.Add(flight);
             }
+            flights = flights.OrderBy(x => x.Duration).ThenBy(x => x.Duration).ToList();
+            _minItinerary = JsonConvert.DeserializeObject<BFM.PricedItineraryType>(flights.First().SerializedJson);
         }
 
         private void ShowCheapestFlyInfo()

@@ -44,6 +44,7 @@
     <Compile Include="Models\Airport.cs" />
     <Compile Include="Models\Credentials.cs" />
     <Compile Include="Models\FlightDescription.cs" />
+    <Compile Include="Models\FlightInfo.cs" />
     <Compile Include="Models\SabreException.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
