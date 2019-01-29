@@ -97,8 +97,7 @@ namespace ApiService.Controllers
 
         [HttpPost]
         [ActionName("GetBargainFinderMax")]
-        //public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax(SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ request)
-        public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax([FromBody]SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ requestObject)
+        public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax(object requestObject)
         {
             try
             {
@@ -107,14 +106,6 @@ namespace ApiService.Controllers
                 Session session = GetSession(Request);
 
                 var bargainFinderMax = await _sabreApiClient.GetBargainFinderMax(session, request);
-            //var request = JsonConvert.DeserializeObject<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ>(requestObject.ToString());
-            //Session session = GetSession(Request);
-
-            //var client = new SabreApi();
-            //var bargainFinderMax = await client.GetBargainFinderMax(session, requestObject);
-
-            //return bargainFinderMax.OTA_AirLowFareSearchRS;
-            return null;
                 return bargainFinderMax.OTA_AirLowFareSearchRS;
             }
             catch (Exception e)
