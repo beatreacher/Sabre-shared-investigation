@@ -68,7 +68,7 @@ namespace SabreClientTest
             var session = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
             var client = new SabreApi(_logger);
-            var schedule = await client.GetAirBook(session, GetAirBookRequest());
+            var schedule = await client.BookAirSegment(session, GetAirBookRequest());
             schedule.Should().NotBeNull();
             schedule.OTA_AirBookRS.Should().NotBeNull();
 

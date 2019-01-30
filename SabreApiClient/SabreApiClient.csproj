@@ -68,6 +68,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\CancelItinerarySegments\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\CreatePassengerNameRecordRQ\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,6 +94,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\ExchangeBookingRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\GetReservationRQ\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -119,12 +129,24 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Extensions\UniqueID_Type.cs" />
+    <Compile Include="Helpers\SecurityTokenContainer.cs" />
     <Compile Include="Helpers\XmlResponseProcessor.cs" />
     <Compile Include="Interfaces\ISabreApi.cs" />
     <Compile Include="Interfaces\ISessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\MessageHeaderHelper.cs" />
     <Compile Include="Helpers\SabreMapper.cs" />
+    <Compile Include="Requests\BargainFinderMaxRequest.cs" />
+    <Compile Include="Requests\BaseSabreApiRequest.cs" />
+    <Compile Include="Requests\BookAirSegmentRequest.cs" />
+    <Compile Include="Requests\CancelItinerarySegmentsRequest.cs" />
+    <Compile Include="Requests\CreatePnrRequest.cs" />
+    <Compile Include="Requests\EndTransactionRequest.cs" />
+    <Compile Include="Requests\EnhancedAirBookRequest.cs" />
+    <Compile Include="Requests\ExchangeBookingRequest.cs" />
+    <Compile Include="Requests\FlightSchedulesRequest.cs" />
+    <Compile Include="Requests\LoadPnrRequest.cs" />
+    <Compile Include="Requests\RetrieveItineraryRequest.cs" />
     <Compile Include="SabreApi.cs" />
     <Compile Include="SessionManager.cs" />
   </ItemGroup>
@@ -182,6 +204,55 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\BargainFinderMax\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\OTA_CancelLLS2.wsdl" />
+    <None Include="Connected Services\CancelItinerarySegments\OTA_CancelLLS2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\OTA_CancelLLS21.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\OTA_CancelLLS22.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\SabreApiClient.CancelItinerarySegments.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\SabreApiClient.CancelItinerarySegments.OTA_CancelRQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\SabreApiClient.CancelItinerarySegments.OTA_CancelRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\SabreApiClient.CancelItinerarySegments.Security1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\STL_For_SabreProtocol_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\STL_Header_v.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\sws_common.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CancelItinerarySegments\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\CreatePassengerNameRecordRQ\CommonSimpleTypes_v1.xsd">
@@ -459,6 +530,61 @@
     <None Include="Connected Services\ExchangeBookingRQ\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\GetReservationRQ\Air.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\Ancillaries.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\GetReservationSTLRQ_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\GetReservationSTLRS_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\GetReservationWSDL.wsdl" />
+    <None Include="Connected Services\GetReservationRQ\Lodging.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\OpenReservation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\PNRBuilderTypes_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\Pricing.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\SabreApiClient.GetReservationRQ.GetReservationOperationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\SabreApiClient.GetReservationRQ.GetReservationRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\SabreApiClient.GetReservationRQ.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\SabreApiClient.GetReservationRQ.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GetReservationRQ\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\LoadPNR\Air.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -700,11 +826,13 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\BargainFinderMax\" />
+    <WCFMetadataStorage Include="Connected Services\CancelItinerarySegments\" />
     <WCFMetadataStorage Include="Connected Services\CreatePassengerNameRecordRQ\" />
     <WCFMetadataStorage Include="Connected Services\CreatePNR\" />
     <WCFMetadataStorage Include="Connected Services\EndTransactionLLSRQ\" />
     <WCFMetadataStorage Include="Connected Services\EnhancedAirBookRQ\" />
     <WCFMetadataStorage Include="Connected Services\ExchangeBookingRQ\" />
+    <WCFMetadataStorage Include="Connected Services\GetReservationRQ\" />
     <WCFMetadataStorage Include="Connected Services\LoadPNR\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirBookLLSRQ\" />
     <WCFMetadataStorage Include="Connected Services\OTA_AirScheduleService\" />
@@ -827,6 +955,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ExchangeBookingRQ\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CancelItinerarySegments\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CancelItinerarySegments\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CancelItinerarySegments\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GetReservationRQ\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GetReservationRQ\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GetReservationRQ\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
