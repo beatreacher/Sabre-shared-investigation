@@ -47,6 +47,8 @@
 
                 <TextBlock Grid.Column="6" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">Departure:</TextBlock>
                 <TextBox x:Name="txtDeparture1" Grid.Column="7" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="2019-04-16T00:00:00" />
+                <TextBlock Grid.Column="6" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">Arrival:</TextBlock>
+                <TextBox x:Name="txtArrival1" Grid.Column="7" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="2019-04-19T00:00:00" />
 
                 <Button x:Name="btnAddBfmDestinationPoint" Grid.Column="8" Grid.Row="0" MinWidth="250" HorizontalAlignment="Left" VerticalAlignment="Center"  Click="btnAddBfmDestinationPoint_Click">Add Flight Segment</Button>
 
@@ -72,7 +74,7 @@
                     <ComboBoxItem>Other</ComboBoxItem>
                 </ComboBox>
 
-                
+
                 <TextBlock Grid.Column="0" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center">AirlineCode</TextBlock>
                 <!--<TextBox x:Name="txtAirlineCode" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" Text="DL" />-->
                 <TextBox x:Name="txtAirlineCode" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150" />
@@ -92,7 +94,7 @@
                 <TextBlock Grid.Column="3" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center">Current PNR:</TextBlock>
                 <TextBox x:Name="txtPNR" Grid.Column="4" Grid.Row="8" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150"  />
 
-                
+
                 <TextBlock Grid.Column="0" Grid.Row="10" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Red" >Cheapest fly</TextBlock>
                 <TextBlock Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center">Segments Count:</TextBlock>
                 <TextBox x:Name="txtSegmentsCount" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="150"  />
@@ -119,12 +121,12 @@
             <Button x:Name="btnSearchBFM" Margin="10,10,0,0" MinWidth="150" HorizontalAlignment="Left" Click="btnSearchBFM_Click">SearchBFM</Button>
 
             <Button x:Name="btnCheapest" Margin="10,10,0,0" MinWidth="150" HorizontalAlignment="Left" Foreground="Red" Click="btnCheapest_Click">Process Cheapest</Button>
-            
+
             <!--<TextBlock Margin="0,10,0,0">Pnr Created:</TextBlock>
             <TextBox x:Name="txtPnrCreateResponse" TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Stretch">PnrCreateResponse</TextBox>-->
             <Button x:Name="btnCreatePnr" Margin="10,10,0,0" MinWidth="150" HorizontalAlignment="Left" Click="btnCreatePnr_Click">Create Pnr</Button>
 
-            
+
             <!--<TextBlock Margin="0,10,0,0">Enhanced:</TextBlock>
             <TextBox x:Name="txtEnhancedResponse" TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Top">EnhancedResponse</TextBox>-->
             <Button x:Name="btnEnhanced" Margin="10,10,0,0" MinWidth="150" HorizontalAlignment="Left" Click="btnEnhanced_Click">Enhanced</Button>
@@ -144,6 +146,7 @@
                         <GridViewColumn Header="OriginLocation" Width="250" DisplayMemberBinding="{Binding OriginLocation}" />
                         <GridViewColumn Header="DestinationLocation" Width="250" DisplayMemberBinding="{Binding DestinationLocation}" />
                         <GridViewColumn Header="DepartureDateTime" Width="250" DisplayMemberBinding="{Binding DepartureDateTime}" />
+                        <GridViewColumn Header="ArrivalDateTime" Width="250" DisplayMemberBinding="{Binding ArrivalDateTime}" />
                     </GridView>
                 </ListView.View>
             </ListView>

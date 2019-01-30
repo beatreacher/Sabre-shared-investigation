@@ -11,6 +11,7 @@ namespace Domain.Models
         public string DestinationLocation { get; set; }
 
         public string DepartureDateTime { get; set; }
+        public string ArrivalDateTime { get; set; }
 
         public string FlightNumber { get; set; }
 

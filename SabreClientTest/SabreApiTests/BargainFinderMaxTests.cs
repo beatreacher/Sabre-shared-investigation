@@ -103,8 +103,18 @@ namespace SabreClientTest
                 Item = i.DepartureDateTime,
                 OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = i.OriginLocation },
                 DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = i.DestinationLocation },
-            }).ToArray();
+            }).ToList();
 
+            if(tripType == BFM.AirTripType.Return)
+            {
+                odis.AddRange(flightDescriptions.Select(i => new BFM.OTA_AirLowFareSearchRQOriginDestinationInformation
+                {
+                    RPH = i.RPH,
+                    Item = i.ArrivalDateTime,
+                    OriginLocation = new BFM.OriginDestinationInformationTypeOriginLocation { LocationCode = i.DestinationLocation },
+                    DestinationLocation = new BFM.OriginDestinationInformationTypeDestinationLocation { LocationCode = i.OriginLocation },
+                }));
+            }
             var travelPreferences = new BFM.AirSearchPrefsType
             {
                 CabinPref = new BFM.CabinPrefType[1] //
@@ -174,7 +184,7 @@ namespace SabreClientTest
                         PseudoCityCode ="PCC"
                     }
                 },
-                OriginDestinationInformation = odis,
+                OriginDestinationInformation = odis.ToArray(),
                 TravelPreferences = travelPreferences,
                 TravelerInfoSummary = travelerInfoSummary,
             };

@@ -349,7 +349,7 @@ namespace SabreClient
                 flight.SerializedJson = JsonConvert.SerializeObject(itinerary);
                 flights.Add(flight);
             }
-            flights = flights.OrderBy(x => x.Duration).ThenBy(x => x.Duration).ToList();
+            flights = flights.OrderBy(x => x.NumberOfFlights).ThenBy(x => x.Price).ToList();
             _minItinerary = JsonConvert.DeserializeObject<BFM.PricedItineraryType>(flights.First().SerializedJson);
         }
 
@@ -371,7 +371,7 @@ namespace SabreClient
 
         private void btnAddBfmDestinationPoint_Click(object sender, RoutedEventArgs e)
         {
-            BfmFlightDescriptions.Add(new FlightDescription { OriginLocation = txtOriginLocation1.Text, DestinationLocation = txtDestinationLocation1.Text, DepartureDateTime = txtDeparture1.Text });
+            BfmFlightDescriptions.Add(new FlightDescription { OriginLocation = txtOriginLocation1.Text, DestinationLocation = txtDestinationLocation1.Text, DepartureDateTime = txtDeparture1.Text, ArrivalDateTime=txtArrival1.Text });
 
             lvBfmFlightDescriptions.ItemsSource = BfmFlightDescriptions;
             ICollectionView view = CollectionViewSource.GetDefaultView(lvBfmFlightDescriptions.ItemsSource);
