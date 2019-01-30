@@ -6,11 +6,12 @@ using FluentAssertions;
 using SabreApiClient;
 using Autofac.Extras.NLog;
 using Newtonsoft.Json;
-using Enh = SabreApiClient.EnhancedAirBookRQ;
 using Domain.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+
+using Enh = SabreApiClient.EnhancedAirBookRQ;
 
 namespace SabreClientTest
 {

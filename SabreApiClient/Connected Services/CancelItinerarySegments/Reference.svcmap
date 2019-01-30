@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="486c076f-0d44-4ef2-a318-9d2563384e02" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://webservices.sabre.com/wsdl/tpfc/OTA_CancelLLS2.0.2RQ.wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="xml.xsd" MetadataType="Schema" ID="26f132e0-cf94-4b6b-8c3a-e42cf12f6c98" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/xml.xsd" />
+    <MetadataFile FileName="xlink.xsd" MetadataType="Schema" ID="3797cdaf-3e73-4891-a3c3-d738bff95e88" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/xlink.xsd" />
+    <MetadataFile FileName="STL_Header_v.xsd" MetadataType="Schema" ID="40dde082-1071-4731-a7d5-1228d5f87e6f" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/STL_Header_v.1.2.0.xsd" />
+    <MetadataFile FileName="sws_common.xsd" MetadataType="Schema" ID="b23c88c0-54dc-4e7b-afe0-80eda7b4f51d" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/sws_common.xsd" />
+    <MetadataFile FileName="OTA_CancelLLS2.xsd" MetadataType="Schema" ID="02e0e68c-02c4-426e-bc73-cdb1aa2032be" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/OTA_CancelLLS2.0.2RQRS.xsd" />
+    <MetadataFile FileName="wsse.xsd" MetadataType="Schema" ID="93d472f6-3e00-4b40-ae21-1dc3ebe59986" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/wsse.xsd" />
+    <MetadataFile FileName="OTA_CancelLLS21.xsd" MetadataType="Schema" ID="a5bf33fc-40b8-44b8-bccd-08c1d49470a3" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/OTA_CancelLLS2.0.2RQ.xsd" />
+    <MetadataFile FileName="OTA_CancelLLS2.wsdl" MetadataType="Wsdl" ID="21e436e8-44da-4536-aea3-12fa4b9b9024" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/OTA_CancelLLS2.0.2RQ.wsdl" />
+    <MetadataFile FileName="STL_For_SabreProtocol_v.xsd" MetadataType="Schema" ID="6ffa405e-7f6a-4803-8f39-d569bfb70a61" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/STL_For_SabreProtocol_v.1.2.0.xsd" />
+    <MetadataFile FileName="envelope.xsd" MetadataType="Schema" ID="8e330066-02cd-404b-880c-4d6abad01ab6" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/envelope.xsd" />
+    <MetadataFile FileName="OTA_CancelLLS22.xsd" MetadataType="Schema" ID="a9c0a2d6-723b-4644-bf4c-9be2816eb2dc" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/OTA_CancelLLS2.0.2RS.xsd" />
+    <MetadataFile FileName="xmldsig-core-schema.xsd" MetadataType="Schema" ID="7333eb7b-4970-4afb-adf9-723033a0d0f5" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/xmldsig-core-schema.xsd" />
+    <MetadataFile FileName="msg-header-2_0.xsd" MetadataType="Schema" ID="ebdf6f98-c4d7-478f-beb5-71e0b8e68a90" SourceId="1" SourceUrl="http://webservices.sabre.com/wsdl/tpfc/msg-header-2_0.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

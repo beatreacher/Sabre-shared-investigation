@@ -5,6 +5,7 @@ using Autofac.Extras.NLog;
 using Domain.Models;
 using SabreApiClient.Interfaces;
 using Newtonsoft.Json;
+using SabreApiClient.Requests;
 
 namespace SabreApiClient
 {
@@ -22,219 +23,72 @@ namespace SabreApiClient
 
         public async Task<OTA_AirScheduleService.OTA_AirScheduleRQResponse> GetFlightSchedules(
             Session session,
-            OTA_AirScheduleService.OTA_AirScheduleRQ req
-            )
+            OTA_AirScheduleService.OTA_AirScheduleRQ request)
         {
-            try
-            {
-                _logger.Debug("GetFlightSchedules started");
-
-                var header = SabreMapper.GetMessageHeader<OTA_AirScheduleService.MessageHeader>(session.ConversationId, "OTA_AirScheduleLLSRQ", session.Organization);
-
-                var security = new OTA_AirScheduleService.Security1 { BinarySecurityToken = session.Token };
-
-                var proxy = new OTA_AirScheduleService.OTA_AirSchedulePortTypeClient("OTA_AirSchedulePortType");
-                var response = await proxy.OTA_AirScheduleRQAsync(header, security, req);
-                ResponseProcessor.CheckErrors(req, response);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("GetFlightSchedules finished");
-            }
+            var req = new FlightSchedulesRequest(_logger);
+            return await req.CallSabreMethod(session, request);
         }
 
         public async Task<BargainFinderMax.BargainFinderMaxRQResponse> GetBargainFinderMax(Session session, BargainFinderMax.OTA_AirLowFareSearchRQ request)
         {
-            try
-            {
-                _logger.Debug("GetBargainFinderMax started");
-
-                var header = SabreMapper.GetMessageHeader<BargainFinderMax.MessageHeader>(session.ConversationId, "BargainFinderMaxRQ", session.Organization);
-                var security = new BargainFinderMax.Security { BinarySecurityToken = session.Token };
-
-                var proxy = new BargainFinderMax.BargainFinderMaxPortTypeClient("BargainFinderMaxPortType");
-                var t = JsonConvert.SerializeObject(request);
-                var response = await proxy.BargainFinderMaxRQAsync(header, security, request);
-
-                ResponseProcessor.CheckErrors(request, response);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("GetBargainFinderMax finished");
-            }
+            var req = new BargainFinderMaxRequest(_logger);
+            return await req.CallSabreMethod(session, request);
         }
 
-        public async Task<OTA_AirBookLLSRQ.OTA_AirBookRQResponse> GetAirBook(Session session, OTA_AirBookLLSRQ.OTA_AirBookRQ request)
+        public async Task<OTA_AirBookLLSRQ.OTA_AirBookRQResponse> BookAirSegment(Session session, OTA_AirBookLLSRQ.OTA_AirBookRQ request)
         {
-            try
-            {
-                _logger.Debug("GetAirBook started");
-                var header = SabreMapper.GetMessageHeader<OTA_AirBookLLSRQ.MessageHeader>(session.ConversationId, "OTA_AirBookLLSRQ", session.Organization);
-                var security = new OTA_AirBookLLSRQ.Security1 { BinarySecurityToken = session.Token };
-
-                var proxy = new OTA_AirBookLLSRQ.OTA_AirBookPortTypeClient("OTA_AirBookPortType");
-                var response = await proxy.OTA_AirBookRQAsync(header, security, request);
-
-                ResponseProcessor.CheckErrors(request, response);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("GetAirBook finished");
-            }
+            var req = new BookAirSegmentRequest(_logger);
+            return await req.CallSabreMethod(session, request);
         }
 
         public async Task<EnhancedAirBookRQ.EnhancedAirBookRQResponse> GetEnhancedAirBook(Session session, EnhancedAirBookRQ.EnhancedAirBookRQ request)
         {
-            try
-            {
-                _logger.Debug("GetAirBook started");
-                var header = SabreMapper.GetMessageHeader<EnhancedAirBookRQ.MessageHeader>(session.ConversationId, "EnhancedAirBookRQ", session.Organization);
-                var security = new EnhancedAirBookRQ.Security { BinarySecurityToken = session.Token };
-
-                var proxy = new EnhancedAirBookRQ.EnhancedAirBookPortTypeClient("EnhancedAirBookPortType");
-                var response = await proxy.EnhancedAirBookRQAsync(header, security, request);
-
-                ResponseProcessor.CheckErrors(request, response);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("GetAirBook finished");
-            }
+            var req = new EnhancedAirBookRequest(_logger);
+            return await req.CallSabreMethod(session, request);
         }
 
         public async Task<CreatePNR.PassengerDetailsRQResponse> CreatePNR(Session session, CreatePNR.PassengerDetailsRQ request)
         {
-            try
-            {
-                _logger.Debug("CreatePNR started");
-                var header = SabreMapper.GetMessageHeader<CreatePNR.MessageHeader>(session.ConversationId, "PassengerDetailsRQ", session.Organization);
-                var security = new CreatePNR.Security { BinarySecurityToken = session.Token };
-
-                var proxy = new CreatePNR.PassengerDetailsPortTypeClient("PassengerDetailsPortType");
-                var response = await proxy.PassengerDetailsRQAsync(header, security, request);
-
-                ResponseProcessor.CheckErrors(request, response);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("CreatePNR finished");
-            }
+            var req = new CreatePnrRequest(_logger);
+            return await req.CallSabreMethod(session, request);
         }
 
         public async Task<LoadPNR.TravelItineraryReadRQResponse> LoadPNR(Session session, LoadPNR.TravelItineraryReadRQ request)
         {
-            try
-            {
-                //SabreApiClient.LoadPNR.
-                _logger.Debug("LoadPNR started");
-                var header = SabreMapper.GetMessageHeader<LoadPNR.MessageHeader>(session.ConversationId, "TravelItineraryReadRQ", session.Organization);
-                var security = new LoadPNR.Security1 { BinarySecurityToken = session.Token };
-
-                var proxy = new LoadPNR.TravelItineraryReadPortTypeClient("TravelItineraryReadPortType");
-                var response = await proxy.TravelItineraryReadRQAsync(header, security, request);
-
-                ResponseProcessor.CheckErrors(request, response);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("LoadPNR finished");
-            }
+            var req = new LoadPnrRequest(_logger);
+            return await req.CallSabreMethod(session, request);
         }
 
         public async Task<EndTransactionLLSRQ.EndTransactionRQResponse> EndTransaction(Session session, EndTransactionLLSRQ.EndTransactionRQ request)
         {
-            try
-            {
-                //SabreApiClient.EndTransactionLLSRQ
-                _logger.Debug("EndTransaction started");
-                var header = SabreMapper.GetMessageHeader<EndTransactionLLSRQ.MessageHeader>(session.ConversationId, "EndTransactionLLSRQ", session.Organization);
-                var security = new EndTransactionLLSRQ.Security1 { BinarySecurityToken = session.Token };
-
-                var proxy = new EndTransactionLLSRQ.EndTransactionPortTypeClient("EndTransactionPortType");
-                var response = await proxy.EndTransactionRQAsync(header, security, request);
-
-                ResponseProcessor.CheckErrors(request, response);
-
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("EndTransaction finished");
-            }
+            var req = new EndTransactionRequest(_logger);
+            return await req.CallSabreMethod(session, request);
         }
 
         public async Task<ExchangeBookingRQ.ExchangeBookingRQResponse> ExchangeBooking(Session session, ExchangeBookingRQ.ExchangeBookingRQ request)
         {
-            try
-            {
-                //SabreApiClient.ExchangeBookingRQ
-                _logger.Debug("ExchangeBooking started");
-                var header = SabreMapper.GetMessageHeader<ExchangeBookingRQ.MessageHeader>(session.ConversationId, "ExchangeBookingRQ", session.Organization);
-                var security = new ExchangeBookingRQ.Security { BinarySecurityToken = session.Token };
+            var req = new ExchangeBookingRequest(_logger);
+            return await req.CallSabreMethod(session, request);
+        }
 
-                var proxy = new ExchangeBookingRQ.ExchangeBookingPortTypeClient("ExchangeBookingPortType");
-                var response = await proxy.ExchangeBookingRQAsync(header, security, request);
+        public async Task<CancelItinerarySegments.OTA_CancelRQResponse> CancelItinerarySegments(Session session, CancelItinerarySegments.OTA_CancelRQ request)
+        {
+            var req = new CancelItinerarySegmentsRequest(_logger);
+            return await req.CallSabreMethod(session, request);
+        }
 
-                ResponseProcessor.CheckErrors(request, response);
+        public async Task<GetReservationRQ.GetReservationOperationResponse> RetrieveItineraryResources(Session session, GetReservationRQ.GetReservationRQ request)
+        {
+            var req = new RetrieveItineraryRequest(_logger);
+            return await req.CallSabreMethod(session, request);
+            /*
+            //SabreApiClient.GetReservationRQ
+                _logger.Debug("RetrieveItineraryResources started");
+                var header = SabreMapper.GetMessageHeader<GetReservationRQ.MessageHeader>(session.ConversationId, "GetReservationRQ", session.Organization);
+                var security = new GetReservationRQ.Security { BinarySecurityToken = session.Token };
 
-                return response;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e);
-                throw;
-            }
-            finally
-            {
-                _logger.Debug("ExchangeBooking finished");
-            }
+                var proxy = new GetReservationRQ.GetReservationPortTypeClient("GetReservationPortType");
+                var response = await proxy.GetReservationOperationAsync(header, security, request);*/
         }
     }
 }

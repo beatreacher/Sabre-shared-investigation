@@ -97,8 +97,7 @@ namespace ApiService.Controllers
 
         [HttpPost]
         [ActionName("GetBargainFinderMax")]
-        //public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax(SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ request)
-        public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax([FromBody]SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ requestObject)
+        public async Task<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRS> GetBargainFinderMax(object requestObject)
         {
             try
             {
@@ -107,14 +106,6 @@ namespace ApiService.Controllers
                 Session session = GetSession(Request);
 
                 var bargainFinderMax = await _sabreApiClient.GetBargainFinderMax(session, request);
-            //var request = JsonConvert.DeserializeObject<SabreApiClient.BargainFinderMax.OTA_AirLowFareSearchRQ>(requestObject.ToString());
-            //Session session = GetSession(Request);
-
-            //var client = new SabreApi();
-            //var bargainFinderMax = await client.GetBargainFinderMax(session, requestObject);
-
-            //return bargainFinderMax.OTA_AirLowFareSearchRS;
-            return null;
                 return bargainFinderMax.OTA_AirLowFareSearchRS;
             }
             catch (Exception e)
@@ -152,6 +143,82 @@ namespace ApiService.Controllers
                 _logger.Debug("EnhancedAirBook finished");
             }
         }
+
+        [HttpPost]
+        [ActionName("CreateOrUpdatePnr")]
+        public async Task<SabreApiClient.CreatePNR.PassengerDetailsRQResponse> CreateOrUpdatePnr(object requestObject)
+        {
+            try
+            {
+                _logger.Debug("CreateOrUpdatePnr started");
+                var request = JsonConvert.DeserializeObject<SabreApiClient.CreatePNR.PassengerDetailsRQ>(requestObject.ToString(), new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
+                Session session = GetSession(Request);
+
+                var enhacned = await _sabreApiClient.CreatePNR(session, request);
+
+                return enhacned;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("CreateOrUpdatePnr finished");
+            }
+        }
+
+        [HttpPost]
+        [ActionName("LoadPnr")]
+        public async Task<SabreApiClient.LoadPNR.TravelItineraryReadRQResponse> LoadPnr(object requestObject)
+        {
+            try
+            {
+                _logger.Debug("LoadPnr started");
+                var request = JsonConvert.DeserializeObject<SabreApiClient.LoadPNR.TravelItineraryReadRQ>(requestObject.ToString(), new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
+                Session session = GetSession(Request);
+
+                var enhacned = await _sabreApiClient.LoadPNR(session, request);
+
+                return enhacned;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("LoadPnr finished");
+            }
+        }
+
+        [HttpPost]
+        [ActionName("EndTransaction")]
+        public async Task<SabreApiClient.EndTransactionLLSRQ.EndTransactionRQResponse> EndTransaction(object requestObject)
+        {
+            try
+            {
+                _logger.Debug("EndTransaction started");
+                var request = JsonConvert.DeserializeObject<SabreApiClient.EndTransactionLLSRQ.EndTransactionRQ>(requestObject.ToString(), new JsonSerializerSettings() { DateParseHandling = DateParseHandling.None });
+                Session session = GetSession(Request);
+
+                var enhacned = await _sabreApiClient.EndTransaction(session, request);
+
+                return enhacned;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            finally
+            {
+                _logger.Debug("EndTransaction finished");
+            }
+        }
+
 
         private static Session GetSession(HttpRequestMessage request)
         {
