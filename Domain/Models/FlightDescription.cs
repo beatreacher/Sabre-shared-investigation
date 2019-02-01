@@ -31,8 +31,13 @@ namespace Domain.Models
         {
             get
             {
-                return DateTime.Parse(DepartureDateTime).ToString("MM-dd");
+                return GetPnrFormattedDateTime(DepartureDateTime);
             }
+        }
+
+        private static string GetPnrFormattedDateTime(string dateTime)
+        {
+            return DateTime.Parse(dateTime).ToString("MM-dd");
         }
     }
 }

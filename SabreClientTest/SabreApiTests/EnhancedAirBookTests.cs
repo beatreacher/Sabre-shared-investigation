@@ -36,7 +36,8 @@ namespace SabreClientTest
         {
             CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
-            await CreateEnhanced(CurrentSession, "ULJUAA",
+            //await CreateEnhanced(CurrentSession, "ULJUAA",
+            await CreateEnhanced(CurrentSession, null,
                 new List<FlightDescription>
                 {
                     new FlightDescription { OriginLocation = "JFK", DestinationLocation = "LAS", DepartureDateTime = "2019-02-15T08:30:00",
@@ -57,14 +58,14 @@ namespace SabreClientTest
         )
         {
             var enhacnedReq = GetEnhancedRequest(pnr, flightDescriptions);
-            var enhacnedReqSer = JsonConvert.SerializeObject(enhacnedReq, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            File.WriteAllText("enhacnedReqSer.txt", enhacnedReqSer);
-            Process.Start("enhacnedReqSer.txt");
+            var enhacnedReqSer = JsonConvert.SerializeObject(enhacnedReq, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            //File.WriteAllText("enhacnedReqSer.txt", enhacnedReqSer);
+            //Process.Start("enhacnedReqSer.txt");
 
             var enhacned = await _client.GetEnhancedAirBook(session, enhacnedReq);
             enhacned.Should().NotBeNull();
 
-            var resp = JsonConvert.SerializeObject(enhacned.EnhancedAirBookRS);
+            var resp = JsonConvert.SerializeObject(enhacned.EnhancedAirBookRS, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             _logger.Debug(resp);
 
             return enhacned;
@@ -85,6 +86,12 @@ namespace SabreClientTest
                 MarketingAirline = new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentMarketingAirline { Code = i.MarketingAirline, FlightNumber = i.FlightNumber },
                 OperatingAirline = string.IsNullOrWhiteSpace(i.OperatingAirline) ? null : new Enh.EnhancedAirBookRQOTA_AirBookRQFlightSegmentOperatingAirline { Code = i.OperatingAirline }
             }).ToArray();
+
+            var preProcessing = new Enh.EnhancedAirBookRQPreProcessing
+            {
+                
+            };
+
 
             var enhacnedReq = new Enh.EnhancedAirBookRQ
             {
@@ -119,8 +126,9 @@ namespace SabreClientTest
                 },
                 PreProcessing = new Enh.EnhancedAirBookRQPreProcessing
                 {
+                    IgnoreBeforeSpecified = true,
                     IgnoreBefore = false,
-                    UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = pnr }
+                    UniqueID = string.IsNullOrWhiteSpace(pnr) ? null : new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = pnr }
                 }
                 //PreProcessing = new Enh.EnhancedAirBookRQPreProcessing { IgnoreBefore = true/*, UniqueID = new Enh.EnhancedAirBookRQPreProcessingUniqueID { ID = "JEGYLT" } */}
             };

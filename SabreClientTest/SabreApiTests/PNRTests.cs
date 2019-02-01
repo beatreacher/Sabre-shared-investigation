@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using SabreApiClient;
+using Domain.Models;
 using Autofac.Extras.NLog;
 using Newtonsoft.Json;
 
 using PNR = SabreApiClient.CreatePNR;
 using LOR = SabreApiClient.LoadPNR;
-using Domain.Models;
+using CPNR = SabreApiClient.CancelItinerarySegments;
 
 namespace SabreClientTest
 {
@@ -66,30 +67,66 @@ namespace SabreClientTest
         }
 
         [TestMethod]
-        public async Task CreatePNRTest()
+        public async Task LoadPNRTest()
         {
             CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
-            var sessionSer = JsonConvert.SerializeObject(CurrentSession);
-            _logger.Debug("-------------- session --------------");
-            _logger.Debug(sessionSer);
-
-
-            await CreatePNR(CurrentSession, null, "JFK", "2019-04-15T16:55:00", "DL");
-
-            //await CreatePNR(CurrentSession, "ULJUAA", "DFW", "02-27", "DL");
-            //await CreatePNR(CurrentSession, "ULJUAA", "JFK", "2019-04-15T16:55:00", "DL");
+            var pnrResp = await LoadPNR(CurrentSession, "HQOOAM");
 
             var response = await _sessionManager.CloseSession(CurrentSession);
             response.Should().Be("Approved");
         }
 
         [TestMethod]
-        public async Task LoadPNRTest()
+        public async Task CancelPnrTest()
         {
             CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
-            var pnrResp = await LoadPNR(CurrentSession, "HQOOAM");
+            var resp = await CancelPnr(CurrentSession);
+
+            var closeSession = await _sessionManager.CloseSession(CurrentSession);
+            closeSession.Should().Be("Approved");
+        }
+
+        public async Task<CPNR.OTA_CancelRQResponse> CancelPnr(Session session)
+        {
+            var request = new CPNR.OTA_CancelRQ
+            {
+                Version = "2.0.2",
+                Segment = new CPNR.OTA_CancelRQSegment[]
+                {
+                    new CPNR.OTA_CancelRQSegment
+                    {
+                        Type = CPNR.OTA_CancelRQSegmentType.air,
+                        TypeSpecified = true,
+                    }
+                }
+            };
+            var reqSer = JsonConvert.SerializeObject(request, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
+            var response = await _client.CancelItinerarySegments(session, request);
+
+            var responseSer = JsonConvert.SerializeObject(response, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
+            return response;
+        }
+
+
+        [TestMethod]
+        public async Task CreatePNRTest()
+        {
+            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+
+            //var sessionSer = JsonConvert.SerializeObject(CurrentSession);
+            //_logger.Debug("-------------- session --------------");
+            //_logger.Debug(sessionSer);
+
+
+            await CreatePNR(CurrentSession, null, "JFK", "02-15", "DL");
+            //await CreatePNR(CurrentSession, null, "DWF", "12-21", "DL");
+
+            //await CreatePNR(CurrentSession, "ULJUAA", "DFW", "02-27", "DL");
+            //await CreatePNR(CurrentSession, "ULJUAA", "JFK", "2019-04-15T16:55:00", "DL");
 
             var response = await _sessionManager.CloseSession(CurrentSession);
             response.Should().Be("Approved");
@@ -104,6 +141,36 @@ namespace SabreClientTest
             string airlineCode
         )
         {
+
+            var preProcessing = string.IsNullOrEmpty(existedPnr) ? //Use it to updating existing PNR
+                    new PNR.PassengerDetailsRQPreProcessing()
+                    {
+                        IgnoreBefore = false,
+                        IgnoreBeforeSpecified = true,
+                    }
+                    :
+                    new PNR.PassengerDetailsRQPreProcessing
+                    {
+                        IgnoreBefore = false, // true for existing, false for new
+                        IgnoreBeforeSpecified = true,
+                        UniqueID = new PNR.PassengerDetailsRQPreProcessingUniqueID { ID = existedPnr }
+                    };
+
+            //var preProcessing = string.IsNullOrEmpty(existedPnr) ? //Use it to updating existing PNR
+            //        new PNR.PassengerDetailsRQPreProcessing()
+            //        {
+            //            //IgnoreBefore = true,
+            //            IgnoreBeforeSpecified = false,
+            //            //UniqueID = new PNR.PassengerDetailsRQPreProcessingUniqueID { ID = null }
+            //        }
+            //        :
+            //        new PNR.PassengerDetailsRQPreProcessing
+            //        {
+            //            IgnoreBefore = false, // true for existing, false for new
+            //            IgnoreBeforeSpecified = true,
+            //            UniqueID = new PNR.PassengerDetailsRQPreProcessingUniqueID { ID = existedPnr }
+            //        };
+
             var req = new PNR.PassengerDetailsRQ
             {
                 version = "3.3.0",
@@ -116,13 +183,13 @@ namespace SabreClientTest
                         DepartureDateTime = departureDateTime,
                         NumberInParty = "1",
                         //
-                        //Type = PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentType.OTH,
+                        Type = PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentType.OTH,
                         Status = "HK",
                         OriginLocation = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentOriginLocation
                         {
                             LocationCode = originLocation
                         },
-                        Text = "RETENTION SEGMENT FOR SWS ORCHESTRATED SERVICES TEST",
+                        Text = "TEST",
                         VendorPrefs = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentVendorPrefs
                         {
                             Airline = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentVendorPrefsAirline
@@ -150,14 +217,22 @@ namespace SabreClientTest
                         }
                     }
                 },
+                PreProcessing = preProcessing,
 
-                PreProcessing = string.IsNullOrEmpty(existedPnr) ? //Use it to updating existing PNR
-                    new PNR.PassengerDetailsRQPreProcessing() :
-                    new PNR.PassengerDetailsRQPreProcessing
-                    {
-                        IgnoreBefore = false,
-                        UniqueID = new PNR.PassengerDetailsRQPreProcessingUniqueID { ID = existedPnr }
-                    },
+                //PreProcessing = string.IsNullOrEmpty(existedPnr) ? //Use it to updating existing PNR
+                //    new PNR.PassengerDetailsRQPreProcessing()
+                //    {
+                //        IgnoreBefore = true,
+                //        IgnoreBeforeSpecified = true,
+                //        //UniqueID = new PNR.PassengerDetailsRQPreProcessingUniqueID { ID = null }
+                //    } 
+                //    :
+                //    new PNR.PassengerDetailsRQPreProcessing
+                //    {
+                //        IgnoreBefore = false, // true for existing, false for new
+                //        IgnoreBeforeSpecified = true,
+                //        UniqueID = new PNR.PassengerDetailsRQPreProcessingUniqueID { ID = existedPnr }
+                //    },
                 SpecialReqDetails = new PNR.PassengerDetailsRQSpecialReqDetails
                 {
                     SpecialServiceRQ = new PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQ
@@ -180,8 +255,7 @@ namespace SabreClientTest
                                     PersonName = new PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoAdvancePassengerPersonName
                                     {
                                         DateOfBirth = DateTime.Now.AddYears(-30),
-                                        //
-                                        //Gender = PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoAdvancePassengerPersonNameGender.M,
+                                        Gender = PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoAdvancePassengerPersonNameGender.M,
                                         //NameNumber = "1.1",
                                         DocumentHolder = true,
                                         GivenName = "BAMBARBIA",
@@ -246,7 +320,7 @@ namespace SabreClientTest
                             {
                                 //NameNumber = "1.1",
                                 //NameReference = "ABC123",
-                                //PassengerType = "ADT",
+                                PassengerType = "ADT",
                                 GivenName = "Octavian",
                                 Surname = "August"
                             }
@@ -254,6 +328,8 @@ namespace SabreClientTest
                     }
                 }
             };
+
+            var reqSer = JsonConvert.SerializeObject(req, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var pnr = await _client.CreatePNR(session, req);
 
             var pnrSer = JsonConvert.SerializeObject(pnr.PassengerDetailsRS);

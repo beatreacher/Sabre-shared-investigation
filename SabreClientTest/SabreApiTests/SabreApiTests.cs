@@ -8,6 +8,7 @@ using Autofac.Extras.NLog;
 using BFM = SabreApiClient.BargainFinderMax;
 using Domain.Models;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SabreClientTest
 {
@@ -23,39 +24,78 @@ namespace SabreClientTest
             var sessionManager = new SessionManager(_logger);
             var CurrentSession = await sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
 
-            string airlineCode = "DL";
-            string flightNumber = "1800";
-            string originLocation = "LAS"; // "DFW"???
-            string destinationLocation = "JFK";
-            string resBookDesigCode = "E";
+            //string airlineCode = "DL";
+            //string flightNumber = "1800";
+            //string originLocation = "LAS"; // "DFW"???
+            //string destinationLocation = "JFK";
+            //string resBookDesigCode = "E";
+            //string departureDateTime = "2019-04-15T16:55:00"; //"02-27"
+            //string pnrDepartureDateTime = FlightDescription.GetPnrFormattedDateTime(departureDateTime);
 
-            string departureDateTime = "2019-04-15T16:55:00"; //"02-27"
-            string pnrDepartureDateTime = "04-15";
+            var flightSegmentForward = new FlightDescription
+            {
+                OriginLocation = "JFK",
+                DestinationLocation = "LAS",
+                DepartureDateTime = "2019-02-15T16:55:00",
+                MarketingAirline = "DL",
+                FlightNumber = "1549",
+                Status = "NN",
+                ResBookDesigCode = "E",
+                NumberInParty = "1",
+                InstantPurchase = false
+            };
 
+            var flightSegmentBack = new FlightDescription
+            {
+                OriginLocation = "LAS",
+                DestinationLocation = "JFK",
+                DepartureDateTime = "2019-02-26T23:15:00",
+                MarketingAirline = "DL",
+                FlightNumber = "1694",
+                Status = "NN",
+                ResBookDesigCode = "E",
+                NumberInParty = "1",
+                InstantPurchase = false
+            };
 
-            var pnrTests = new PNRTests();
-            //var pnrResponse = await pnrTests.CreatePNR(CurrentSession, null, originLocation, "02-27", airlineCode);
-            var pnrResponse = await pnrTests.CreatePNR(CurrentSession, null, originLocation, pnrDepartureDateTime, airlineCode);
+            try
+            {
+                var enhancedAirBook = new EnhancedAirBookTests();
+                var enhResp = await enhancedAirBook.CreateEnhanced(
+                    CurrentSession,
+                    null,
+                    //pnrId,
+                    new List<FlightDescription>
+                    {
+                    flightSegmentForward,
+                    flightSegmentBack
+                    });
 
-            string pnrId = pnrResponse.PassengerDetailsRS.ItineraryRef.ID;
+                var enhRespSer = JsonConvert.SerializeObject(enhResp);
 
-            var e = new EnhancedAirBookTests();
-            var enhResp = await e.CreateEnhanced(
-                CurrentSession, 
-                pnrId,
-                new List<FlightDescription>
-                {
-                    new FlightDescription { OriginLocation = originLocation, DestinationLocation = destinationLocation, DepartureDateTime = departureDateTime,
-                        MarketingAirline = airlineCode, FlightNumber=flightNumber, Status="NN", ResBookDesigCode=resBookDesigCode, NumberInParty = "1",
-                        InstantPurchase = false }
-                    
-                });
+                var pnrTests = new PNRTests();
+                //var pnrResponse = await pnrTests.CreatePNR(CurrentSession, null, flightSegmentForward.OriginLocation, flightSegmentForward.PnrDepartureDateTime, flightSegmentForward.MarketingAirline);
+                var pnrResponse = await pnrTests.CreatePNR(CurrentSession, null, flightSegmentForward.OriginLocation, "06-15", flightSegmentForward.MarketingAirline);
 
-            var EndTransaction = await pnrTests.EndTransaction(CurrentSession);
+                var pnrResponseSer = JsonConvert.SerializeObject(pnrResponse);
+                string pnrId = pnrResponse.PassengerDetailsRS.ItineraryRef.ID;
 
-            var updatedPnrResponse = await pnrTests.CreatePNR(CurrentSession, pnrId, originLocation, pnrDepartureDateTime, airlineCode);
+                //var EndTransaction = await pnrTests.EndTransaction(CurrentSession);
+                //var updatedPnrResponse = await pnrTests.CreatePNR(CurrentSession, pnrId, originLocation, pnrDepartureDateTime, airlineCode);
 
-            var loadPnrResp = await pnrTests.LoadPNR(CurrentSession, pnrId);
+                var loadPnrResp = await pnrTests.LoadPNR(CurrentSession, pnrId);
+                var loadPnrRespSer = JsonConvert.SerializeObject(loadPnrResp);
+
+                var cancelResponse = await pnrTests.CancelPnr(CurrentSession);
+                var cancelResponseSer = JsonConvert.SerializeObject(cancelResponse);
+
+                var loadPnrResp1 = await pnrTests.LoadPNR(CurrentSession, pnrId);
+                var loadPnrResp1Ser = JsonConvert.SerializeObject(loadPnrResp1);
+            }
+            catch (Exception e)
+            {
+            }
+
 
             var closeResp = await sessionManager.CloseSession(CurrentSession);
         }
