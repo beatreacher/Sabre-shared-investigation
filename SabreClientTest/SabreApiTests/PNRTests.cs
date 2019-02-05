@@ -183,7 +183,7 @@ namespace SabreClientTest
                         DepartureDateTime = departureDateTime,
                         NumberInParty = "1",
                         //
-                        Type = PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentType.OTH,
+                        Type = PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentType.OTH, //
                         Status = "HK",
                         OriginLocation = new PNR.PassengerDetailsRQMiscSegmentSellRQMiscSegmentOriginLocation
                         {
@@ -260,7 +260,8 @@ namespace SabreClientTest
                                         DocumentHolder = true,
                                         GivenName = "BAMBARBIA",
                                         MiddleName = "N",
-                                        Surname = "KIRGUDU"
+                                        Surname = "KIRGUDU",
+                                        GenderSpecified = true
                                     },
                                     //VendorPrefs = new PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoAdvancePassengerVendorPrefs
                                     //{
@@ -270,6 +271,19 @@ namespace SabreClientTest
                                     //    }
                                     //}
                                 },
+                            },
+                            SecureFlight = new PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoSecureFlight[]
+                            {
+                                new PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoSecureFlight
+                                {
+                                    PersonName = new PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoSecureFlightPersonName
+                                    {
+                                        GivenName = "BAMBARBIA",
+                                        Surname = "KIRGUDU",
+                                        Gender = PNR.PassengerDetailsRQSpecialReqDetailsSpecialServiceRQSpecialServiceInfoSecureFlightPersonNameGender.M,
+                                        GenderSpecified = true
+                                    }
+                                }
                             }
                         },
                     }
@@ -320,7 +334,7 @@ namespace SabreClientTest
                             {
                                 //NameNumber = "1.1",
                                 //NameReference = "ABC123",
-                                PassengerType = "ADT",
+                                //PassengerType = "ADT",  //
                                 GivenName = "Octavian",
                                 Surname = "August"
                             }

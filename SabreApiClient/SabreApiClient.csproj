@@ -128,6 +128,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\UpdateReservationRQ\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\UniqueID_Type.cs" />
     <Compile Include="Helpers\SecurityTokenContainer.cs" />
     <Compile Include="Helpers\XmlResponseProcessor.cs" />
@@ -147,6 +152,7 @@
     <Compile Include="Requests\FlightSchedulesRequest.cs" />
     <Compile Include="Requests\LoadPnrRequest.cs" />
     <Compile Include="Requests\RetrieveItineraryRequest.cs" />
+    <Compile Include="Requests\UpdateItineraryRequest.cs" />
     <Compile Include="SabreApi.cs" />
     <Compile Include="SessionManager.cs" />
   </ItemGroup>
@@ -821,6 +827,61 @@
     <None Include="Connected Services\SessionCreator\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\UpdateReservationRQ\Air.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\Ancillaries.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\envelope.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\Lodging.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\msg-header-2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\OpenReservation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\PNRBuilderTypes_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\Pricing.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\SabreApiClient.UpdateReservationRQ.MessageHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\SabreApiClient.UpdateReservationRQ.Security.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\SabreApiClient.UpdateReservationRQ.UpdateReservationOperationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\SabreApiClient.UpdateReservationRQ.UpdateReservationRS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\UpdateReservationSTLRQ_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\UpdateReservationSTLRS_v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\UpdateReservationWSDL.wsdl" />
+    <None Include="Connected Services\UpdateReservationRQ\wsse.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\xlink.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\xml.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UpdateReservationRQ\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="NLog.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -838,6 +899,7 @@
     <WCFMetadataStorage Include="Connected Services\OTA_AirScheduleService\" />
     <WCFMetadataStorage Include="Connected Services\SessionCloseRQ\" />
     <WCFMetadataStorage Include="Connected Services\SessionCreator\" />
+    <WCFMetadataStorage Include="Connected Services\UpdateReservationRQ\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\SessionCreator\configuration91.svcinfo" />
@@ -979,6 +1041,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\GetReservationRQ\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UpdateReservationRQ\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UpdateReservationRQ\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UpdateReservationRQ\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

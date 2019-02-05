@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="http://webservices.sabre.com/pnrbuilder/v1_19" xmlns:or="http://services.sabre.com/res/or/v1_14" xmlns:pnrb="http://webservices.sabre.com/pnrbuilder/v1_19" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://webservices.sabre.com/pnrbuilder/v1_19" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import schemaLocation="OpenReservation.1.14.0.xsd" namespace="http://services.sabre.com/res/or/v1_14" />
+  <xsd:include schemaLocation="PNRBuilderTypes_v1.19.0.xsd" />
+  <xsd:element name="UpdateReservationRQ">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element minOccurs="0" name="RequestType" type="pnrb:RequestType" />
+        <xsd:element minOccurs="0" name="ReturnOptions" type="pnrb:ReturnOptions" />
+        <xsd:element minOccurs="0" name="POS" type="pnrb:POS_Type.PNRB" />
+        <xsd:element minOccurs="0" name="ReservationUpdateList" type="pnrb:ReservationUpdateListType" />
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="AssociationUpdate" type="pnrb:AssociationUpdate.PNRB" />
+        <xsd:element minOccurs="0" name="UpdateToken" type="xsd:string" />
+        <xsd:element minOccurs="0" name="PnrContent">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="RawContent" type="xsd:base64Binary" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="Partition" type="xsd:string" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="ResultAction" type="pnrb:ResultAction" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="ClientContext" type="pnrb:ClientContext" />
+      </xsd:sequence>
+      <xsd:attribute name="Version" type="xsd:string" use="optional" />
+      <xsd:attribute name="EchoToken" type="xsd:string" use="optional" />
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ReservationUpdateListType">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="Locator" type="pnrb:LocatorWithPartitionType" />
+      <xsd:element minOccurs="0" name="CreateDate" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>PNR creation date that is used as part of PNR identifier (both active and
+                        inactive PNRs)
+                    </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice minOccurs="0">
+        <xsd:element maxOccurs="unbounded" name="ReservationUpdateItem" type="pnrb:ReservationUpdateItemType" />
+        <xsd:element name="ChangeNbrInParty" type="pnrb:ChangeNbrInPartyType.PNRB" />
+        <xsd:element name="LinearEntryRequest" type="pnrb:LinearEntryRequestType.PNRB">
+          <xsd:annotation>
+            <xsd:documentation>Linear entry requests such as CKS* coming from Terminal Gateway, restricted
+                            for internal use
+                        </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="GMRUpdate" type="pnrb:GMRUpdateType.PNRB" />
+      </xsd:choice>
+      <xsd:element minOccurs="0" name="ReceivedFrom" type="pnrb:ReceivedFrom.PNRB" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LocatorWithPartitionType">
+    <xsd:simpleContent>
+      <xsd:extension base="pnrb:RecordLocatorType">
+        <xsd:attribute name="Partition" type="xsd:string" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="ReservationUpdateItemType">
+    <xsd:choice>
+      <xsd:element minOccurs="0" maxOccurs="1" name="PassengerNameUpdate" type="pnrb:PassengerNameUpdate.PNRB" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="GroupNameUpdate" type="pnrb:GroupNameUpdate.PNRB" />
+      <xsd:element name="AncillaryServicesUpdate" type="pnrb:AncillaryServicesUpdate.PNRB" />
+      <xsd:element name="AncillaryServicesPartialUpdate" type="pnrb:AncillaryServicesPartialUpdate.PNRB" />
+      <xsd:element maxOccurs="unbounded" name="EmailAddressUpdate" type="pnrb:EmailAddressUpdate.PNRB" />
+      <xsd:element name="ProfileUpdate" type="pnrb:ProfileUpdate.PNRB" />
+      <xsd:element name="PreReservedSeatPartialUpdate" type="pnrb:PreReservedSeatPartialUpdate.PNRB" />
+      <xsd:element name="SpecialServiceRequestUpdate" type="pnrb:SpecialServiceRequestUpdate.PNRB" />
+      <xsd:element name="SpecialServiceRequestPartialUpdate" type="pnrb:SSRPartialUpdate.PNRB" />
+      <xsd:element maxOccurs="unbounded" name="RemarkUpdate" type="pnrb:RemarkUpdate.PNRB" />
+      <xsd:element name="TicketDetailsUpdate" type="pnrb:TicketDetailsUpdate.PNRB" />
+      <xsd:element name="CssRequestUpdate" type="pnrb:CssRequestUpdate.PNRB" />
+      <xsd:element name="RemarkPartialUpdate" type="pnrb:RemarkPartialUpdate.PNRB" />
+      <xsd:element name="FrequentFlyerTSAPreCheckUpdate" type="pnrb:FrequentFlyerTSAPreCheckUpdate.PNRB" />
+      <xsd:element name="ProductUpdate" type="pnrb:ProductUpdate.PNRB" />
+      <xsd:element name="PhoneNumberUpdate" type="pnrb:PhoneNumberUpdate.PNRB" />
+      <xsd:element name="PhoneNumberPartialUpdate" type="pnrb:PhoneNumberPartialUpdate.PNRB" />
+      <xsd:element name="OpenReservationElementUpdate" type="pnrb:OpenReservationElementUpdate.PNRB" />
+      <xsd:element name="DKNumber" type="pnrb:DKNumber.PNRB" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="OtherServiceInformation" type="pnrb:OtherServiceInformation.PNRB" />
+      <xsd:element maxOccurs="unbounded" name="AccountingLine" type="pnrb:AccountingLine.PNRB" />
+      <xsd:element name="AirSegmentPartialUpdate" type="pnrb:AirSegmentPartialUpdate.PNRB" />
+      <xsd:element name="AirItineraryUpdate" type="pnrb:AirItineraryUpdate.PNRB" />
+      <xsd:element name="GeneralSegmentUpdate" type="pnrb:GeneralSegmentUpdate.PNRB" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="CarrierRefundItem" type="pnrb:CarrierRefundItem.PNRB" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="HeaderUpdateItem" type="pnrb:HeaderUpdateItem.PNRB" />
+      <xsd:element name="AssociationMatrixUpdate" type="pnrb:AssociationMatrixUpdate.PNRB" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="PreReservedSeatUpdate" type="pnrb:PreReservedSeatUpdate.PNRB" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="TicketingInfoUpdate" type="pnrb:TicketingInfo" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="BookAndHold" type="pnrb:BookAndHoldType.PNRB" />
+      <xsd:element minOccurs="0" maxOccurs="1" name="OpenReservationAction" type="or:OpenReservationAction" />
+    </xsd:choice>
+    <xsd:attribute name="UpdateId" type="xsd:string" />
+  </xsd:complexType>
+</xsd:schema>

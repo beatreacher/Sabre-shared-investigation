@@ -67,8 +67,8 @@ namespace SabreClientTest
                     //pnrId,
                     new List<FlightDescription>
                     {
-                    flightSegmentForward,
-                    flightSegmentBack
+                        flightSegmentForward,
+                        flightSegmentBack
                     });
 
                 var enhRespSer = JsonConvert.SerializeObject(enhResp);

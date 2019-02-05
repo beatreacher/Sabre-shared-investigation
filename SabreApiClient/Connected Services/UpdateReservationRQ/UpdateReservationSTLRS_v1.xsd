@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="http://webservices.sabre.com/pnrbuilder/v1_19" xmlns:pnrb="http://webservices.sabre.com/pnrbuilder/v1_19" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://webservices.sabre.com/pnrbuilder/v1_19" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="PNRBuilderTypes_v1.19.0.xsd" />
+  <xsd:element name="UpdateReservationRS">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element minOccurs="0" maxOccurs="1" name="Locator" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Used to return PNR locator if requested using ReturnOptions.ReturnLocator in request is set to true and locator information is available</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element minOccurs="0" maxOccurs="1" name="Success" type="xsd:string" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="Warnings" type="pnrb:UpdateWarnings.PNRB" />
+        <xsd:element minOccurs="0" maxOccurs="1" name="Errors" type="pnrb:UpdateErrors.PNRB" />
+        <xsd:choice>
+          <xsd:element minOccurs="0" name="Reservation" type="pnrb:Reservation.PNRB" />
+          <xsd:element minOccurs="0" name="Content">
+            <xsd:complexType>
+              <xsd:choice>
+                <xsd:any processContents="lax" />
+              </xsd:choice>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+        <xsd:element minOccurs="0" maxOccurs="1" name="Results" type="pnrb:Results.PNRB" />
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="PshUpdates" type="pnrb:PshUpdate.PNRB" />
+        <xsd:element minOccurs="0" name="CorrelationId" type="xsd:string" />
+      </xsd:sequence>
+      <xsd:attribute name="Version" type="xsd:string" use="optional" />
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
