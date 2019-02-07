@@ -115,6 +115,37 @@
 			"response": []
 		},
 		{
+			"name": "Get Reservation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "text/xml"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n   <s:Header>\r\n      <h:Security xmlns:h=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns=\"http://schemas.xmlsoap.org/ws/2002/12/secext\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n         <BinarySecurityToken>>Shared/IDL:IceSess\\/SessMgr:1\\.0.IDL/Common/!ICESMS\\/ACPCRTD!ICESMSLB\\/CRT.LB!1549549051040!1089!9</BinarySecurityToken>\r\n      </h:Security>\r\n      <h:MessageHeader xmlns:h=\"http://www.ebxml.org/namespaces/messageHeader\" xmlns=\"http://www.ebxml.org/namespaces/messageHeader\">\r\n         <From>\r\n            <PartyId>123ws123</PartyId>\r\n         </From>\r\n         <To>\r\n            <PartyId>9aq99999</PartyId>\r\n         </To>\r\n         <CPAId>92RG</CPAId>\r\n         <ConversationId>1234567</ConversationId>\r\n         <Service>UpdateReservationRQ</Service>\r\n         <Action>UpdateReservationRQ</Action>\r\n         <MessageData>\r\n            <MessageId>886121327205170150</MessageId>\r\n            <Timestamp>2019-02-06T20:10:37Z</Timestamp>2587668742982340150\r\n         </MessageData>\r\n      </h:MessageHeader>\r\n   </s:Header>\r\n   <s:Body xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n\t\t<ns7:GetReservationRQ xmlns:ns7 = \"http://webservices.sabre.com/pnrbuilder/v1_19\" Version = \"1.19.0\">\r\n\t\t    <ns7:Locator>CATUGY</ns7:Locator>\r\n\t\t    <ns7:RequestType>Statefull</ns7:RequestType>\r\n\t\t</ns7:GetReservationRQ>\r\n   </s:Body>\r\n</s:Envelope>"
+				},
+				"url": {
+					"raw": "https://sws-crt.cert.sabre.com/",
+					"protocol": "https",
+					"host": [
+						"sws-crt",
+						"cert",
+						"sabre",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "UpdateReservation",
 			"request": {
 				"method": "POST",
