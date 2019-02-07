@@ -86,8 +86,11 @@ namespace SabreClientTest
                 var loadPnrResp = await pnrTests.LoadPNR(CurrentSession, pnrId);
                 var loadPnrRespSer = JsonConvert.SerializeObject(loadPnrResp);
 
-                var cancelResponse = await pnrTests.CancelPnr(CurrentSession);
-                var cancelResponseSer = JsonConvert.SerializeObject(cancelResponse);
+                //var cancelResponse = await pnrTests.CancelPnr(CurrentSession);
+                //var cancelResponseSer = JsonConvert.SerializeObject(cancelResponse);
+
+                var updateResponse = await pnrTests.UpdateItinerary(CurrentSession, pnrId);
+                var updateResponseSer = JsonConvert.SerializeObject(updateResponse);
 
                 var loadPnrResp1 = await pnrTests.LoadPNR(CurrentSession, pnrId);
                 var loadPnrResp1Ser = JsonConvert.SerializeObject(loadPnrResp1);

@@ -90,5 +90,11 @@ namespace SabreApiClient
                 var proxy = new GetReservationRQ.GetReservationPortTypeClient("GetReservationPortType");
                 var response = await proxy.GetReservationOperationAsync(header, security, request);*/
         }
+
+        public async Task<UpdateReservationRQ.UpdateReservationOperationResponse> UpdateItinerary(Session session, UpdateReservationRQ.UpdateReservationRQ request)
+        {
+            var req = new UpdateItineraryRequest(_logger);
+            return await req.CallSabreMethod(session, request);
+        }
     }
 }

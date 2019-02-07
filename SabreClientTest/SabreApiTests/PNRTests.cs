@@ -67,17 +67,6 @@ namespace SabreClientTest
         }
 
         [TestMethod]
-        public async Task LoadPNRTest()
-        {
-            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
-
-            var pnrResp = await LoadPNR(CurrentSession, "HQOOAM");
-
-            var response = await _sessionManager.CloseSession(CurrentSession);
-            response.Should().Be("Approved");
-        }
-
-        [TestMethod]
         public async Task CancelPnrTest()
         {
             CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
@@ -353,6 +342,17 @@ namespace SabreClientTest
             return pnr;
         }
 
+        [TestMethod]
+        public async Task LoadPNRTest()
+        {
+            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+
+            var pnrResp = await LoadPNR(CurrentSession, "HQOOAM");
+
+            var response = await _sessionManager.CloseSession(CurrentSession);
+            response.Should().Be("Approved");
+        }
+
         public async Task<LOR.TravelItineraryReadRQResponse> LoadPNR(Session session, string pnr)
         {
             var req = new LOR.TravelItineraryReadRQ
@@ -369,6 +369,76 @@ namespace SabreClientTest
 
             var pnrSer = JsonConvert.SerializeObject(pnrResp.TravelItineraryReadRS);
             _logger.Debug("-------------- PNR --------------");
+            _logger.Debug(pnrSer);
+
+            return pnrResp;
+        }
+
+        [TestMethod]
+        public async Task UpdateItineraryTest()
+        {
+            CurrentSession = await _sessionManager.CreateSession(SessionTests.ApiCredentials, "SessionCreateRQ");
+
+            //var pnrResp = await LoadPNR(CurrentSession, "HQOOAM");
+            var pnrResp = await UpdateItinerary(CurrentSession, "HQOOAM");
+
+            var response = await _sessionManager.CloseSession(CurrentSession);
+            response.Should().Be("Approved");
+        }
+
+        public async Task<SabreApiClient.UpdateReservationRQ.UpdateReservationOperationResponse> UpdateItinerary(Session session, string pnrId)
+        {
+            var request = new SabreApiClient.UpdateReservationRQ.UpdateReservationRQ
+            {
+                Version = "1.19.0",
+                RequestType = new SabreApiClient.UpdateReservationRQ.RequestType { Value = SabreApiClient.UpdateReservationRQ.RequestEnumerationType.Stateless },
+                ReturnOptions = new SabreApiClient.UpdateReservationRQ.ReturnOptions
+                {
+                    IncludeUpdateDetails = true,
+                    RetrievePNR = true,
+                    PriceQuoteServiceVersion = "3.2.0",
+                    ReturnLocator = true
+                },
+                //PnrContent = new SabreApiClient.UpdateReservationRQ.UpdateReservationRQPnrContent { RawContent = }
+                ReservationUpdateList = new SabreApiClient.UpdateReservationRQ.ReservationUpdateListType
+                {
+                    Locator = new SabreApiClient.UpdateReservationRQ.LocatorWithPartitionType
+                    {
+                        Value = pnrId
+                    },
+                    Items = new SabreApiClient.UpdateReservationRQ.ReservationUpdateItemType[]
+                    {
+                        new SabreApiClient.UpdateReservationRQ.ReservationUpdateItemType
+                        {
+                            Items = new object[]
+                            {
+                                new SabreApiClient.UpdateReservationRQ.PassengerNameUpdatePNRB
+                                {
+                                    TravelerName = new SabreApiClient.UpdateReservationRQ.TravelerName
+                                    {
+                                        Given = "John",
+                                        Surname = "Yong"
+                                    }
+                                },
+                                new SabreApiClient.UpdateReservationRQ.PhoneNumberPartialUpdatePNRB
+                                {
+                                    PhoneTextUpdate = new SabreApiClient.UpdateReservationRQ.PhoneNumberPartialUpdatePNRBPhoneTextUpdate
+                                    {
+                                        Item = "777-777-7777"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //Items = new 
+                }
+            };
+
+            var pnrReqSer = JsonConvert.SerializeObject(request);
+
+            var pnrResp = await _client.UpdateItinerary(CurrentSession, request);
+            var pnrSer = JsonConvert.SerializeObject(pnrResp);
+            _logger.Debug("-------------- PNR Update --------------");
             _logger.Debug(pnrSer);
 
             return pnrResp;
